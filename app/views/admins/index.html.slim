@@ -42,7 +42,7 @@
                     td= select :progress_status, :name, options_for_select(Store.progress_statuses_i18n.invert, selected: s.progress_status), {}, { class: 'js-progress_status form-control', data: { id: s.id } }
                     td= select :settlement_status, :name, options_for_select(Store.settlement_statuses_i18n.invert, selected: s.settlement_status), {}, { class: 'js-settlement_status form-control', data: { id: s.id } }
                     td= link_to '詳細', edit_store_path(c.id), class: 'btn btn-outline-dark'
-        = paginate @companies
+        / = paginate @companies
                 / - @projects.each do |project|
                 /   tr
                 /     td.text-nowrap = truncate(project.name, length: 30, omission: '...')
