@@ -1,0 +1,13 @@
+.header {
+    background-color: white;
+    box-shadow: 0 2px 2px 0 gray;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1100;
+}
+.spacer {
+    margin-bottom: 66px;
+}

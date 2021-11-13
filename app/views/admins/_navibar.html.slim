@@ -1,0 +1,18 @@
+nav.client-header.navbar.navbar-expand-lg.navbar-light.border-bottom.position-fixed.w-100.d-xl-none
+  / = link_to admins_path, class: "navbar-brand" do
+    / img.client-header__logo alt=("バリオンロゴ") src="/assets/logo.png"
+  ul
+    li.sidebar__wraper.text-light.text-left
+        | 運営管理画面
+  button.navbar-toggler.ml-auto aria-controls="Navber" aria-expanded="false" aria-label="ナビゲーションの切替" data-target="#Navber" data-toggle="collapse" type="button"
+    span.navbar-toggler-icon
+  #Navber.collapse.navbar-collapse
+    ul.navbar-nav.ml-auto
+      li.nav-item.dropdown.border-bottom.m-2
+        = link_to admins_path, class: "nav-link text-white"
+          | ユーザー一覧ページ
+      li.nav-item.dropdown.border-bottom.m-2
+        = link_to admins_agencies_path, class: "nav-link text-white"
+          | 代理店一覧ページ
+      li.nav-item.dropdown.border-bottom.m-2
+        = link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "nav-link text-white"

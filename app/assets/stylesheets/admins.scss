@@ -1,0 +1,169 @@
+// Place all the styles related to the admins controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+// Place all the styles related to the clients controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+// client共通部品
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+.sidebar {
+
+  &__container {
+    width: 100%;
+    height: 100%;
+    background-color: #8b8b8b
+  }
+
+  &__logo {
+    pointer-events: none;
+    padding: 1.0rem;
+
+    &--img {
+      max-width: 100px;
+    }
+  }
+
+  &__text {
+    font-family: YuGothic;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+  }
+
+  &__wraper {
+    text-align: center;
+    display: block;
+
+    &--link {
+      display: block;
+      padding: 1.0rem 0;
+      color: white;
+      text-decoration: none;
+
+      &:hover {
+        background-color:rgb(219, 219, 219);
+        color: #3f3f3f;
+        text-decoration: none;
+      }
+
+      &__icon {
+        font-size: 2.0rem;
+      }
+
+      &__text {
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+.client-header {
+  z-index: 1;
+  background-color: #a5a5a5;
+
+  &__logo {
+    max-width: 100px;
+  }
+
+  .navbar-toggler {
+    border-color: #fff;
+  }
+
+  .navbar-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+}
+
+.client-container {
+  padding-top: 10rem;
+  max-width: 1000px;
+
+  @media(max-width: 576px) {
+    padding-top: 7rem;
+  }
+}
+
+.position-right {
+  right: 0px;
+  left: auto;
+}
+
+.pagination {
+  .page-link {
+    border: none;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .page-link:hover {
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  // .active{
+  //   a{
+  //     background: #7cb342 !important;
+  //   }
+  // }
+}
+
+// タイトルの色
+.valion-client-color {
+  color: #ff6b7c;
+}
+
+// ボタンの色
+.common-btn {
+  background-color: white;
+  color:#ff6b7c;
+  border: 1px solid#ff6b7c;
+  text-decoration: none;
+
+  &:hover {
+    color: white;
+    background-color: #ff6b7c;
+  }
+}
+
+.import-btn {
+  background-color: white;
+  color:#6c757d;
+  border: 1px solid#6c757d;
+  text-decoration: none;
+
+  &:hover {
+    color:#6c757d;
+  }
+}
+
+.btn:disabled {
+  opacity: 0.2;
+}
+
+.import-icon {
+  background-color: #ff6b7c;
+  color:white;
+  border: 1px solid#ff6b7c;
+  text-decoration: none;
+
+  &:hover {
+    color: gray;
+  }
+}
+
+// アイコンの色
+.icon-link {
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    color: gray;
+  }
+}
+// Place all the styles related to the chats controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/

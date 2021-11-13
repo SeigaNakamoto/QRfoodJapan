@@ -1,0 +1,143 @@
+.sidebar.d-none.d-xl-block
+  .vh-100.row
+    .col-md-2
+      = render partial: 'sidebar'
+    .col-md-10
+      .container
+        h2.mt-3.font-weight-bold.valion-client-color 代理店管理
+        .card
+          .card-header
+            h5.card-title 傘下代理店基本情報
+          .card-body
+            ul
+              li.d-flex              
+                .col
+                  | 傘下代理店数
+                .col.text-right
+                  = @child_agencies.count
+                  | 店舗
+              li.d-flex              
+                .col
+                  | 傘下代理店報酬
+                .col.text-right
+                  - total = 0
+                  - @agencies.each do |a|
+                    - @plans.each do |p|
+                      - total += (Store.where(agency_id: a.agency_id, plan_id: p.id).count * p.reward_price)
+                  | ¥
+                  = total.to_s(:delimited)
+                  | (税込)
+              li.d-flex              
+                .col
+                  | 特別代理店報酬
+                .col.text-right
+                  | ¥
+                  = @special_reward.to_s(:delimited)
+                  | (税込)
+        .card
+          .card-header
+            h5.card-title 傘下代理店一覧
+          .card-body
+            table.table.table-hover.table-sm
+              thead
+                tr
+                  th.text-nowrap 代理店ID
+                  th.text-nowrap 代理店名
+                  th.text-nowrap 代理店TEL
+                  th.text-nowrap 代理店MAIL
+                  th.text-nowrap 登録日
+                  th.text-nowrap プラン別件数
+                  th.text-nowrap 報酬合計(税込)
+              tbody
+                - @agencies.each do |a|
+                  tr
+                    td= a.agency_id
+                    td= a.agency_name
+                    td= a.agency_tel
+                    td= a.agency_mail
+                    td= a.created_at.to_s(:datetime_jp_Ymd)
+                    td.plan
+                      - @plans.each do |p|
+                        = p.name
+                        | ：#{Store.where(agency_id: a.agency_id, plan_id: p.id).count}
+                        br/
+                    td
+                      .text-right
+                        - total = 0
+                        - @plans.each do |p|
+                          - total += (Store.where(agency_id: a.agency_id, plan_id: p.id).count * p.reward_price * @tax).to_i
+                        | ¥
+                        = total.to_s(:delimited)
+            = paginate @agencies
+
+= render partial: 'navibar'
+.d-block.d-xl-none
+  .row
+    .col.mt-5
+      .container.mt-5
+        h2.mt-3.font-weight-bold.valion-client-color 代理店管理
+        .card
+          .card-header
+            h5.card-title 傘下代理店基本情報
+          .card-body
+            ul
+              li.d-flex              
+                .col
+                  | 傘下代理店数
+                .col.text-right
+                  = @child_agencies.count
+                  | 店舗
+              li.d-flex              
+                .col
+                  | 傘下代理店報酬
+                .col.text-right
+                  - total = 0
+                  - @agencies.each do |a|
+                    - @plans.each do |p|
+                      - total += (Store.where(agency_id: a.agency_id, plan_id: p.id).count * p.reward_price)
+                  | ¥
+                  = total.to_s(:delimited)
+                  | (税込)
+              li.d-flex              
+                .col
+                  | 特別代理店報酬
+                .col.text-right
+                  | ¥
+                  = @special_reward.to_s(:delimited)
+                  | (税込)
+        .card
+          .card-header
+            h5.card-title 傘下代理店一覧
+          .card-body
+            .table-responsive
+              table.table.table-hover.table-sm
+                thead
+                  tr
+                    th.text-nowrap 代理店ID
+                    th.text-nowrap 代理店名
+                    th.text-nowrap 代理店TEL
+                    th.text-nowrap 代理店MAIL
+                    th.text-nowrap 登録日
+                    th.text-nowrap プラン別件数
+                    th.text-nowrap 報酬合計
+                tbody
+                  - @agencies.each do |a|
+                    tr
+                      td= a.agency_id
+                      td= a.agency_name
+                      td= a.agency_tel
+                      td= a.agency_mail
+                      td= a.created_at.to_s(:datetime_jp_Ymd)
+                      td.plan
+                        - @plans.each do |p|
+                          = p.name
+                          | ：#{Store.where(agency_id: a.agency_id, plan_id: p.id).count}
+                          br/
+                      td
+                        .text-right
+                          - total = 0
+                          - @plans.each do |p|
+                            - total += (Store.where(agency_id: a.agency_id, plan_id: p.id).count * p.reward_price * @tax).to_i
+                          | ¥
+                          = total.to_s(:delimited)
+              = paginate @agencies

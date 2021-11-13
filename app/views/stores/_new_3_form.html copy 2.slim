@@ -1,0 +1,116 @@
+.card
+  .card-header
+    .d-flex.align-items-center
+      h5.card-title 講座情報
+      - if btn.eql?('更新')
+        .ml-auto.boards__linkBox
+          = f.submit btn, class: 'btn btn-primary'
+  .card-body
+    .form-group
+      = i.label :bank_name, '金融機関名'
+      - if @company.errors.include?(:bank_name)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:bank_name).first}
+      = i.text_field :bank_name, class: 'form-control', :placeholder=>"〇〇銀行"
+    .form-group
+      = i.label :bank_code, '金融機関コード'
+      - if @company.errors.include?(:bank_code)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:bank_code).first}
+      = i.text_field :bank_code, class: 'form-control', :placeholder=>"XXXX"
+    .form-group
+      = i.label :bank_branch_name, '支店名'
+      - if @company.errors.include?(:bank_branch_name)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:bank_branch_name).first}
+      = i.text_field :bank_branch_name, class: 'form-control', :placeholder=>"〇〇支店"
+    .form-group
+      = i.label :bank_branch_code, '支店コード'
+      - if @company.errors.include?(:bank_branch_code)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:bank_branch_code).first}
+      = i.text_field :bank_branch_code, class: 'form-control', :placeholder=>"XXX"
+    .form-group
+      = i.label :bank_account_type, '口座種別'
+      | 【
+      | #{i.radio_button :bank_account_type, '普通預金', checked: true} 普通預金：
+      | #{i.radio_button :bank_account_type, '当座預金'} 当座預金】
+    .form-group
+      = i.label :bank_account_number, '口座番号'
+      - if @company.errors.include?(:bank_account_number)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:bank_account_number).first}
+      = i.text_field :bank_account_number, class: 'form-control', :placeholder=>"XXXXXXX"
+    .form-group
+      = i.label :bank_account_holder_kana, '口座名義（カナ）'
+      - if @company.errors.include?(:bank_account_holder_kana)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:bank_account_holder_kana).first}
+      = i.text_field :bank_account_holder_kana, class: 'form-control', :placeholder=>"ヤマダ　タロウ"
+    .form-group
+      = i.label :credit_card_member_name, 'クレジットカード 会員名（ローマ字）'
+      - if @company.errors.include?(:credit_card_member_name)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:credit_card_member_name).first}
+      = i.text_field :credit_card_member_name, class: 'form-control', :placeholder=>"YAMADA TARO"
+    .form-group
+      = i.label :credit_card_expiry_date, 'クレジットカード 有効期限'
+      - if @company.errors.include?(:credit_card_expiry_date)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:credit_card_expiry_date).first}
+      = i.text_field :credit_card_expiry_date, class: 'form-control', :placeholder=>"11/25"
+    .form-group
+      = i.label :credit_card_number, 'クレジットカード 番号'
+      - if @company.errors.include?(:credit_card_number)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:credit_card_number).first}
+      = i.text_field :credit_card_number, class: 'form-control', :placeholder=>"16桁"
+- if btn.eql?('登録')
+  .card
+    .card-header
+      .d-flex.align-items-center
+        h5.card-title プラン選択
+    .card-body
+      .form-group
+        = i.label :plan_id, 'プラン選択'
+        br/
+        - @plans.each do |p|
+          = i.radio_button :plan_id, p.id
+          | 【
+          = p.name
+          | （プラン料金：¥
+          = p.sales_price.to_s(:delimited)
+          | ）】
+          br/
+      .form-group
+        = i.label :plan_settlement, '決済機能有無'
+        | 【
+        | #{i.radio_button :plan_settlement, '有', checked: true} 有：
+        | #{i.radio_button :plan_settlement, '無'} 無】
+      .form-group
+        = f.check_box :agreement, :as => :boolean, checked:false
+        = link_to '利用規約', new_agency_registration_path, target: :_blank, rel: "noopener noreferrer"
+        | に同意する
+- if btn.eql?('更新')
+  .card
+    .card-header
+      .d-flex.align-items-center
+        h5.card-title プラン情報
+    .card-body
+      .form-group
+        = i.label :plan_id, 'プラン選択'
+        br/
+        - @plans.each do |p|
+          = i.radio_button :plan_id, p.id
+          | 【
+          = p.name
+          | （プラン料金：¥
+          = p.sales_price.to_s(:delimited)
+          | ）】
+          br/
+      .form-group
+        = i.label :plan_settlement, '決済機能有無'
+        | 【
+        | #{i.radio_button :plan_settlement, '有', checked: true} 有：
+        | #{i.radio_button :plan_settlement, '無'} 無】
+

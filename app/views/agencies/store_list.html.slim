@@ -1,0 +1,78 @@
+.sidebar.d-none.d-xl-block
+  .vh-100.row
+    .col-md-2
+      = render partial: 'sidebar'
+    .col-md-10
+      .container
+        h2.mt-3.font-weight-bold.valion-client-color ユーザー管理
+        .card
+          .card-header
+            h5.card-title 条件検索
+          .card-body
+        .card
+          .card-header
+            .d-flex.align-items-center
+              h5.card-title ユーザー一覧
+              .ml-auto.boards__linkBox
+              = link_to 'ユーザー情報CSVダウンロード', agencies_store_list_path(format: :csv), class: 'btn btn-outline-dark'
+          .card-body
+            table.table.table-hover.table-sm
+              thead
+                tr
+                  th.text-nowrap 店舗ID
+                  th.text-nowrap お申込者名
+                  th.text-nowrap 店舗名
+                  th.text-nowrap 店舗TEL
+                  th.text-nowrap 店舗MAIL
+                  th.text-nowrap 進捗ステータス
+                  th.text-nowrap 決済ステータス
+              tbody
+                - @companies.each do |c|
+                  - c.stores.each do |s|
+                    tr
+                      td= c.id
+                      td= s.per_name
+                      td= s.store_name
+                      td= s.store_tel
+                      td= s.store_email
+                      td= select :progress_status, :name, options_for_select(Store.progress_statuses_i18n.invert, selected: s.progress_status), {}, { class: 'js-progress_status form-control', data: { id: s.id } }
+                      td= select :settlement_status, :name, options_for_select(Store.settlement_statuses_i18n.invert, selected: s.settlement_status), {}, { class: 'js-settlement_status form-control', data: { id: s.id } }
+        = paginate @companies
+
+= render partial: 'navibar'
+.d-block.d-xl-none
+  .row
+    .col.mt-5
+      .container.mt-5
+        h2.mt-3.font-weight-bold.valion-client-color ユーザー管理
+        .card
+          .card-header
+            h5.card-title 条件検索
+          .card-body
+        .card
+          .card-header
+            h5.card-title ユーザー一覧
+          .card-body
+            .table-responsive
+              table.table.table-hover.table-sm
+                thead
+                  tr
+                    th.text-nowrap 店舗ID
+                    th.text-nowrap お申込者名
+                    th.text-nowrap 店舗名
+                    th.text-nowrap 店舗TEL
+                    th.text-nowrap 店舗MAIL
+                    th.text-nowrap 進捗ステータス
+                    th.text-nowrap 決済ステータス
+                tbody
+                  - @companies.each do |c|
+                    - c.stores.each do |s|
+                      tr
+                        td= c.id
+                        td= s.per_name
+                        td= s.store_name
+                        td= s.store_tel
+                        td= s.store_email
+                        td= select :progress_status, :name, options_for_select(Store.progress_statuses_i18n.invert, selected: s.progress_status), {}, { class: 'js-progress_status form-control', data: { id: s.id } }
+                        td= select :settlement_status, :name, options_for_select(Store.settlement_statuses_i18n.invert, selected: s.settlement_status), {}, { class: 'js-settlement_status form-control', data: { id: s.id } }
+        = paginate @companies

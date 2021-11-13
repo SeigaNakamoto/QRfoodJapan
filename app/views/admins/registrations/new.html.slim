@@ -1,0 +1,17 @@
+.container
+  .row
+    .card.col-sm-5.mx-auto.my-5
+      .card-body
+        h2.text-center.mb-4 QR FOOD JAPAN<br>for 運営管理
+        h3.mt-1.mb-3.text-center  運営管理者登録
+        = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+          .form-group
+            = f.label :email, "メールアドレス", :class => "form-label"
+            = f.email_field :email, autofocus: true, autocomplete: "email", :class => "form-control"
+          .form-group.mt-1
+            = f.label :password, "パスワード", :class => "form-label"
+            = f.password_field :password, :class => "form-control"
+          .actions
+            = f.submit "サインアップ", :class => "btn btn-block btn-secondary"
+          .mt-3
+            = link_to 'ログイン', new_admin_path, :class => "btn btn-block btn-outline-secondary"

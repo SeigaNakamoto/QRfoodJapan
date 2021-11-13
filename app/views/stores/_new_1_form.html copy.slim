@@ -1,0 +1,122 @@
+- if btn.eql?('更新')
+  .card
+    .card-header
+      .d-flex.align-items-center
+        h5.card-title アプリID・PW
+        - if btn.eql?('更新')
+          .ml-auto.boards__linkBox
+            = f.submit btn, class: 'btn btn-primary'
+    .card-body
+      .form-group
+        = i.label :store_id, 'アプリID'
+        = i.text_field :store_id, class: 'form-control', :placeholder=>""
+      .form-group
+        = i.label :password, 'アプリPW'
+        = i.text_field :password, class: 'form-control', :placeholder=>""
+.card
+  .card-header
+    .d-flex.align-items-center
+      h5.card-title 紹介者情報
+      - if btn.eql?('更新')
+        .ml-auto.boards__linkBox
+          = f.submit btn, class: 'btn btn-primary'
+  .card-body
+    .form-group
+      = i.label :agency_id, '代理店ID'
+      = i.text_field :agency_id, class: 'form-control', :placeholder=>"QXX-XXX"
+    .form-group
+      = i.label :agency_per_name, '代理店担当者名'
+      = i.text_field :agency_per_name, class: 'form-control', :placeholder=>""
+.card
+  .card-header
+    .d-flex.align-items-center
+      h5.card-title 事業者情報
+      - if btn.eql?('更新')
+        .ml-auto.boards__linkBox
+          = f.submit btn, class: 'btn btn-primary'
+  .card-body
+    .form-group
+      = f.label :company_type, '事業者種別'
+      | 【
+      | #{f.radio_button :company_type, '法人', checked: true} 法人：
+      | #{f.radio_button :company_type, '個人事業主'} 個人事業主】
+    hr/
+    .form-group
+      = f.label :corp_name, '<法人のみ> 法人名'
+      = f.text_field :corp_name, class: 'form-control', :placeholder=>"株式会社○○○"
+    .form-group
+      = f.label :corp_postal, '<法人のみ> 登記住所郵便番号'
+      = f.text_field :corp_postal, class: 'form-control', :placeholder=>"XXX-XXXX"
+    .form-group
+      = f.label :corp_add, '<法人のみ> 登記住所'
+      = f.text_field :corp_add, class: 'form-control', :placeholder=>"都道府県市区町村番地建物名"
+    .form-group
+      = f.label :corp_add_kana, '<法人のみ> 登記住所（カナ）'
+      = f.text_field :corp_add_kana, class: 'form-control', :placeholder=>"トドウフケンシクチョウソンバンチタテモノメイ"
+    .form-group
+      = f.label :corp_tel, '<法人のみ> 事業者電話番号'
+      = f.text_field :corp_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+    .form-group
+      = f.label :corp_fax, '<法人のみ> 事業者FAX番号'
+      = f.text_field :corp_fax, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+    .form-group
+      = f.label :corp_num, '<法人のみ> 法人番号'
+      = f.text_field :corp_num, class: 'form-control', :placeholder=>"13桁"
+    .form-group
+      = f.label :corp_date, '<法人のみ> 設立年月日'
+      = f.date_field :corp_date, class: 'form-control'
+    hr/
+    .form-group
+      = f.label :rep_post, '代表者 役職'
+      - if @company.errors.include?(:rep_post)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:rep_post).first}
+      = f.text_field :rep_post, class: 'form-control', :placeholder=>"代表取締役"
+    .form-group
+      = f.label :rep_name, '代表者 氏名'
+      - if @company.errors.include?(:rep_name)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:rep_name).first}
+      = f.text_field :rep_name, class: 'form-control', :placeholder=>"山田太郎"
+    .form-group
+      = f.label :rep_name_kana, '代表者 氏名（カナ）'
+      - if @company.errors.include?(:rep_name_kana)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:rep_name_kana).first}
+      = f.text_field :rep_name_kana, class: 'form-control', :placeholder=>"ヤマダタロウ"
+    .form-group
+      = f.label :rep_postal, '代表者 郵便番号'
+      - if @company.errors.include?(:rep_postal)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:rep_postal).first}
+      = f.text_field :rep_postal, class: 'form-control', :placeholder=>"XXX-XXXX"
+    .form-group
+      = f.label :rep_add, '代表者 住所'
+      - if @company.errors.include?(:rep_add)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:rep_add).first}
+      = f.text_field :rep_add, class: 'form-control', :placeholder=>"都道府県市区町村番地建物名"
+    .form-group
+      = f.label :rep_add_kana, '代表者 住所（カナ）'
+      - if @company.errors.include?(:rep_add_kana)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:rep_add_kana).first}
+      = f.text_field :rep_add_kana, class: 'form-control', :placeholder=>"トドウフケンシクチョウソンバンチタテモノメイ"
+    .form-group
+      = f.label :rep_birthdate, '代表者 生年月日'
+      - if @company.errors.include?(:rep_birthdate)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:rep_birthdate).first}
+      = f.date_field :rep_birthdate, class: 'form-control'
+    .form-group
+      = f.label :rep_tel, '代表者 電話番号'
+      - if @company.errors.include?(:rep_tel)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:rep_tel).first}
+      = f.text_field :rep_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+    .form-group
+      = f.label :rep_email, '代表者 メールアドレス'
+      - if @company.errors.include?(:rep_email)
+        span.error-message
+          | * #{@store.errors.full_messages_for(:rep_email).first}
+      = f.text_field :rep_email, class: 'form-control', :placeholder=>"au/docomo/softbankなどのキャリアアドレス以外"

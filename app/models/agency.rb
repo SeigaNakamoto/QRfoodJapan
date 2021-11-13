@@ -1,0 +1,60 @@
+# == Schema Information
+#
+# Table name: agencies
+#
+#  id                       :bigint           not null, primary key
+#  agency_add               :string(255)      not null
+#  agency_mail              :string(255)      not null
+#  agency_name              :string(255)      not null
+#  agency_postal            :string(255)      not null
+#  agency_rec_name          :string(255)      not null
+#  agency_rec_tel           :string(255)      not null
+#  agency_tel               :string(255)      not null
+#  bank_account_holder_kana :string(255)      not null
+#  bank_account_number      :string(255)      not null
+#  bank_account_type        :string(255)      not null
+#  bank_branch_code         :string(255)      not null
+#  bank_branch_name         :string(255)      not null
+#  bank_code                :string(255)      not null
+#  bank_name                :string(255)      not null
+#  company_type             :string(255)      not null
+#  email                    :string(255)      default(""), not null
+#  encrypted_password       :string(255)      default(""), not null
+#  remember_created_at      :datetime
+#  reset_password_sent_at   :datetime
+#  reset_password_token     :string(255)
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  agency_id                :string(255)      not null
+#  parent_agency_id         :string(255)      default("parent")
+#
+# Indexes
+#
+#  index_agencies_on_email                 (email) UNIQUE
+#  index_agencies_on_reset_password_token  (reset_password_token) UNIQUE
+#
+class Agency < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  validates :company_type, presence: true
+  validates :agency_name, presence: true
+  validates :agency_postal, presence: true
+  validates :agency_add, presence: true
+  validates :agency_rec_name, presence: true
+  VALID_PHONE_REGEX = /\A\d{10}$|^\d{11}\z/
+  validates :agency_rec_tel, presence: true, format: { with: VALID_PHONE_REGEX }
+  validates :agency_tel, presence: true, format: { with: VALID_PHONE_REGEX }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :agency_mail, presence: true, format: { with: VALID_EMAIL_REGEX }
+  validates :bank_name, presence: true
+  validates :bank_code, presence: true, length: { is: 4 }
+  validates :bank_branch_name, presence: true
+  validates :bank_branch_code, presence: true, length: { is: 3 }
+  validates :bank_account_type, presence: true
+  validates :bank_account_number, presence: true, length: { is: 7 }
+  validates :bank_account_holder_kana, presence: true
+     
+end

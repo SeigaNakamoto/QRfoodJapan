@@ -1,0 +1,109 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        operator_lname: 姓
+        operator_fname: 名
+        operator_lname_kana: 姓（カナ）
+        operator_fname_kana: 名（カナ）
+        password: パスワード
+        password_confirmation: パスワード（確認）
+
+      agency:
+        company_type: 事業者種別
+        agency_name: 代理店名
+        agency_postal: 代理店郵便番号
+        agency_add: 代理店住所
+        agency_rec_name: 窓口担当者名
+        agency_rec_tel: 代理店電話番号（窓口担当）
+        agency_tel: 代理店電話番号
+        agency_mail: 代理店メールアドレス
+        bank_name: 金融機関名
+        bank_code: 金融機関コード
+        bank_branch_name: 支店名
+        bank_branch_code: 支店コード
+        bank_account_type: 口座種別
+        bank_account_number: 口座番号
+        bank_account_holder_kana: 口座名義（カナ）
+
+      company:
+        company_type: 事業者種別
+        corp_name: 法人名
+        corp_postal: 登記住所郵便番号
+        corp_add: 登記住所
+        corp_add_kana: 登記住所（カナ）
+        corp_tel: 事業者電話番号
+        corp_fax: 事業者FAX番号
+        corp_num: 法人番号
+        corp_date: 設立年月日
+        rep_post: 代表者 役職
+        rep_name: 代表者 氏名
+        rep_name_kana: 代表者 氏名（カナ）
+        rep_postal: 代表者 郵便番号
+        rep_add: 代表者 住所
+        rep_add_kana: 代表者 住所（カナ）
+        rep_birthdate: 代表者 生年月日
+        rep_tel: 代表者 電話番号
+        rep_email: 代表者 メールアドレス
+
+      store:
+        agency_id": 代理店ID
+        agency_per_name: 代理店担当者名
+        store_name: 店舗名
+        store_name_kana: 店舗名（カナ）
+        alphabet_notation: アルファベット表記
+        store_postal: 店舗郵便番号
+        store_add: 店舗住所
+        store_add_kana: 店舗住所（カナ）
+        store_tel: 店舗電話番号
+        store_fax: 店舗FAX番号
+        store_email: 店舗メールアドレス
+        per_post: 担当者役職
+        per_name: 担当者名
+        per_name_kana: 担当者名（カナ）
+        per_tel: 担当者電話番号
+        per_email: 担当者メールアドレス
+        time_zone_to_contact: 連絡取りやすい時間帯
+        genre: ジャンル
+        business_hours: 営業時間
+        regular_holiday: 定休日
+        hp: HP
+        ave_price: 平均価格帯
+        reservation: 予約可否
+        table_cnt: テーブル数
+        counter_cnt: カウンター数
+        menu_cnt: メニュー数
+        menu_photo_cnt: メニュー個別写真数
+        bank_name: 金融機関名
+        bank_code: 金融機関コード
+        bank_branch_name: 支店名
+        bank_branch_code: 支店コード
+        bank_account_type: 口座種別
+        bank_account_number: 口座番号
+        bank_account_holder_kana: 口座名義（カナ）
+        credit_card_member_name: クレジットカード（名義）
+        credit_card_expiry_date: クレジットカード（有効期限）
+        credit_card_number: クレジットカード（番号）
+        plan_settlement: 決済機能有無
+        agreement: 利用規約とプライバシーポリシー
+
+  views:
+    pagination:
+      first: 最初
+      last: 最後
+      previous: 前
+      next: 次
+      truncate: ...
+
+  enums:
+    store:
+      progress_status:
+        photo_waiting: 写真納品待ち
+        univapay_waiting: UnivaPay審査待ち
+        no_problem: 問題なし
+
+      settlement_status:
+        no_problem: 問題なし
+        delinquent: 滞納中
+        cancellation_reservation: 解約予約
+        canceled: 解約済み

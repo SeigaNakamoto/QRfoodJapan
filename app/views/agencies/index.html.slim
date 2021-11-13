@@ -1,0 +1,182 @@
+.sidebar.d-none.d-xl-block
+  .vh-100.row
+    .col-md-2
+      = render partial: 'sidebar'
+    .col-md-10
+      .container
+        .card
+          .card-body
+            .badge.badge-pil.badge-secondary.p-2
+              |通知一覧
+            .py-2
+              | メッセージ本文
+        .card
+          .card-body
+            .d-flex.justify-content-between
+              .badge.badge-pil.badge-secondary.p-2
+                | 現在の報酬詳細
+              / .badge.badge-pil.badge-secondary.p-2
+              /   | 過去の報酬一覧
+            .d-flex
+              - if @agency.parent_agency_id.eql?('parent')
+                .p-2.mb-1
+                  | 累計報酬金額
+                  .fs-6 
+                    | ¥
+                    span.fs-4
+                      = (@st_total + @sp_total + @special_reward).to_s(:delimited)
+                    | （税込）
+              .p-2.mb-1
+                | 今月（現時点まで）
+                .fs-6 
+                  | ¥
+                  span.fs-4 
+                    = (@st_total + @sp_total).to_s(:delimited)
+                  | （税込）
+              .p-2.mb-1
+                | 年間概算予想
+                .fs-6 
+                  | ¥
+                  span.fs-4 
+                    = ((@st_total + @sp_total + @special_reward) * 12).to_s(:delimited)
+                  | （税込）
+        .card
+          .card-body
+            .badge.badge-pil.badge-secondary.p-2
+              | 報酬形態内訳
+            .d-flex
+              .p-2.mb-1
+                | [ストック報酬益]
+                .fs-6.text-center
+                  = @st_cnt
+                  | 件
+              .p-2.mb-1
+                | 今月（現時点まで）
+                .fs-6 
+                  | ¥
+                  span.fs-4 
+                    = @st_total.to_s(:delimited)
+                  | （税込）
+              .p-2.mb-1
+                | [スポット報酬益]
+                .fs-6.text-center
+                  = @sp_cnt
+                  | 件
+              .p-2.mb-1
+                | 今月（現時点まで）
+                .fs-6 
+                  | ¥
+                  span.fs-4 
+                    = @sp_total.to_s(:delimited)
+        - if @agency.parent_agency_id.eql?('parent')
+          .card
+            .card-body
+              .badge.badge-pil.badge-secondary.p-2
+                | 特別代理店報酬詳細
+              .d-flex
+                .p-2.mb-1
+                  | 特別代理店報酬対象件数
+                  .fs-6.text-center
+                    = @special_reward_cnt 
+                    | 件
+                .p-2.mb-1
+                  | 特別代理店報酬
+                  .fs-6 
+                    | ¥
+                    span.fs-4 
+                      = @special_reward.to_s(:delimited)
+                    | （税込）
+
+= render partial: 'navibar'
+.d-block.d-xl-none
+  .row
+    .col.mt-5
+      .container.mt-5
+        .card
+          .card-body
+            .badge.badge-pil.badge-secondary.p-2
+              |通知一覧
+            .py-2
+              | メッセージ本文
+        .card
+          .card-body
+            .d-flex.justify-content-between
+              .badge.badge-pil.badge-secondary.p-2
+                | 現在の報酬詳細
+              / .badge.badge-pil.badge-secondary.p-2
+              /   | 過去の報酬一覧
+            .d-flex
+              - if @agency.parent_agency_id.eql?('parent')
+                .p-2.mb-1
+                  | 累計報酬金額
+                  .fs-6
+                    | ¥
+                    span.fs-4 
+                      = (@st_total + @sp_total + @special_reward).to_s(:delimited)
+                    | (税込)
+            .d-flex
+              .p-2.mb-1
+                | 今月（現時点まで）
+                .fs-6
+                  | ¥
+                  span.fs-4 
+                    = (@st_total + @sp_total).to_s(:delimited)
+                  | (税込)
+            .d-flex
+              .p-2.mb-1
+                | 年間概算予想
+                .fs-6 
+                  | ¥
+                  span.fs-4 
+                    = ((@st_total + @sp_total + @special_reward) * 12).to_s(:delimited)
+                  | (税込)
+        .card
+          .card-body
+            - stock = Store.where(agency_id: @agency, plan_id: (1..3)).count
+            - spot = 0
+            .badge.badge-pil.badge-secondary.p-2
+              | 報酬形態内訳
+            .d-flex
+              .p-2.mb-1
+                | [ストック報酬益]
+                .fs-6.text-center
+                  = @st_cnt
+                  | 件
+              .p-2.mb-1
+                | 今月（現時点まで）
+                .fs-6 
+                  | ¥
+                  span.fs-4 
+                    = @st_total.to_s(:delimited)
+                  | (税込)
+            .d-flex
+              .p-2.mb-1
+                | [スポット報酬益]
+                .fs-6.text-center
+                  = @sp_cnt
+                  | 件
+              .p-2.mb-1
+                | 今月（現時点まで）
+                .fs-6 
+                  | ¥
+                  span.fs-4 
+                    = @sp_total.to_s(:delimited)
+                  | (税込)
+        - if @agency.parent_agency_id.eql?('parent')
+          .card
+            .card-body
+              .badge.badge-pil.badge-secondary.p-2
+                | 特別代理店報酬詳細
+              .d-flex
+                .p-2.mb-1
+                  | 傘下代理店対象件数
+                  .fs-6.text-center
+                    = @special_reward_cnt 
+                    | 件
+                .p-2.mb-1
+                  | 特別代理店報酬
+                  .fs-6 
+                    | ¥
+                    span.fs-4 
+                      = @special_reward.to_s(:delimited)
+                    | (税込)
