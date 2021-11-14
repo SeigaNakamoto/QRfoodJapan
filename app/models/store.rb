@@ -5,7 +5,7 @@
 #  id                       :bigint           not null, primary key
 #  agency_per_name          :string(255)
 #  alphabet_notation        :string(255)
-#  ave_price                :integer          default(0), not null
+#  ave_price                :integer          not null
 #  bank_account_holder_kana :string(255)      not null
 #  bank_account_number      :string(255)      not null
 #  bank_account_type        :string(255)      not null
@@ -14,14 +14,14 @@
 #  bank_code                :string(255)      not null
 #  bank_name                :string(255)      not null
 #  business_hours           :string(255)      not null
-#  counter_cnt              :integer          default(0), not null
+#  counter_cnt              :integer          not null
 #  credit_card_expiry_date  :string(255)      not null
 #  credit_card_member_name  :string(255)      not null
 #  credit_card_number       :string(255)      not null
 #  genre                    :string(255)      not null
 #  hp                       :text(65535)
-#  menu_cnt                 :integer          default(0), not null
-#  menu_photo_cnt           :integer          default(0), not null
+#  menu_cnt                 :integer          not null
+#  menu_photo_cnt           :integer          not null
 #  password_digest          :string(255)
 #  per_email                :string(255)      not null
 #  per_name                 :string(255)      not null
@@ -29,36 +29,38 @@
 #  per_post                 :string(255)      not null
 #  per_tel                  :string(255)      not null
 #  plan_settlement          :string(255)      not null
-#  progress_status          :integer          default("写真納品待ち"), not null
+#  progress_status          :integer          default("photo_waiting"), not null
 #  regular_holiday          :string(255)      not null
 #  reservation              :string(255)      not null
-#  settlement_status        :integer          default(0), not null
+#  settlement_status        :integer          default("no_problem"), not null
 #  store_add                :string(255)      not null
 #  store_add_kana           :string(255)      not null
+#  store_code               :string(255)
 #  store_email              :string(255)
 #  store_fax                :string(255)
 #  store_name               :string(255)      not null
 #  store_name_kana          :string(255)      not null
 #  store_postal             :string(255)      not null
 #  store_tel                :string(255)      not null
-#  table_cnt                :integer          default(0), not null
+#  string                   :string(255)      not null
+#  table_cnt                :integer          not null
 #  time_zone_to_contact     :string(255)      not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :string(255)
-#  app_id                   :string(255)
 #  company_id               :bigint           not null
 #  plan_id                  :bigint           not null
 #  progress_id              :bigint           default(1), not null
 #  settlement_id            :bigint           default(1), not null
+#  store_id                 :string(255)
 #
 # Indexes
 #
-#  index_stores_on_app_id         (app_id) UNIQUE
 #  index_stores_on_company_id     (company_id)
 #  index_stores_on_plan_id        (plan_id)
 #  index_stores_on_progress_id    (progress_id)
 #  index_stores_on_settlement_id  (settlement_id)
+#  index_stores_on_store_code     (store_code) UNIQUE
 #
 # Foreign Keys
 #

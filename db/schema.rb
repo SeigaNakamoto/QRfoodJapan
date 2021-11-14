@@ -101,7 +101,8 @@ ActiveRecord::Schema.define(version: 2021_11_12_200631) do
   end
 
   create_table "stores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "app_id"
+    t.string "store_id"
+    t.string "store_code"
     t.string "store_name", null: false
     t.string "store_name_kana", null: false
     t.string "alphabet_notation"
@@ -111,6 +112,7 @@ ActiveRecord::Schema.define(version: 2021_11_12_200631) do
     t.string "store_fax"
     t.string "store_email"
     t.string "store_postal", null: false
+    t.string "string", null: false
     t.string "per_post", null: false
     t.string "per_name", null: false
     t.string "per_name_kana", null: false
@@ -121,12 +123,12 @@ ActiveRecord::Schema.define(version: 2021_11_12_200631) do
     t.string "business_hours", null: false
     t.string "regular_holiday", null: false
     t.text "hp"
-    t.integer "ave_price", default: 0, null: false
+    t.integer "ave_price", null: false
     t.string "reservation", null: false
-    t.integer "table_cnt", default: 0, null: false
-    t.integer "counter_cnt", default: 0, null: false
-    t.integer "menu_cnt", default: 0, null: false
-    t.integer "menu_photo_cnt", default: 0, null: false
+    t.integer "table_cnt", null: false
+    t.integer "counter_cnt", null: false
+    t.integer "menu_cnt", null: false
+    t.integer "menu_photo_cnt", null: false
     t.string "bank_name", null: false
     t.string "bank_code", null: false
     t.string "bank_branch_name", null: false
@@ -149,11 +151,11 @@ ActiveRecord::Schema.define(version: 2021_11_12_200631) do
     t.string "agency_id"
     t.integer "progress_status", default: 0, null: false
     t.integer "settlement_status", default: 0, null: false
-    t.index ["app_id"], name: "index_stores_on_app_id", unique: true
     t.index ["company_id"], name: "index_stores_on_company_id"
     t.index ["plan_id"], name: "index_stores_on_plan_id"
     t.index ["progress_id"], name: "index_stores_on_progress_id"
     t.index ["settlement_id"], name: "index_stores_on_settlement_id"
+    t.index ["store_code"], name: "index_stores_on_store_code", unique: true
   end
 
   add_foreign_key "stores", "companies"
