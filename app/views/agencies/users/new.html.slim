@@ -1,0 +1,16 @@
+.row
+  .col-md-10.mx-auto
+    .d-flex.align-items-center
+      h1 QRfood加盟店登録申し込み
+    - if flash[:notice]
+      .alert.alert-primary= flash[:notice]
+    - if @company.errors.any? || @store.errors.any?
+      .alert.alert-danger 入力内容をご確認ください。
+    = form_with( model: @company, url: companies_path) do |c|
+      = c.fields_for @store do |s| 
+        = render partial: 'new_1', locals: {c: c, s: s}
+        = render partial: 'new_2', locals: {s: s}
+        = render partial: 'new_3', locals: {s: s}
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = c.submit '登録', class: 'btn btn-primary'

@@ -1,0 +1,18 @@
+.row
+  .col
+    .container
+      .card 
+        .card-body
+          .mx-auto
+            = image_tag "plan.png", width: '80%', height: 'auto'
+        .card-body
+          label
+            form action="https://credit.j-payment.co.jp/gateway/payform.aspx" method="post" 
+              input name="aid" type="hidden" value="121799"
+              input name="pt" type="hidden" value="1"
+              td class="“table-b-td-a”"  プラン選択
+              select name="iid" 
+                option value="QRLightPlan"  ライトプラン： 14,800円
+                option value="QRStandardPlan"  スタンダードプラン： 19,800円
+                option value="QRPremiumPlan"  プレミアムプラン： 27,800円
+                input name="submit" type="submit" value="登録"
