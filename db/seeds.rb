@@ -13,6 +13,54 @@ if Rails.env == 'production'
     { id: 2, name: "スタンダードプラン" , sales_price: 19800, reward_price: 6000, reward_style: "ストック型（毎月）"},
     { id: 3, name: "プレミアムプラン" , sales_price: 27800, reward_price: 10000, reward_style: "ストック型（毎月）"},
   ])
+
+  Agency.create(
+    id: 1,
+    email: "agency.1@test.com",
+    password: "12345678",
+    parent_agency_id: "parent",
+    agency_id: "Q01-000",
+    company_type: "法人",
+    agency_name: "親代理店1",
+    agency_postal: "100-0005",
+    agency_add: "東京都千代田区丸の内1丁目",
+    agency_tel: "05020161600",
+    agency_rec_name: "山田太郎",
+    agency_rec_tel: "05020161601",
+    agency_mail: "dairiten.1@test.com",
+    bank_name: "三井住友銀行",
+    bank_code: "0009",
+    bank_branch_name: "本店",
+    bank_branch_code: "001",
+    bank_account_type: "普通預金",
+    bank_account_number: "1234567",
+    bank_account_holder_kana: "ヤマダ　タロウ"
+  )
+
+  (1..50).each do |i|
+    Agency.create(
+      id: i + 1,
+      email: "agency.1_#{i}@test.com",
+      password: "12345678",
+      parent_agency_id: "Q01-000",
+      agency_id: "Q01-#{sprintf("%03d", i)}",
+      company_type: "法人",
+      agency_name: "傘下代理店#{i}",
+      agency_postal: "100-0005",
+      agency_add: "東京都千代田区丸の内1丁目",
+      agency_tel: "05020161600",
+      agency_rec_name: "山田太郎",
+      agency_rec_tel: "05020161601",
+      agency_mail: "dairiten.1_#{i}@test.com",
+      bank_name: "三井住友銀行",
+      bank_code: "0009",
+      bank_branch_name: "本店",
+      bank_branch_code: "001",
+      bank_account_type: "普通預金",
+      bank_account_number: "1234567",
+      bank_account_holder_kana: "ヤマダ　タロウ"
+    )
+  end
 end
 
 # 開発環境用の処理
