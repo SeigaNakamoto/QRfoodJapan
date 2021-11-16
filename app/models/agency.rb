@@ -18,7 +18,6 @@
 #  bank_code                :string(255)      not null
 #  bank_name                :string(255)      not null
 #  company_type             :string(255)      not null
-#  email                    :string(255)      default(""), not null
 #  encrypted_password       :string(255)      default(""), not null
 #  remember_created_at      :datetime
 #  reset_password_sent_at   :datetime
@@ -30,15 +29,27 @@
 #
 # Indexes
 #
-#  index_agencies_on_email                 (email) UNIQUE
 #  index_agencies_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class Agency < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :authentication_keys => [:agency_id]
 
+  # No use email
+  def email_required?
+    false
+  end
+
+  def email_changed?
+    false
+  end
+
+  def will_save_change_to_email?
+    false
+  end
+
+  # Validation
   validates :company_type, presence: true
   validates :agency_name, presence: true
   validates :agency_postal, presence: true

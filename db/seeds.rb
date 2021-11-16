@@ -64,6 +64,7 @@ if Rails.env == 'production'
 
   (1..100).each do |i|
     @company = Company.create(
+      id: i,
       company_type: "法人",
       corp_name: "株式会社QRfood(#{i})",
       corp_postal: "100-0005",
@@ -84,6 +85,7 @@ if Rails.env == 'production'
       rep_email: "tanakataro.#{i}@test.com"
     )
     Store.create(
+      id: i,
       agency_id: "Q01-#{sprintf("%03d", rand(0..9))}",
       agency_per_name: "山田太郎",
       company_id: @company.id,
