@@ -16,7 +16,6 @@ if Rails.env == 'production'
 
   Agency.create(
     id: 1,
-    email: "agency.1@test.com",
     password: "12345678",
     parent_agency_id: "parent",
     agency_id: "Q01-000",
@@ -40,7 +39,6 @@ if Rails.env == 'production'
   (1..50).each do |i|
     Agency.create(
       id: i + 1,
-      email: "agency.1_#{i}@test.com",
       password: "12345678",
       parent_agency_id: "Q01-000",
       agency_id: "Q01-#{sprintf("%03d", i)}",
@@ -139,7 +137,6 @@ if Rails.env == 'development'
   ])
 
   Agency.create(
-    email: "agency.1@test.com",
     password: "12345678",
     parent_agency_id: "parent",
     agency_id: "Q01-000",
@@ -162,7 +159,6 @@ if Rails.env == 'development'
 
   (1..50).each do |i|
     Agency.create(
-      email: "agency.1_#{i}@test.com",
       password: "12345678",
       parent_agency_id: "Q01-000",
       agency_id: "Q01-#{sprintf("%03d", i)}",
