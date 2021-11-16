@@ -18,13 +18,14 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  # 運営側システム
-  get "admins/agencies" => "admins#agencies"
-  get "admins/stores" => "admins#stores"
-
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # 追加ルーティング
-  # 代理店
+
+  # 運営側システム
+  get "admins/store_list" => "admins#store_list"
+  get "admins/agency_list" => "admins#agency_list"
+
+  # 代理店側システム
   get  "agencies/projects"  => "agencies#projects"
   get  "agencies/store_list"  => "agencies#store_list"
   get  "agencies/agency_list"  => "agencies#agency_list"
@@ -36,11 +37,6 @@ Rails.application.routes.draw do
   get  "users/termsofservice" => "agencies/users#termsofservice"
   get  "users/privacypolicy" => "agencies/users#privacypolicy"
   
-
-  # 利用規約
-
-  
-  root to: 'home#index'
   resources :companies
   resources :agencies
   resources :admins

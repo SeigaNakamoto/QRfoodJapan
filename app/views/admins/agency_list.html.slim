@@ -1,0 +1,75 @@
+.sidebar.d-none.d-xl-block
+  .row
+    .col-md-2
+      = render partial: 'sidebar'
+    .col-md-10 
+      .container
+        h2.mt-3.font-weight-bold.valion-client-color 代理店管理
+        .card 
+          .card-header
+            .d-flex.align-items-center
+              .me-auto.p-2
+                h5.card-title 代理店一覧
+              = link_to '代理店情報csvダウンロード', admins_agency_list_path(format: :csv), class: 'btn btn-outline-dark'
+              = link_to '新規登録', new_agency_registration_path, target: :_blank, rel: "noopener noreferrer", class: 'btn btn-outline-dark'
+          .card-body
+            table.table.table-hover.table-sm
+              thead
+                tr
+                  th.text-nowrap 代理店ID
+                  th.text-nowrap 代理店名
+                  th.text-nowrap 代理店TEL
+                  th.text-nowrap 代理店MAIL
+                  th.text-nowrap プラン別件数
+                  th 
+              tbody
+                - @agencies.each do |a|
+                  tr
+                    td= a.agency_id
+                    td= a.agency_name
+                    td= a.agency_tel
+                    td= a.agency_mail
+                    td.plan
+                      - @plans.each do |p|
+                        = p.name
+                        | ：#{Store.where(agency_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
+                        br/
+                    td= link_to '詳細', admins_agency_list_path(a.id), class: 'btn btn-outline-dark'
+          = paginate @agencies
+= render partial: 'navibar'
+.d-block.d-xl-none
+  .row
+    .col.mt-5
+      .container.mt-5
+        h2.mt-3.font-weight-bold.valion-client-color 代理店管理
+        .card 
+          .card-header
+            .align-items-center
+              h5.card-title 代理店一覧
+              = link_to '代理店情報csvダウンロード', admins_agency_list_path(format: :csv), class: 'btn btn-outline-dark'
+              = link_to '新規登録', new_agency_registration_path, target: :_blank, rel: "noopener noreferrer", class: 'btn btn-outline-dark'
+          .card-body
+            .table-responsive
+              table.table.table-hover.table-sm
+                thead
+                  tr
+                    th.text-nowrap 代理店ID
+                    th.text-nowrap 代理店名
+                    th.text-nowrap 代理店TEL
+                    th.text-nowrap 代理店MAIL
+                    th.text-nowrap プラン別件数
+                    th 
+                tbody
+                  - @agencies.each do |a|
+                    tr
+                      td= a.agency_id
+                      td= a.agency_name
+                      td= a.agency_tel
+                      td= a.agency_mail
+                      td.plan
+                        - @plans.each do |p|
+                          = p.name
+                          | ：#{Store.where(agency_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
+                          br/
+                      td= link_to '詳細', admins_agency_list_path(a.id), class: 'btn btn-outline-dark'
+          = paginate @agencies

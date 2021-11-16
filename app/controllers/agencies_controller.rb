@@ -1,5 +1,5 @@
 class AgenciesController < ApplicationController
-  before_action :authenticate_agency!
+  before_action :authenticate_agency!, only: %i[index projects store_list agency_list]
   before_action :set_agency
 
 
@@ -53,9 +53,6 @@ class AgenciesController < ApplicationController
   def agency_list
     @agencies = Agency.where(parent_agency_id: @agency.agency_id).page(params[:page]).per(30)
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
-  end
-  
-  def payment
   end
   
   private

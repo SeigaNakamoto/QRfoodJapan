@@ -51,7 +51,9 @@
         /   .card-body
         .card
           .card-header
-            h5.card-title ユーザー一覧
+            .align-items-center
+              h5.card-title ユーザー一覧
+              = link_to 'ユーザー情報CSVダウンロード', agencies_store_list_path(format: :csv), class: 'btn btn-outline-dark'
           .card-body
             .table-responsive
               table.table.table-hover.table-sm

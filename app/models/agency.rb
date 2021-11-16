@@ -67,5 +67,5 @@ class Agency < ApplicationRecord
   validates :bank_account_type, presence: true
   validates :bank_account_number, presence: true, length: { is: 7 }
   validates :bank_account_holder_kana, presence: true
-     
+
 end

@@ -8,6 +8,40 @@ class AdminsController < ApplicationController
     @agencies = Agency.page(params[:page])
     @plans = Plan.all
 
+  end
+  
+  def new
+  end
+  
+  def show
+  end
+  
+  def edit
+  end
+  
+  def destroy
+  end
+  
+  def store_list
+    @companies = Company.joins(:stores).page(params[:page]).per(30)
+    @plans = Plan.all
+
+    @companiescsv = Company.joins(:stores).all
+    respond_to do |format|
+      format.html
+      format.csv do |csv|
+        send_companies_csv(@companiescsv)
+      end
+    end
+  
+    # @q = Agency.ransack(params[:q])
+    # @agencies = @q.result.includes(:user).page(params[:page]).order("created_at desc")
+  end
+  
+  def agency_list
+    @agencies = Agency.page(params[:page]).per(30)
+    @plans = Plan.all
+
     @agenciescsv = Agency.all
     respond_to do |format|
       format.html
@@ -15,30 +49,9 @@ class AdminsController < ApplicationController
         send_agencies_csv(@agenciescsv)
       end
     end
-
-    @q = Agency.ransack(params[:q])
-    @agencies = @q.result.includes(:user).page(params[:page]).order("created_at desc")
-  end
-
-  def new
-  end
-
-  def show
-  end
-
-  def edit
-  end
-
-  def destroy
-  end
-
-  def agencies
-    @agencies = Agency.page(params[:page])
-    @plans = Plan.all
-  end
-
-  def stores
-    @companies = Company.joins(:stores).all
+  
+    # @q = Agency.ransack(params[:q])
+    # @agencies = @q.result.includes(:user).page(params[:page]).order("created_at desc")
   end
 
   private
@@ -68,5 +81,37 @@ class AdminsController < ApplicationController
       end
     end
     send_data(csv_data, filename: "代理店一覧.csv")
+  end
+
+  def send_companies_csv(companies)
+    csv_data = CSV.generate do |csv|
+      column_names = %w(店舗ID 事業者名 店舗名 店舗TEL 店舗MAIL 代理店ID 代理店担当者名 申込日 進捗ステータス 決済ステータス 金融機関名 金融機関コード 支店名 支店コード 口座種別 口座名義（カナ） 口座番号)
+      csv << column_names
+      companies.each do |company|
+        company.stores.each do |store|
+          column_values = [
+            store.id,
+            company.corp_name,
+            store.store_name,
+            store.store_tel,
+            store.store_email,
+            store.agency_id,
+            store.agency_per_name,
+            store.created_at.to_s(:datetime_jp_Ymd),
+            store.progress_status,
+            store.settlement_status,
+            store.bank_name,
+            store.bank_code,
+            store.bank_branch_name,
+            store.bank_branch_code,
+            store.bank_account_type,
+            store.bank_account_number,
+            store.bank_account_holder_kana
+          ]
+          csv << column_values
+        end
+      end
+    end
+    send_data(csv_data, filename: "ユーザー一覧.csv")
   end
 end

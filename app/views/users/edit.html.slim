@@ -1,0 +1,33 @@
+.sidebar.d-none.d-xl-block
+  .row
+    .col-md-2
+      = render partial: 'admins/sidebar'
+    .col-md-10 
+      .container
+        .d-flex.align-items-center
+          h1 ユーザー詳細確認・更新
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_store_list_path, class: 'btn btn-outline-dark'       
+
+        - if flash[:notice]
+          .alert.alert-primary= flash[:notice]
+        - if @company.errors.any? || @store.errors.any?
+          .alert.alert-danger 入力内容をご確認ください。
+
+        = form_with( model: @company, url: users_path) do |c|
+          = render partial: 'new_1', locals: {c: c}
+          = c.fields_for @store do |s| 
+            = render partial: 'new_2', locals: {s: s}
+            = render partial: 'new_3', locals: {s: s}
+        = form_with( model: @company, url: stores_path) do ||
+          = f.fields_for :store do |i|
+            = render partial: 'new_1_form', locals: { f: f, i: i, btn: '更新'}
+            = render partial: 'new_2_form', locals: { f: f, i: i, btn: '更新'}
+            = render partial: 'new_3_form', locals: { f: f, i: i, btn: '更新'}        
+
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_stores_path, class: 'btn btn-outline-dark'
+            .d-flex.align-items-center
+              .ml-auto.boards__linkBox
+                = c.submit '登録', class: 'btn btn-primary'
