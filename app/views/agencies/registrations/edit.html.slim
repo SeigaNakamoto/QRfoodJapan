@@ -6,7 +6,7 @@
       .container
         - if flash[:notice]
           .alert.alert-primary= flash[:notice]
-        = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
           .form-group.text-right
             = f.submit "お客様情報を更新", class: "btn btn-dark"
           .card

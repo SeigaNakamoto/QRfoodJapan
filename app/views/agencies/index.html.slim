@@ -4,6 +4,9 @@
       = render partial: 'sidebar'
     .col-md-10
       .container
+        .py-2
+          - if flash[:notice]
+            .alert.alert-primary= flash[:notice]
         .card
           .card-body
             .badge.badge-pil.badge-secondary.p-2
@@ -92,6 +95,9 @@
   .row
     .col.mt-5
       .container.mt-5
+        .py-2
+          - if flash[:notice]
+            .alert.alert-primary= flash[:notice]
         .card
           .card-body
             .badge.badge-pil.badge-secondary.p-2
