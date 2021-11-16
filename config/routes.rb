@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     passwords:     'agencies/passwords',
     registrations: 'agencies/registrations'
   }
+
   # メールの送受信確認
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
@@ -28,9 +29,15 @@ Rails.application.routes.draw do
   get  "agencies/store_list"  => "agencies#store_list"
   get  "agencies/agency_list"  => "agencies#agency_list"
   get  "agencies/payment"  => "agencies#payment"
+  
+  # QRfoodサービスお申込フォーム
+  resources :users, module: 'agencies', only: [:new, :create]
+  get  "users/payment"  => "agencies/users#payment"
+  get  "users/termsofservice" => "agencies/users#termsofservice"
+  get  "users/privacypolicy" => "agencies/users#privacypolicy"
+  
+
   # 利用規約
-  get  "companies/termsofservice" => "companies#termsofservice"
-  get  "companies/privacypolicy" => "companies#privacypolicy"
 
   
   root to: 'home#index'

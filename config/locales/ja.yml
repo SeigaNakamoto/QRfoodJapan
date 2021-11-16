@@ -81,9 +81,6 @@ ja:
         bank_account_type: 口座種別
         bank_account_number: 口座番号
         bank_account_holder_kana: 口座名義（カナ）
-        credit_card_member_name: クレジットカード（名義）
-        credit_card_expiry_date: クレジットカード（有効期限）
-        credit_card_number: クレジットカード（番号）
         plan_settlement: 決済機能有無
         agreement: 利用規約とプライバシーポリシー
 

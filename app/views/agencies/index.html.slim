@@ -18,14 +18,14 @@
               / .badge.badge-pil.badge-secondary.p-2
               /   | 過去の報酬一覧
             .d-flex
-              - if @agency.parent_agency_id.eql?('parent')
-                .p-2.mb-1
-                  | 累計報酬金額
-                  .fs-6 
-                    | ¥
-                    span.fs-4
-                      = (@st_total + @sp_total + @special_reward).to_s(:delimited)
-                    | （税込）
+              / - if @agency.parent_agency_id.eql?('parent')
+                / .p-2.mb-1
+                /   | 累計報酬金額
+                /   .fs-6 
+                /     | ¥
+                /     span.fs-4
+                /       = (@st_total + @sp_total + @special_reward).to_s(:delimited)
+                /     | （税込）
               .p-2.mb-1
                 | 今月（現時点まで）
                 .fs-6 
@@ -34,7 +34,7 @@
                     = (@st_total + @sp_total).to_s(:delimited)
                   | （税込）
               .p-2.mb-1
-                | 年間概算予想
+                | 年間報酬
                 .fs-6 
                   | ¥
                   span.fs-4 
@@ -57,17 +57,17 @@
                   span.fs-4 
                     = @st_total.to_s(:delimited)
                   | （税込）
-              .p-2.mb-1
-                | [スポット報酬益]
-                .fs-6.text-center
-                  = @sp_cnt
-                  | 件
-              .p-2.mb-1
-                | 今月（現時点まで）
-                .fs-6 
-                  | ¥
-                  span.fs-4 
-                    = @sp_total.to_s(:delimited)
+              / .p-2.mb-1
+              /   | [スポット報酬益]
+              /   .fs-6.text-center
+              /     = @sp_cnt
+              /     | 件
+              / .p-2.mb-1
+              /   | 今月（現時点まで）
+              /   .fs-6 
+              /     | ¥
+              /     span.fs-4 
+              /       = @sp_total.to_s(:delimited)
         - if @agency.parent_agency_id.eql?('parent')
           .card
             .card-body
@@ -105,15 +105,15 @@
                 | 現在の報酬詳細
               / .badge.badge-pil.badge-secondary.p-2
               /   | 過去の報酬一覧
-            .d-flex
-              - if @agency.parent_agency_id.eql?('parent')
-                .p-2.mb-1
-                  | 累計報酬金額
-                  .fs-6
-                    | ¥
-                    span.fs-4 
-                      = (@st_total + @sp_total + @special_reward).to_s(:delimited)
-                    | (税込)
+            / .d-flex
+            /   - if @agency.parent_agency_id.eql?('parent')
+                / .p-2.mb-1
+                /   | 累計報酬金額
+                /   .fs-6
+                /     | ¥
+                /     span.fs-4 
+                /       = (@st_total + @sp_total + @special_reward).to_s(:delimited)
+                /     | (税込)
             .d-flex
               .p-2.mb-1
                 | 今月（現時点まで）
@@ -149,19 +149,19 @@
                   span.fs-4 
                     = @st_total.to_s(:delimited)
                   | (税込)
-            .d-flex
-              .p-2.mb-1
-                | [スポット報酬益]
-                .fs-6.text-center
-                  = @sp_cnt
-                  | 件
-              .p-2.mb-1
-                | 今月（現時点まで）
-                .fs-6 
-                  | ¥
-                  span.fs-4 
-                    = @sp_total.to_s(:delimited)
-                  | (税込)
+            / .d-flex
+            /   .p-2.mb-1
+            /     | [スポット報酬益]
+            /     .fs-6.text-center
+            /       = @sp_cnt
+            /       | 件
+            /   .p-2.mb-1
+            /     | 今月（現時点まで）
+            /     .fs-6 
+            /       | ¥
+            /       span.fs-4 
+            /         = @sp_total.to_s(:delimited)
+            /       | (税込)
         - if @agency.parent_agency_id.eql?('parent')
           .card
             .card-body

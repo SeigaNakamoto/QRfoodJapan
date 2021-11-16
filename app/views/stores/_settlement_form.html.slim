@@ -1,4 +1,0 @@
-= form_tag admins_stores_path, method: :get do
-  = select_tag :settlement_id,\
-    options_from_collection_for_select(Settlement.all, :id, :name, params[:settlement_id]),\
-    { prompt: '< 選択 >', class: 'form-control', onchange: 'submit(this.form);' }

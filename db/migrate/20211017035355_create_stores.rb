@@ -11,7 +11,7 @@ class CreateStores < ActiveRecord::Migration[6.1]
       t.string :store_tel, null: false
       t.string :store_fax
       t.string :store_email
-      t.string :store_postal, :string, null: false
+      t.string :store_postal, null: false
       t.string :per_post, null: false
       t.string :per_name, null: false
       t.string :per_name_kana, null: false

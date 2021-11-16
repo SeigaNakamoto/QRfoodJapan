@@ -7,7 +7,7 @@ class AgenciesController < ApplicationController
     # ストック型（件数、報酬合計）、スポット型（件数、報酬合計）
     @st_cnt, @st_total, @sp_cnt, @sp_total = 0, 0, 0, 0
       @plans.each do |p|
-        reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id).count # プラン毎の合計件数格納
+        reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
         reward_price = (reward_cnt * p.reward_price * @tax).to_i # プラン毎の報酬金額格納
         if p.reward_style.eql?('ストック型（毎月）')
           @st_cnt += reward_cnt
@@ -38,9 +38,7 @@ class AgenciesController < ApplicationController
   end
   
   def store_list
-    @companies = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).page(params[:page]).per(5)
-    @progresses = Progress.all
-    @settlements = Settlement.all
+    @companies = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).page(params[:page]).per(30)
     
     # CSV出力
     @companiescsv = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).all
@@ -53,7 +51,7 @@ class AgenciesController < ApplicationController
   end
   
   def agency_list
-    @agencies = Agency.where(parent_agency_id: @agency.agency_id).page(params[:page]).per(5)
+    @agencies = Agency.where(parent_agency_id: @agency.agency_id).page(params[:page]).per(30)
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
   end
   
@@ -70,7 +68,7 @@ class AgenciesController < ApplicationController
     @child_agencies = Agency.where(parent_agency_id: @agency.agency_id)
     @special_reward_cnt = 0 # 特別代理店報酬対象件数
       @child_agencies.each do |child|
-        @special_reward_cnt += Store.where(agency_id: child.agency_id).count
+        @special_reward_cnt += Store.where(agency_id: child.agency_id, settlement_status: [0,2]).count
       end
   end
   

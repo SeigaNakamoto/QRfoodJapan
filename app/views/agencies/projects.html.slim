@@ -9,7 +9,7 @@
           .card-body
             p サマリー
             - @plans.each do |p|
-              - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id).count # プラン毎の合計件数格納
+              - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
               - reward_price = (p.reward_price * @tax).to_i
               ul.plan_color
                 li.d-flex              
@@ -51,19 +51,19 @@
                     | （税込）
             .d-flex.align-items-center.justify-content-between.plan_item
               | サービス紹介ページ
-              = link_to 'https://www.youtube.com/', class: 'btn btn-primary' do 
+              = link_to agencies_projects_path, class: 'btn btn-primary' do 
                 | WEBサイトへ
             .d-flex.align-items-center.justify-content-between.plan_item
               | 営業研修動画
-              = link_to 'https://www.youtube.com/', class: 'btn btn-primary' do 
+              = link_to agencies_projects_path, class: 'btn btn-primary' do 
                 | 動画を視聴する
             .d-flex.align-items-center.justify-content-between.plan_item
-              | 営業資料ダウンロード（各自google driveなどクラウドに保管したURLを載せる）
-              = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', class: 'btn btn-primary' do 
+              | 営業資料ダウンロード
+              = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do 
                 | ダウンロード
             .d-flex.align-items-center.justify-content-between
-              | プラン申し込みURL（※代理店IDと担当者を必ずお伝え、入力させてください）
-              = link_to agencies_payment_path(agency_id: current_agency.agency_id), class: 'btn btn-primary' do 
+              | プラン申し込みURL
+              = link_to new_user_path(agency_id: current_agency.agency_id), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do 
                 | URLをコピー
 
 = render partial: 'navibar'
@@ -76,7 +76,7 @@
           .card-body
             p サマリー
             - @plans.each do |p|
-              - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id).count # プラン毎の合計件数格納
+              - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
               - reward_price = (p.reward_price * @tax).to_i
               ul.plan_color
                 li.d-flex              
@@ -118,17 +118,17 @@
                     | （税込）
             .d-flex.align-items-center.justify-content-between.plan_item
               | サービス紹介ページ
-              = link_to 'https://www.youtube.com/', class: 'btn btn-primary' do 
+              = link_to agencies_projects_path, class: 'btn btn-primary' do 
                 | WEBサイトへ
             .d-flex.align-items-center.justify-content-between.plan_item
               | 営業研修動画
-              = link_to 'https://www.youtube.com/', class: 'btn btn-primary' do 
+              = link_to agencies_projects_path, class: 'btn btn-primary' do 
                 | 動画を視聴する
             .d-flex.align-items-center.justify-content-between.plan_item
-              | 営業資料ダウンロード（各自google driveなどクラウドに保管したURLを載せる）
-              = link_to 'https://www.youtube.com/', class: 'btn btn-primary' do 
+              | 営業資料ダウンロード
+              = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', class: 'btn btn-primary' do 
                 | ダウンロード
             .d-flex.align-items-center.justify-content-between
-              | プラン申し込みURL（※代理店IDと担当者を必ずお伝え、入力させてください）
+              | プラン申し込みURL
               = link_to agencies_payment_path(agency_id: current_agency.agency_id), class: 'btn btn-primary' do 
                 | URLをコピー

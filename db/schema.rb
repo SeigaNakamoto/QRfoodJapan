@@ -76,6 +76,16 @@ ActiveRecord::Schema.define(version: 2021_11_12_200631) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "operators", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "operator_name", null: false
+    t.string "operator_name_kana", null: false
+    t.string "email", null: false
+    t.string "password_digest"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_operators_on_email", unique: true
+  end
+
   create_table "plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.integer "sales_price", null: false
@@ -86,23 +96,26 @@ ActiveRecord::Schema.define(version: 2021_11_12_200631) do
     t.index ["name"], name: "index_plans_on_name", unique: true
   end
 
-  create_table "progresses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
+  create_table "serviceoffers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "store_id", null: false
+    t.bigint "service_id", null: false
+    t.integer "order", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_progresses_on_name", unique: true
+    t.index ["service_id"], name: "index_serviceoffers_on_service_id"
+    t.index ["store_id"], name: "index_serviceoffers_on_store_id"
   end
 
-  create_table "settlements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "services", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
+    t.integer "price", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_settlements_on_name", unique: true
+    t.index ["name"], name: "index_services_on_name", unique: true
   end
 
   create_table "stores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "store_id"
-    t.string "store_code"
+    t.string "app_id"
     t.string "store_name", null: false
     t.string "store_name_kana", null: false
     t.string "alphabet_notation"
@@ -112,7 +125,6 @@ ActiveRecord::Schema.define(version: 2021_11_12_200631) do
     t.string "store_fax"
     t.string "store_email"
     t.string "store_postal", null: false
-    t.string "string", null: false
     t.string "per_post", null: false
     t.string "per_name", null: false
     t.string "per_name_kana", null: false
@@ -123,12 +135,12 @@ ActiveRecord::Schema.define(version: 2021_11_12_200631) do
     t.string "business_hours", null: false
     t.string "regular_holiday", null: false
     t.text "hp"
-    t.integer "ave_price", null: false
+    t.integer "ave_price", default: 0, null: false
     t.string "reservation", null: false
-    t.integer "table_cnt", null: false
-    t.integer "counter_cnt", null: false
-    t.integer "menu_cnt", null: false
-    t.integer "menu_photo_cnt", null: false
+    t.integer "table_cnt", default: 0, null: false
+    t.integer "counter_cnt", default: 0, null: false
+    t.integer "menu_cnt", default: 0, null: false
+    t.integer "menu_photo_cnt", default: 0, null: false
     t.string "bank_name", null: false
     t.string "bank_code", null: false
     t.string "bank_branch_name", null: false
@@ -136,30 +148,23 @@ ActiveRecord::Schema.define(version: 2021_11_12_200631) do
     t.string "bank_account_type", null: false
     t.string "bank_account_number", null: false
     t.string "bank_account_holder_kana", null: false
-    t.string "credit_card_member_name", null: false
-    t.string "credit_card_expiry_date", null: false
-    t.string "credit_card_number", null: false
     t.bigint "company_id", null: false
     t.string "agency_per_name"
     t.bigint "plan_id", null: false
     t.string "plan_settlement", null: false
-    t.bigint "progress_id", default: 1, null: false
-    t.bigint "settlement_id", default: 1, null: false
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "agency_id"
     t.integer "progress_status", default: 0, null: false
     t.integer "settlement_status", default: 0, null: false
+    t.index ["app_id"], name: "index_stores_on_app_id", unique: true
     t.index ["company_id"], name: "index_stores_on_company_id"
     t.index ["plan_id"], name: "index_stores_on_plan_id"
-    t.index ["progress_id"], name: "index_stores_on_progress_id"
-    t.index ["settlement_id"], name: "index_stores_on_settlement_id"
-    t.index ["store_code"], name: "index_stores_on_store_code", unique: true
   end
 
+  add_foreign_key "serviceoffers", "services"
+  add_foreign_key "serviceoffers", "stores"
   add_foreign_key "stores", "companies"
   add_foreign_key "stores", "plans"
-  add_foreign_key "stores", "progresses"
-  add_foreign_key "stores", "settlements"
 end

@@ -21,7 +21,7 @@ class Stores::SettlementStatusController < ApplicationController
       @store.settlement_delinquent!
     when "cancellation_reservation"
       @store.settlement_cancellation_reservation!
-    when "no_problem"
+    when "canceled"
       @store.settlement_canceled!
     end
   end

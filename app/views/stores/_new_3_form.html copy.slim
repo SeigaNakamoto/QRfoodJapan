@@ -47,24 +47,6 @@
         span.error-message
           | * #{@store.errors.full_messages_for(:bank_account_holder_kana).first}
       = i.text_field :bank_account_holder_kana, class: 'form-control', :placeholder=>"ヤマダ　タロウ"
-    .form-group
-      = i.label :credit_card_member_name, 'クレジットカード 会員名（ローマ字）'
-      - if @company.errors.include?(:credit_card_member_name)
-        span.error-message
-          | * #{@store.errors.full_messages_for(:credit_card_member_name).first}
-      = i.text_field :credit_card_member_name, class: 'form-control', :placeholder=>"YAMADA TARO"
-    .form-group
-      = i.label :credit_card_expiry_date, 'クレジットカード 有効期限'
-      - if @company.errors.include?(:credit_card_expiry_date)
-        span.error-message
-          | * #{@store.errors.full_messages_for(:credit_card_expiry_date).first}
-      = i.text_field :credit_card_expiry_date, class: 'form-control', :placeholder=>"11/25"
-    .form-group
-      = i.label :credit_card_number, 'クレジットカード 番号'
-      - if @company.errors.include?(:credit_card_number)
-        span.error-message
-          | * #{@store.errors.full_messages_for(:credit_card_number).first}
-      = i.text_field :credit_card_number, class: 'form-control', :placeholder=>"16桁"
 - if btn.eql?('登録')
   .card
     .card-header
