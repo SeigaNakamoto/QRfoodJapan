@@ -10,10 +10,10 @@
             p サマリー
             - @plans.each do |p|
               - if @agency.parent_agency_id.eql?("parent")
-                - agency_id = @agency.agency_id[0, 6] + "1"
-                - reward_cnt = Store.where(agency_id: agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+                - @agency_id = @agency.agency_id[0, 6] + "1"
               - else
-                - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+                - @agency_id = @agency.agency_id
+              - reward_cnt = Store.where(agency_id: @agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
               - reward_price = (p.reward_price * @tax).to_i
               ul.plan_color
                 li.d-flex              
@@ -47,9 +47,9 @@
               = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do 
                 | ダウンロード
             .d-flex.align-items-center.justify-content-between
-              | プラン申し込みURL
-              = link_to new_user_path(agency_id: current_agency.agency_id), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do 
-                | URLをコピー
+              | プラン申込みURL
+              = link_to new_user_path(agency_id: @agency_id), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do 
+                | 申込み画面へ
 
 = render partial: 'navibar'
 .d-block.d-xl-none
@@ -62,10 +62,10 @@
             p サマリー
             - @plans.each do |p|
               - if @agency.parent_agency_id.eql?("parent")
-                - agency_id = @agency.agency_id[0, 6] + "1"
-                - reward_cnt = Store.where(agency_id: agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+                - @agency_id = @agency.agency_id[0, 6] + "1"
               - else
-                - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+                - @agency_id = @agency.agency_id
+              - reward_cnt = Store.where(agency_id: @agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
               - reward_price = (p.reward_price * @tax).to_i
               ul.plan_color
                 li.d-flex              
@@ -99,6 +99,6 @@
               = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', class: 'btn btn-primary' do 
                 | ダウンロード
             .d-flex.align-items-center.justify-content-between
-              | プラン申し込みURL
-              = link_to agencies_payment_path(agency_id: current_agency.agency_id), class: 'btn btn-primary' do 
-                | URLをコピー
+              | プラン申込みURL
+              = link_to agencies_payment_path(agency_id: @agency_id), class: 'btn btn-primary' do 
+                | 申込み画面へ

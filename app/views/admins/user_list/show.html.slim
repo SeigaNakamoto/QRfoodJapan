@@ -1,0 +1,52 @@
+.sidebar.d-none.d-xl-block
+  .row
+    .col-md-2
+      = render partial: 'admins/sidebar'
+    .col-md-10 
+      .container
+        h2.mt-3.font-weight-bold.valion-client-color ユーザー詳細確認・更新
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_user_list_index_path, class: 'btn btn-outline-dark'       
+
+        - if flash[:success]
+          .alert.alert-primary= flash[:success]
+        - if @company.errors.any? || @store.errors.any? 
+          .alert.alert-danger 入力内容をご確認ください。
+
+        = form_with( model: @company, url: admins_user_list_path) do |c|
+          = c.fields_for @store do |s| 
+            = c.hidden_field :id
+            = s.hidden_field :id
+            = render partial: 'edit_1_form', locals: {c: c, s: s, btn: '更新'}
+            = render partial: 'edit_2_form', locals: {c: c, s: s, btn: '更新'}
+            = render partial: 'edit_3_form', locals: {c: c, s: s, btn: '更新'}
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_user_list_index_path, class: 'btn btn-outline-dark'
+
+= render partial: 'admins/navibar'
+.d-block.d-xl-none
+  .row
+    .col.mt-5
+      .container
+        h2.mt-3.font-weight-bold.valion-client-color ユーザー詳細確認・更新
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_user_list_index_path, class: 'btn btn-outline-dark'       
+
+        - if flash[:success]
+          .alert.alert-primary= flash[:success]
+        - if @company.errors.any? || @store.errors.any? 
+          .alert.alert-danger 入力内容をご確認ください。
+
+        = form_with( model: @company, url: admins_user_list_path) do |c|
+          = c.fields_for @store do |s| 
+            = c.hidden_field :id
+            = s.hidden_field :id
+            = render partial: 'edit_1_form', locals: {c: c, s: s, btn: '更新'}
+            = render partial: 'edit_2_form', locals: {c: c, s: s, btn: '更新'}
+            = render partial: 'edit_3_form', locals: {c: c, s: s, btn: '更新'}
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_user_list_index_path, class: 'btn btn-outline-dark'

@@ -1,0 +1,75 @@
+.card
+  .card-header
+    .d-flex.align-items-center
+      h5.card-title 講座情報
+      .ml-auto.boards__linkBox
+        = c.submit btn, class: 'btn btn-primary'
+  .card-body
+    .form-group
+      = s.label :bank_name, '金融機関名'
+      - if @store.errors.include?(:bank_name)
+        .error-message
+          | * #{@store.errors.full_messages_for(:bank_name).first}
+      = s.text_field :bank_name, class: 'form-control', :placeholder=>"〇〇銀行"
+    .form-group
+      = s.label :bank_code, '金融機関コード'
+      - if @store.errors.include?(:bank_code)
+        .error-message
+          | * #{@store.errors.full_messages_for(:bank_code).first}
+      = s.text_field :bank_code, class: 'form-control', :placeholder=>"XXXX"
+    .form-group
+      = s.label :bank_branch_name, '支店名'
+      - if @store.errors.include?(:bank_branch_name)
+        .error-message
+          | * #{@store.errors.full_messages_for(:bank_branch_name).first}
+      = s.text_field :bank_branch_name, class: 'form-control', :placeholder=>"〇〇支店"
+    .form-group
+      = s.label :bank_branch_code, '支店コード'
+      - if @store.errors.include?(:bank_branch_code)
+        .error-message
+          | * #{@store.errors.full_messages_for(:bank_branch_code).first}
+      = s.text_field :bank_branch_code, class: 'form-control', :placeholder=>"XXX"
+    .form-group
+      = s.label :bank_account_type, '口座種別'
+      | 【
+      | #{s.radio_button :bank_account_type, '普通預金', checked: true} 普通預金：
+      | #{s.radio_button :bank_account_type, '当座預金'} 当座預金】
+    .form-group
+      = s.label :bank_account_number, '口座番号'
+      - if @store.errors.include?(:bank_account_number)
+        .error-message
+          | * #{@store.errors.full_messages_for(:bank_account_number).first}
+      = s.text_field :bank_account_number, class: 'form-control', :placeholder=>"XXXXXXX"
+    .form-group
+      = s.label :bank_account_holder_kana, '口座名義（カナ）'
+      - if @store.errors.include?(:bank_account_holder_kana)
+        .error-message
+          | * #{@store.errors.full_messages_for(:bank_account_holder_kana).first}
+      = s.text_field :bank_account_holder_kana, class: 'form-control', :placeholder=>"ヤマダ　タロウ"
+.card
+  .card-header
+    .d-flex.align-items-center
+      h5.card-title プラン情報
+  .card-body
+    .py-2
+      .mb-2
+        | 選択プラン：
+        - @plans.each do |p|
+          - if p.id.eql?(@store.plan_id)
+            | 【 #{p.name} （プラン料金：¥ #{p.sales_price.to_s(:delimited)}）】
+    .py-2
+      .mb-2
+        | 決済機能有無：【#{@store.plan_settlement}】
+.card
+  .card-header
+    .d-flex.align-items-center
+      h5.card-title 紹介者情報
+      .ml-auto.boards__linkBox
+        = c.submit btn, class: 'btn btn-primary'
+  .card-body
+    .py-2
+      .mb-2
+        | 代理店ID：#{@store.agency_id}
+    .form-group
+      = s.label :agency_per_name, '代理店担当者名'
+      = s.text_field :agency_per_name, class: 'form-control', :placeholder=>""

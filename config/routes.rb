@@ -22,6 +22,10 @@ Rails.application.routes.draw do
   # 追加ルーティング
 
   # 運営側システム
+  namespace :admins do
+    resources :user_list, :agency_list
+  end
+
   get "admins/store_list" => "admins#store_list"
   get "admins/agency_list" => "admins#agency_list"
 
@@ -39,7 +43,6 @@ Rails.application.routes.draw do
   
   resources :companies
   resources :agencies
-  resources :admins
   resources :stores do
     resource :progress_status, only: :update, controller: 'stores/progress_status'
     resource :settlement_status, only: :update, controller: 'stores/settlement_status'

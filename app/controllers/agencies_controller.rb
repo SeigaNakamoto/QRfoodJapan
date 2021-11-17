@@ -1,5 +1,5 @@
 class AgenciesController < ApplicationController
-  before_action :authenticate_agency!, only: %i[index projects store_list agency_list]
+  before_action :authenticate_agency!
   before_action :set_agency
 
 
@@ -25,17 +25,6 @@ class AgenciesController < ApplicationController
     # 特別代理店報酬金額
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
     
-  end
-  
-  def edit
-    @agency = Agency.find(params[:id])
-  end
-  
-  def update
-    if current_agency.update(agency_params)
-      flash[:notice] = "「#{current_agency.agency_name}」の代理店情報を変更しました。"
-      redirect_to edit_agency_registration_path(current_agency)
-    end
   end
   
   def projects
@@ -77,27 +66,6 @@ class AgenciesController < ApplicationController
       @child_agencies.each do |child|
         @special_reward_cnt += Store.where(agency_id: child.agency_id, settlement_status: [0,2]).count
       end
-  end
-  
-  def agency_params
-    params.require(:agency).permit(
-      :company_type,
-      :parent_agency_id,
-      :agency_name,
-      :agency_postal,
-      :agency_add,
-      :agency_rec_name,
-      :agency_rec_tel,
-      :agency_tel,
-      :agency_mail,
-      :bank_name,
-      :bank_code,
-      :bank_branch_name,
-      :bank_branch_code,
-      :bank_account_type,
-      :bank_account_number,
-      :bank_account_holder_kana
-    )
   end
 
   def send_companies_csv(companies)

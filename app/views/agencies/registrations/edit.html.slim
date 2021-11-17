@@ -4,8 +4,8 @@
       = render partial: 'agencies/sidebar'
     .col-md-10.my-3
       .container
-        - if flash[:notice]
-          .alert.alert-primary= flash[:notice]
+        - if flash[:success]
+          .alert.alert-primary= flash[:success]
         = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
           .form-group.text-right
             = f.submit "お客様情報を更新", class: "btn btn-dark"
@@ -112,8 +112,8 @@
   .row
     .col.mt-5
       .container.mt-5
-        - if flash[:notice]
-          .alert.alert-primary= flash[:notice]
+        - if flash[:success]
+          .alert.alert-primary= flash[:success]
         = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
           .form-group.text-right
             = f.submit "お客様情報を更新", class: "btn btn-dark"

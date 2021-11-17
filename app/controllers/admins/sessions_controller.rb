@@ -26,7 +26,7 @@ class Admins::SessionsController < Devise::SessionsController
   end
 
   def after_sign_in_path_for(resource)
-    admins_store_list_path
+    admins_user_list_index_path
   end
 
   def after_sign_out_path_for(resource)

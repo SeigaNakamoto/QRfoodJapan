@@ -15,13 +15,11 @@ class Agencies::UsersController < ApplicationController
     @company = Company.new(company_params)
     @store = Store.new(store_params[:store])
     @plans = Plan.all
-    if @company.save | @store.save
+    if @company.valid? & (@store.valid? | @store.errors.size.eql?(1))
+      @company.save
       @store.company_id = @company.id
-      if @store.save
-        redirect_to users_payment_path
-      else
-        render 'new'
-      end
+      @store.save
+      redirect_to users_payment_path
     else
       render 'new'
     end
