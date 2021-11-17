@@ -3,7 +3,7 @@ class Admins::AgencyListController < ApplicationController
   require 'csv'
 
   def index
-    @agencies = Agency.page(params[:page]).per(30)
+    @agencies = Agency.order(:agency_id).page(params[:page]).per(30)
     @plans = Plan.all
 
     @agenciescsv = Agency.all
