@@ -35,8 +35,8 @@
                       td= s.store_name
                       td= s.store_tel
                       td= s.store_email
-                      td= select :progress_status, :name, options_for_select(Store.progress_statuses_i18n.invert, selected: s.progress_status), {}, { class: 'js-progress_status form-control', data: { id: s.id } }
-                      td= select :settlement_status, :name, options_for_select(Store.settlement_statuses_i18n.invert, selected: s.settlement_status), {}, { class: 'js-settlement_status form-control', data: { id: s.id } }
+                      td= s.progress_status_i18n
+                      td= s.settlement_status_i18n
         = paginate @companies
 
 = render partial: 'navibar'
@@ -75,6 +75,6 @@
                         td= s.store_name
                         td= s.store_tel
                         td= s.store_email
-                        td= select :progress_status, :name, options_for_select(Store.progress_statuses_i18n.invert, selected: s.progress_status), {}, { class: 'js-progress_status form-control', data: { id: s.id } }
-                        td= select :settlement_status, :name, options_for_select(Store.settlement_statuses_i18n.invert, selected: s.settlement_status), {}, { class: 'js-settlement_status form-control', data: { id: s.id } }
+                        td= s.progress_status_i18n
+                        td= s.settlement_status_i18n
         = paginate @companies

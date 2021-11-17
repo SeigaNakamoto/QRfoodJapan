@@ -13,9 +13,13 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
     if resource.parent_agency_id.eql?("parent")
-      # 代理店テーブルの親代理店の数をカウント。2桁の数値に変換し、代理店IDを作成
+      # 代理店テーブルの親代理店の数をカウント
       @parent_no = sprintf("%02d", Agency.where(parent_agency_id: "parent").count + 1)
-      resource.agency_id = "Q#{@parent_no}-000"
+      # QXX-000作成
+      create_parent_agency.save
+      # 代理店IDを作成
+      resource.parent_agency_id = "Q#{@parent_no}-000"
+      resource.agency_id = "Q#{@parent_no}-001"
     else
       parent_no = resource.parent_agency_id[1, 2]
       agency_no = sprintf("%03d", Agency.where('agency_id like ?',"Q#{parent_no}%").count)
@@ -27,13 +31,6 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
-        # 案件獲得用親代理店アカウント作成
-        if resource.parent_agency_id.eql?("parent")
-          agency = Agency.new(sign_up_params)
-          agency.agency_id = "Q#{@parent_no}-001"
-          agency.parent_agency_id = "Q#{@parent_no}-000"
-          agency.save
-        end
         set_flash_message! :notice, :signed_up
         sign_up(resource_name, resource)
         respond_with resource, location: after_sign_up_path_for(resource)
@@ -75,6 +72,30 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
 
   protected
 
+  # create [QXX-000]
+  def create_parent_agency
+    Agency.create(
+      password: "qrfoodjapan",
+      parent_agency_id: "parent",
+      agency_id: "Q#{@parent_no}-000",
+      company_type: "parent",
+      agency_name: "parent",
+      agency_postal: "123-4567",
+      agency_add: "parent",
+      agency_tel: "1234567890",
+      agency_rec_name: "parent",
+      agency_rec_tel: "1234567890",
+      agency_mail: "parent@parent.parent",
+      bank_name: "parent",
+      bank_code: "1234",
+      bank_branch_name: "parent",
+      bank_branch_code: "123",
+      bank_account_type: "parent",
+      bank_account_number: "1234567",
+      bank_account_holder_kana: "parent"
+    )
+  end
+  #
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [ 
@@ -99,7 +120,23 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
+    devise_parameter_sanitizer.permit(:account_update, keys: [
+      :company_type,
+      :agency_name,
+      :agency_postal,
+      :agency_add,
+      :agency_rec_name,
+      :agency_rec_tel,
+      :agency_tel,
+      :agency_mail,
+      :bank_name,
+      :bank_code,
+      :bank_branch_name,
+      :bank_branch_code,
+      :bank_account_type,
+      :bank_account_number,
+      :bank_account_holder_kana
+    ])
   end
 
   # The path used after sign up.

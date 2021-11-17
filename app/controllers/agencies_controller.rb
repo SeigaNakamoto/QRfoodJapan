@@ -4,15 +4,11 @@ class AgenciesController < ApplicationController
 
 
   def index
+    # 【今月】
     # ストック型（件数、報酬合計）、スポット型（件数、報酬合計）
     @st_cnt, @st_total, @sp_cnt, @sp_total = 0, 0, 0, 0
       @plans.each do |p|
-        if @agency.parent_agency_id.eql?("parent")
-          agency_id = @agency.agency_id[0, 6] + "1"
-          reward_cnt = Store.where(agency_id: agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
-        else
-          reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
-        end
+        reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
         reward_price = (reward_cnt * p.reward_price * @tax).to_i # プラン毎の報酬金額格納
         if p.reward_style.eql?('ストック型（毎月）')
           @st_cnt += reward_cnt
@@ -24,7 +20,23 @@ class AgenciesController < ApplicationController
       end
     # 特別代理店報酬金額
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
-    
+  
+    # 【当月】
+    # ストック型（件数、報酬合計）、スポット型（件数、報酬合計）
+    @st_cnt_m, @st_total_m, @sp_cnt_m, @sp_total_m = 0, 0, 0, 0
+      @plans.each do |p|
+        reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2], created_at: Date.current.strftime('%Y-%m-%d').in_time_zone.all_month).count # プラン毎の合計件数格納
+        reward_price = (reward_cnt * p.reward_price * @tax).to_i # プラン毎の報酬金額格納
+        if p.reward_style.eql?('ストック型（毎月）')
+          @st_cnt_m += reward_cnt
+          @st_total_m += reward_price
+        else
+          @sp_cnt_m += reward_cnt
+          @sp_total_m += reward_price
+        end
+      end
+    # 特別代理店報酬金額
+    @special_reward_m = (@special_reward_cnt_m * 2000 * @tax).to_i
   end
   
   def projects
@@ -32,14 +44,8 @@ class AgenciesController < ApplicationController
   end
   
   def store_list
-    if @agency.parent_agency_id.eql?("parent")
-      agency_id = @agency.agency_id[0, 6] + "1"
-      @companies = Company.joins(:stores).where(stores: { agency_id: agency_id}).page(params[:page]).per(30)
-      @companiescsv = Company.joins(:stores).where(stores: { agency_id: agency_id}).all
-    else
-      @companies = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).page(params[:page]).per(30)
-      @companiescsv = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).all
-    end
+    @companies = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).page(params[:page]).per(30)
+    @companiescsv = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).all
     # CSV出力
     respond_to do |format|
       format.html
@@ -50,7 +56,7 @@ class AgenciesController < ApplicationController
   end
   
   def agency_list
-    @agencies = Agency.where(parent_agency_id: @agency.agency_id).page(params[:page]).per(30)
+    @agencies = Agency.where(parent_agency_id: @agency.parent_agency_id).page(params[:page]).per(30)
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
   end
   
@@ -61,10 +67,16 @@ class AgenciesController < ApplicationController
     @plans = Plan.all
     @tax = 1.1
     # 傘下代理店一覧
-    @child_agencies = Agency.where(parent_agency_id: @agency.agency_id)
-    @special_reward_cnt = 0 # 特別代理店報酬対象件数
+    @child_agencies = Agency.where(parent_agency_id: @agency.parent_agency_id)
+    # 【今月】特別代理店報酬対象件数
+    @special_reward_cnt = 0
       @child_agencies.each do |child|
         @special_reward_cnt += Store.where(agency_id: child.agency_id, settlement_status: [0,2]).count
+      end
+    # 【当月】特別代理店報酬対象件数
+    @special_reward_cnt_m = 0
+      @child_agencies.each do |child|
+        @special_reward_cnt_m += Store.where(agency_id: child.agency_id, settlement_status: [0,2], created_at: Date.current.strftime('%Y-%m-%d').in_time_zone.all_month).count
       end
   end
 

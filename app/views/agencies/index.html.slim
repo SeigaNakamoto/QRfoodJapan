@@ -37,6 +37,19 @@
                     = (@st_total + @sp_total + @special_reward).to_s(:delimited)
                   | （税込）
               .p-2.mb-1
+                | 当月（#{Date.current.strftime('%m')}月中）
+                .fs-6 
+                  | ¥
+                  span.fs-4 
+                    = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
+                  | （税込）
+              / .p-2.mb-1
+              /   | 当月解約
+              /   .fs-6 
+              /     span.fs-4 
+              /       | ???
+              /     | 件
+              .p-2.mb-1
                 | 年間報酬
                 .fs-6 
                   | ¥
@@ -71,7 +84,7 @@
               /     | ¥
               /     span.fs-4 
               /       = @sp_total.to_s(:delimited)
-        - if @agency.parent_agency_id.eql?('parent')
+        - if @agency.agency_id[4,3].eql?('001')
           .card
             .card-body
               .badge.badge-pil.badge-secondary.p-2
@@ -130,6 +143,21 @@
                   | (税込)
             .d-flex
               .p-2.mb-1
+                | 当月（#{Date.current.strftime('%m')}月中）
+                .fs-6 
+                  | ¥
+                  span.fs-4 
+                    = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
+                  | （税込）
+            / .d-flex
+            /   .p-2.mb-1
+            /     | 当月解約
+            /     .fs-6 
+            /       span.fs-4 
+            /         | ???
+            /       | 件
+            .d-flex
+              .p-2.mb-1
                 | 年間概算予想
                 .fs-6 
                   | ¥
@@ -168,7 +196,7 @@
             /       span.fs-4 
             /         = @sp_total.to_s(:delimited)
             /       | (税込)
-        - if @agency.parent_agency_id.eql?('parent')
+        - if @agency.agency_id[4,3].eql?('001')
           .card
             .card-body
               .badge.badge-pil.badge-secondary.p-2

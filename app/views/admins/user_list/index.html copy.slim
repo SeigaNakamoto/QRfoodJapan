@@ -1,0 +1,150 @@
+.sidebar.d-none.d-xl-block
+  .row
+    .col-md-2
+      = render partial: 'sidebar'
+    .col-md-10 
+      .container
+        h2.mt-3.font-weight-bold.valion-client-color ユーザー管理
+        .d-flex.flex-row.justify-content-end
+          - @plans.each do |p|
+            .card
+              ul
+                li.d-flex              
+                  .col 【#{p.name}】
+                li.d-flex              
+                  .col ◆進捗ステータス
+                li.d-flex              
+                  .col 写真納品待ち
+                  .col.text-right #{Store.where(plan_id: p.id, progress_status: 0).count}件
+                li.d-flex              
+                  .col UnivaPay審査待ち
+                  .col.text-right #{Store.where(plan_id: p.id, progress_status: 1).count}件
+                li.d-flex              
+                  .col 問題なし
+                  .col.text-right #{Store.where(plan_id: p.id, progress_status: 2).count}件
+                li.d-flex              
+                  .col ◆決済ステータス
+                li.d-flex              
+                  .col 問題なし
+                  .col.text-right #{Store.where(plan_id: p.id, settlement_status: 0).count}件
+                li.d-flex              
+                  .col 滞納中
+                  .col.text-right #{Store.where(plan_id: p.id, settlement_status: 1).count}件
+                li.d-flex              
+                  .col 解約予約
+                  .col.text-right #{Store.where(plan_id: p.id, settlement_status: 2).count}件
+                li.d-flex              
+                  .col 解約済み
+                  .col.text-right #{Store.where(plan_id: p.id, settlement_status: 3).count}件
+        .card
+          .card-header
+            .d-flex.align-items-center
+              .me-auto.p-2
+                h5.card-title ユーザー一覧
+              = link_to 'ユーザー情報csvダウンロード', admins_user_list_index_path(format: :csv), class: 'btn btn-outline-dark'
+          .card-body
+            .table-responsive
+              table.table.table-hover
+                thead
+                  tr
+                    th.text-nowrap 店舗ID
+                    th.text-nowrap 事業者名
+                    th.text-nowrap 店舗名
+                    th.text-nowrap 店舗TEL
+                    th.text-nowrap 店舗MAIL
+                    th.text-nowrap 代理店ID
+                    th.text-nowrap 代理店担当者名
+                    th.text-nowrap 申込日
+                    th.text-nowrap 進捗ステータス
+                    th.text-nowrap 決済ステータス
+                    th 
+                tbody
+                - @companies.each do |c|
+                  - c.stores.each do |s|
+                    tr
+                      td= c.id
+                      td= c.corp_name
+                      td= s.store_name
+                      td= s.store_tel
+                      td= s.store_email
+                      td= s.agency_id
+                      td= s.agency_per_name
+                      td= s.created_at.to_s(:datetime_jp_Ymd)
+                      td= select :progress_status, :name, options_for_select(Store.progress_statuses_i18n.invert, selected: s.progress_status), {}, { class: 'js-progress_status form-control', data: { id: s.id } }
+                      td= select :settlement_status, :name, options_for_select(Store.settlement_statuses_i18n.invert, selected: s.settlement_status), {}, { class: 'js-settlement_status form-control', data: { id: s.id } }
+                      td= link_to '詳細', edit_company_path(c.id), class: 'btn btn-outline-dark'
+          = paginate @companies
+
+= render partial: 'navibar'
+.d-block.d-xl-none
+  .row
+    .col.mt-5
+      .container.mt-5
+        h2.mt-3.font-weight-bold.valion-client-color ユーザー管理
+        - @plans.each do |p|
+          .card
+            ul
+              li.d-flex              
+                .col 【#{p.name}】
+              li.d-flex              
+                .col ◆進捗ステータス
+              li.d-flex              
+                .col 写真納品待ち
+                .col.text-right #{Store.where(plan_id: p.id, progress_status: 0).count}件
+              li.d-flex              
+                .col UnivaPay審査待ち
+                .col.text-right #{Store.where(plan_id: p.id, progress_status: 1).count}件
+              li.d-flex              
+                .col 問題なし
+                .col.text-right #{Store.where(plan_id: p.id, progress_status: 2).count}件
+              li.d-flex              
+                .col ◆決済ステータス
+              li.d-flex              
+                .col 問題なし
+                .col.text-right #{Store.where(plan_id: p.id, settlement_status: 0).count}件
+              li.d-flex              
+                .col 滞納中
+                .col.text-right #{Store.where(plan_id: p.id, settlement_status: 1).count}件
+              li.d-flex              
+                .col 解約予約
+                .col.text-right #{Store.where(plan_id: p.id, settlement_status: 2).count}件
+              li.d-flex              
+                .col 解約済み
+                .col.text-right #{Store.where(plan_id: p.id, settlement_status: 3).count}件
+        .card
+          .card-header
+            .align-items-center
+              h5.card-title ユーザー一覧
+              = link_to 'ユーザー情報csvダウンロード', admins_user_list_index_path(format: :csv), class: 'btn btn-outline-dark'
+          .card-body
+            .table-responsive
+              table.table.table-hover
+                thead
+                  tr
+                    th.text-nowrap 店舗ID
+                    th.text-nowrap 事業者名
+                    th.text-nowrap 店舗名
+                    th.text-nowrap 店舗TEL
+                    th.text-nowrap 店舗MAIL
+                    th.text-nowrap 代理店ID
+                    th.text-nowrap 代理店担当者名
+                    th.text-nowrap 申込日
+                    th.text-nowrap 進捗ステータス
+                    th.text-nowrap 決済ステータス
+                    th 
+                tbody
+                - @companies.each do |c|
+                  - c.stores.each do |s|
+                    tr
+                      td= c.id
+                      td= c.corp_name
+                      td= s.store_name
+                      td= s.store_tel
+                      td= s.store_email
+                      td= s.agency_id
+                      td= s.agency_per_name
+                      td= s.created_at.to_s(:datetime_jp_Ymd)
+                      td= select :progress_status, :name, options_for_select(Store.progress_statuses_i18n.invert, selected: s.progress_status), {}, { class: 'js-progress_status form-control', data: { id: s.id } }
+                      td= select :settlement_status, :name, options_for_select(Store.settlement_statuses_i18n.invert, selected: s.settlement_status), {}, { class: 'js-settlement_status form-control', data: { id: s.id } }
+                      td= link_to '詳細', edit_company_path(c.id), class: 'btn btn-outline-dark'
+          = paginate @companies
