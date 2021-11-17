@@ -61,22 +61,58 @@ class AdminsController < ApplicationController
       column_names = %w(代理店ID 代理店名 代理店TEL 代理店MAIL ライト スタンダード プレミアム 金融機関名 金融機関コード 支店名 支店コード 口座種別 口座名義（カナ） 口座番号)
       csv << column_names
       agencies.each do |agency|
-        column_values = [
-          agency.agency_id,
-          agency.agency_name,
-          agency.agency_tel,
-          agency.agency_mail,
-          Store.where(agency_id: agency.agency_id, plan_id: 1, settlement_status: [0,2]).count,
-          Store.where(agency_id: agency.agency_id, plan_id: 2, settlement_status: [0,2]).count,
-          Store.where(agency_id: agency.agency_id, plan_id: 3, settlement_status: [0,2]).count,
-          agency.bank_name,
-          agency.bank_code,
-          agency.bank_branch_name,
-          agency.bank_branch_code,
-          agency.bank_account_type,
-          agency.bank_account_number,
-          agency.bank_account_holder_kana
-        ]
+        if agency.parent_agency_id.eql?("parent")
+          column_values = [
+            agency.agency_id,
+            "【総合】" + agency.agency_name,
+            agency.agency_tel,
+            agency.agency_mail,
+            Store.where('agency_id like ?',"Q#{agency.agency_id[1, 2]}%").where(plan_id: 1, settlement_status: [0,2]).count,
+            Store.where('agency_id like ?',"Q#{agency.agency_id[1, 2]}%").where(plan_id: 2, settlement_status: [0,2]).count,
+            Store.where('agency_id like ?',"Q#{agency.agency_id[1, 2]}%").where(plan_id: 3, settlement_status: [0,2]).count,
+            agency.bank_name,
+            agency.bank_code,
+            agency.bank_branch_name,
+            agency.bank_branch_code,
+            agency.bank_account_type,
+            agency.bank_account_number,
+            agency.bank_account_holder_kana
+          ]
+        elsif agency.agency_id[4,3].eql?("001")
+          column_values = [
+            agency.agency_id,
+            agency.agency_name,
+            agency.agency_tel,
+            agency.agency_mail,
+            Store.where(agency_id: agency.agency_id, plan_id: 1, settlement_status: [0,2]).count,
+            Store.where(agency_id: agency.agency_id, plan_id: 2, settlement_status: [0,2]).count,
+            Store.where(agency_id: agency.agency_id, plan_id: 3, settlement_status: [0,2]).count,
+            agency.bank_name,
+            agency.bank_code,
+            agency.bank_branch_name,
+            agency.bank_branch_code,
+            agency.bank_account_type,
+            agency.bank_account_number,
+            agency.bank_account_holder_kana
+          ]
+        else
+          column_values = [
+            agency.agency_id,
+            agency.agency_name,
+            agency.agency_tel,
+            agency.agency_mail,
+            Store.where(agency_id: agency.agency_id, plan_id: 1, settlement_status: [0,2]).count,
+            Store.where(agency_id: agency.agency_id, plan_id: 2, settlement_status: [0,2]).count,
+            Store.where(agency_id: agency.agency_id, plan_id: 3, settlement_status: [0,2]).count,
+            agency.bank_name,
+            agency.bank_code,
+            agency.bank_branch_name,
+            agency.bank_branch_code,
+            agency.bank_account_type,
+            agency.bank_account_number,
+            agency.bank_account_holder_kana
+          ]
+        end
         csv << column_values
       end
     end
