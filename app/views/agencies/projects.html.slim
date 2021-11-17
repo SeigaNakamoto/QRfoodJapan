@@ -9,46 +9,31 @@
           .card-body
             p サマリー
             - @plans.each do |p|
-              - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+              - if @agency.parent_agency_id.eql?("parent")
+                - agency_id = @agency.agency_id[0, 6] + "1"
+                - reward_cnt = Store.where(agency_id: agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+              - else
+                - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
               - reward_price = (p.reward_price * @tax).to_i
               ul.plan_color
                 li.d-flex              
-                  .col
-                    | プラン
-                  .col.text-right
-                    = p.name
+                  .col プラン
+                  .col.text-right #{p.name}
                 li.d-flex              
-                  .col
-                    | 販売金額
-                  .col.text-right
-                    | ¥
-                    = p.sales_price.to_s(:delimited)
-                    | （税抜）
+                  .col 販売金額
+                  .col.text-right ¥#{p.sales_price.to_s(:delimited)}（税抜）
                 li.d-flex              
-                  .col
-                    | 報酬金額
-                  .col.text-right
-                    | ¥
-                    = reward_price.to_s(:delimited)
-                    | （税込）
+                  .col 報酬金額
+                  .col.text-right ¥#{reward_price.to_s(:delimited)}（税込）
                 li.d-flex              
-                  .col
-                    | 報酬金額形態
-                  .col.text-right
-                    = p.reward_style
+                  .col 報酬金額形態
+                  .col.text-right #{p.reward_style}
                 li.d-flex              
-                  .col
-                    | 対象合計件数
-                  .col.text-right
-                    = reward_cnt
-                    | 件　
+                  .col 対象合計件数
+                  .col.text-right #{reward_cnt}件　
                 li.d-flex              
-                  .col
-                    | 報酬合計金額
-                  .col.text-right
-                    | ¥
-                    = (reward_cnt * reward_price).to_s(:delimited)
-                    | （税込）
+                  .col 報酬合計金額
+                  .col.text-right ¥#{(reward_cnt * reward_price).to_s(:delimited)}（税込）
             .d-flex.align-items-center.justify-content-between.plan_item
               | サービス紹介ページ
               = link_to agencies_projects_path, class: 'btn btn-primary' do 
@@ -76,46 +61,31 @@
           .card-body
             p サマリー
             - @plans.each do |p|
-              - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+              - if @agency.parent_agency_id.eql?("parent")
+                - agency_id = @agency.agency_id[0, 6] + "1"
+                - reward_cnt = Store.where(agency_id: agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+              - else
+                - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
               - reward_price = (p.reward_price * @tax).to_i
               ul.plan_color
                 li.d-flex              
-                  .col
-                    | プラン
-                  .col.text-right
-                    = p.name
+                  .col プラン
+                  .col.text-right #{p.name}
                 li.d-flex              
-                  .col
-                    | 販売金額
-                  .col.text-right
-                    | ¥
-                    = p.sales_price.to_s(:delimited)
-                    | （税抜）
+                  .col 販売金額
+                  .col.text-right ¥#{p.sales_price.to_s(:delimited)}（税抜）
                 li.d-flex              
-                  .col
-                    | 報酬金額
-                  .col.text-right
-                    | ¥
-                    = reward_price.to_s(:delimited)
-                    | （税込）
+                  .col 報酬金額
+                  .col.text-right ¥#{reward_price.to_s(:delimited)}（税込）
                 li.d-flex              
-                  .col
-                    | 報酬金額形態
-                  .col.text-right
-                    = p.reward_style
+                  .col 報酬金額形態
+                  .col.text-right #{p.reward_style}
                 li.d-flex              
-                  .col
-                    | 対象合計件数
-                  .col.text-right
-                    = reward_cnt
-                    | 件　
+                  .col 対象合計件数
+                  .col.text-right #{reward_cnt}件　
                 li.d-flex              
-                  .col
-                    | 報酬合計金額
-                  .col.text-right
-                    | ¥
-                    = (reward_cnt * reward_price).to_s(:delimited)
-                    | （税込）
+                  .col 報酬合計金額
+                  .col.text-right ¥#{(reward_cnt * reward_price).to_s(:delimited)}（税込）
             .d-flex.align-items-center.justify-content-between.plan_item
               | サービス紹介ページ
               = link_to agencies_projects_path, class: 'btn btn-primary' do 

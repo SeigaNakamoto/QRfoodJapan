@@ -3,7 +3,7 @@ class Stores::ProgressStatusController < ApplicationController
 
   def update
     respond_to do |format|
-      format.json { render json: {store_name: @store.store_name, progress_status: @store.progress_status} }
+      format.json { render json: {store_name: @store.store_name, progress_status: @store.progress_status_i18n} }
     end
   end
   

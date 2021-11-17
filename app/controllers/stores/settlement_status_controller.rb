@@ -3,7 +3,7 @@ class Stores::SettlementStatusController < ApplicationController
 
   def update
     respond_to do |format|
-      format.json { render json: {store_name: @store.store_name, settlement_status: @store.settlement_status} }
+      format.json { render json: {store_name: @store.store_name, settlement_status: @store.settlement_status_i18n} }
     end
   end
   

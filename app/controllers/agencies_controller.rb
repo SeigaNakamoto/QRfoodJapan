@@ -7,7 +7,12 @@ class AgenciesController < ApplicationController
     # ストック型（件数、報酬合計）、スポット型（件数、報酬合計）
     @st_cnt, @st_total, @sp_cnt, @sp_total = 0, 0, 0, 0
       @plans.each do |p|
-        reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+        if @agency.parent_agency_id.eql?("parent")
+          agency_id = @agency.agency_id[0, 6] + "1"
+          reward_cnt = Store.where(agency_id: agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+        else
+          reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+        end
         reward_price = (reward_cnt * p.reward_price * @tax).to_i # プラン毎の報酬金額格納
         if p.reward_style.eql?('ストック型（毎月）')
           @st_cnt += reward_cnt
@@ -38,10 +43,15 @@ class AgenciesController < ApplicationController
   end
   
   def store_list
-    @companies = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).page(params[:page]).per(30)
-    
+    if @agency.parent_agency_id.eql?("parent")
+      agency_id = @agency.agency_id[0, 6] + "1"
+      @companies = Company.joins(:stores).where(stores: { agency_id: agency_id}).page(params[:page]).per(30)
+      @companiescsv = Company.joins(:stores).where(stores: { agency_id: agency_id}).all
+    else
+      @companies = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).page(params[:page]).per(30)
+      @companiescsv = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).all
+    end
     # CSV出力
-    @companiescsv = Company.joins(:stores).where(stores: { agency_id: @agency.agency_id}).all
     respond_to do |format|
       format.html
       format.csv do |csv|
@@ -95,27 +105,18 @@ class AgenciesController < ApplicationController
       column_names = %w(店舗ID お申込者名 店舗名 店舗TEL 店舗MAIL 進捗ステータス 決済ステータス)
       csv << column_names
       companies.each do |c|
-        progress_name, settlement_name = "", ""
-        @progresses.each do |p|
-          if p.id.eql?(c.stores.map(&:progress_id)[0])
-            progress_name = p.name
-          end
+        c.stores.each do |s|
+          column_values = [
+            c.id,
+            s.per_name,
+            s.store_name,
+            s.store_tel,
+            s.store_email,
+            s.progress_status_i18n,
+            s.settlement_status_i18n
+          ]
+          csv << column_values
         end
-        @settlements.each do |s|
-          if s.id.eql?(c.stores.map(&:settlement_id)[0])
-            settlement_name = s.name
-          end
-        end
-        column_values = [
-          c.id,
-          c.stores.map(&:per_name)[0],
-          c.stores.map(&:store_name)[0],
-          c.stores.map(&:store_tel)[0],
-          c.stores.map(&:store_email)[0],
-          progress_name,
-          settlement_name
-        ]
-        csv << column_values
       end
     end
     send_data(csv_data, filename: "代理店側_ユーザー一覧.csv")
