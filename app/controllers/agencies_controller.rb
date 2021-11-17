@@ -7,34 +7,34 @@ class AgenciesController < ApplicationController
     # 【今月】
     # ストック型（件数、報酬合計）、スポット型（件数、報酬合計）
     @st_cnt, @st_total, @sp_cnt, @sp_total = 0, 0, 0, 0
-      @plans.each do |p|
-        reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
-        reward_price = (reward_cnt * p.reward_price * @tax).to_i # プラン毎の報酬金額格納
-        if p.reward_style.eql?('ストック型（毎月）')
-          @st_cnt += reward_cnt
-          @st_total += reward_price
-        else
-          @sp_cnt += reward_cnt
-          @sp_total += reward_price
-        end
+    @plans.each do |p|
+      reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+      reward_price = (reward_cnt * p.reward_price * @tax).to_i # プラン毎の報酬金額格納
+      if p.reward_style.eql?('ストック型（毎月）')
+        @st_cnt += reward_cnt
+        @st_total += reward_price
+      else
+        @sp_cnt += reward_cnt
+        @sp_total += reward_price
       end
+    end
     # 特別代理店報酬金額
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
-  
+    
     # 【当月】
     # ストック型（件数、報酬合計）、スポット型（件数、報酬合計）
     @st_cnt_m, @st_total_m, @sp_cnt_m, @sp_total_m = 0, 0, 0, 0
-      @plans.each do |p|
-        reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2], created_at: Date.current.strftime('%Y-%m-%d').in_time_zone.all_month).count # プラン毎の合計件数格納
-        reward_price = (reward_cnt * p.reward_price * @tax).to_i # プラン毎の報酬金額格納
-        if p.reward_style.eql?('ストック型（毎月）')
-          @st_cnt_m += reward_cnt
-          @st_total_m += reward_price
-        else
-          @sp_cnt_m += reward_cnt
-          @sp_total_m += reward_price
-        end
+    @plans.each do |p|
+      reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2], created_at: Date.current.strftime('%Y-%m-%d').in_time_zone.all_month).count # プラン毎の合計件数格納
+      reward_price = (reward_cnt * p.reward_price * @tax).to_i # プラン毎の報酬金額格納
+      if p.reward_style.eql?('ストック型（毎月）')
+        @st_cnt_m += reward_cnt
+        @st_total_m += reward_price
+      else
+        @sp_cnt_m += reward_cnt
+        @sp_total_m += reward_price
       end
+    end
     # 特別代理店報酬金額
     @special_reward_m = (@special_reward_cnt_m * 2000 * @tax).to_i
   end
@@ -66,18 +66,20 @@ class AgenciesController < ApplicationController
     @agency = current_agency
     @plans = Plan.all
     @tax = 1.1
+
     # 傘下代理店一覧
     @child_agencies = Agency.where(parent_agency_id: @agency.parent_agency_id)
+
     # 【今月】特別代理店報酬対象件数
     @special_reward_cnt = 0
-      @child_agencies.each do |child|
-        @special_reward_cnt += Store.where(agency_id: child.agency_id, settlement_status: [0,2]).count
-      end
     # 【当月】特別代理店報酬対象件数
     @special_reward_cnt_m = 0
+    if @agency.agency_id[4,3].eql?('001')
       @child_agencies.each do |child|
+        @special_reward_cnt += Store.where(agency_id: child.agency_id, settlement_status: [0,2]).count
         @special_reward_cnt_m += Store.where(agency_id: child.agency_id, settlement_status: [0,2], created_at: Date.current.strftime('%Y-%m-%d').in_time_zone.all_month).count
       end
+    end
   end
 
   def send_companies_csv(companies)
