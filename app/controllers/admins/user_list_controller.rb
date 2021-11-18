@@ -36,6 +36,14 @@ class Admins::UserListController < ApplicationController
     end
   end
 
+  def destroy
+    @company = Company.find(params[:id])
+    @store = Store.find(@company.stores.first.id)
+    @store.delete
+    @company.delete
+    redirect_to admins_user_list_index_path
+  end
+
   private
 
   def company_params

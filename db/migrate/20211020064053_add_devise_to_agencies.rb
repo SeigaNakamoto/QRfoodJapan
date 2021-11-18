@@ -4,7 +4,7 @@ class AddDeviseToAgencies < ActiveRecord::Migration[6.1]
   def self.up
     change_table :agencies do |t|
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
+      # t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
@@ -37,7 +37,7 @@ class AddDeviseToAgencies < ActiveRecord::Migration[6.1]
       # t.timestamps null: false
     end
 
-    add_index :agencies, :email,                unique: true
+    # add_index :agencies, :email,                unique: true
     add_index :agencies, :reset_password_token, unique: true
     # add_index :agencies, :confirmation_token,   unique: true
     # add_index :agencies, :unlock_token,         unique: true

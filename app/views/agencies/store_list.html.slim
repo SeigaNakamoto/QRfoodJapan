@@ -22,6 +22,7 @@
                   th.text-nowrap 店舗ID
                   th.text-nowrap お申込者名
                   th.text-nowrap 店舗名
+                  th.text-nowrap プラン名
                   th.text-nowrap 店舗TEL
                   th.text-nowrap 店舗MAIL
                   th.text-nowrap 進捗ステータス
@@ -33,6 +34,10 @@
                       td= c.id
                       td= s.per_name
                       td= s.store_name
+                      td
+                        - @plans.each do |p|
+                          - if p.id.eql?(s.plan_id)
+                            = p.name
                       td= s.store_tel
                       td= s.store_email
                       td= s.progress_status_i18n
@@ -62,6 +67,7 @@
                     th.text-nowrap 店舗ID
                     th.text-nowrap お申込者名
                     th.text-nowrap 店舗名
+                    th.text-nowrap プラン名
                     th.text-nowrap 店舗TEL
                     th.text-nowrap 店舗MAIL
                     th.text-nowrap 進捗ステータス
@@ -73,6 +79,10 @@
                         td= c.id
                         td= s.per_name
                         td= s.store_name
+                        td
+                          - @plans.each do |p|
+                            - if p.id.eql?(s.plan_id)
+                              = p.name
                         td= s.store_tel
                         td= s.store_email
                         td= s.progress_status_i18n

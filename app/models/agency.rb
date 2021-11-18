@@ -25,10 +25,11 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  agency_id                :string(255)      not null
-#  parent_agency_id         :string(255)      default("parent")
+#  parent_agency_id         :string(255)
 #
 # Indexes
 #
+#  index_agencies_on_agency_id             (agency_id) UNIQUE
 #  index_agencies_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class Agency < ApplicationRecord

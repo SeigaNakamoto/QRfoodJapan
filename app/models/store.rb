@@ -42,19 +42,22 @@
 #  time_zone_to_contact     :string(255)      not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
-#  agency_id                :string(255)
+#  agency_charge_id         :string(255)
+#  agency_id                :bigint           not null
 #  app_id                   :string(255)
 #  company_id               :bigint           not null
 #  plan_id                  :bigint           not null
 #
 # Indexes
 #
+#  index_stores_on_agency_id   (agency_id)
 #  index_stores_on_app_id      (app_id) UNIQUE
 #  index_stores_on_company_id  (company_id)
 #  index_stores_on_plan_id     (plan_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (agency_id => agencies.id)
 #  fk_rails_...  (company_id => companies.id)
 #  fk_rails_...  (plan_id => plans.id)
 #

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_043118) do
+ActiveRecord::Schema.define(version: 2021_10_20_064053) do
 
   create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -41,13 +41,14 @@ ActiveRecord::Schema.define(version: 2021_11_16_043118) do
     t.string "bank_account_type", null: false
     t.string "bank_account_number", null: false
     t.string "bank_account_holder_kana", null: false
-    t.string "parent_agency_id", default: "parent"
+    t.string "parent_agency_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.index ["agency_id"], name: "index_agencies_on_agency_id", unique: true
     t.index ["reset_password_token"], name: "index_agencies_on_reset_password_token", unique: true
   end
 
@@ -74,16 +75,6 @@ ActiveRecord::Schema.define(version: 2021_11_16_043118) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "operators", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "operator_name", null: false
-    t.string "operator_name_kana", null: false
-    t.string "email", null: false
-    t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_operators_on_email", unique: true
-  end
-
   create_table "plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.integer "sales_price", null: false
@@ -94,26 +85,9 @@ ActiveRecord::Schema.define(version: 2021_11_16_043118) do
     t.index ["name"], name: "index_plans_on_name", unique: true
   end
 
-  create_table "serviceoffers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "store_id", null: false
-    t.bigint "service_id", null: false
-    t.integer "order", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["service_id"], name: "index_serviceoffers_on_service_id"
-    t.index ["store_id"], name: "index_serviceoffers_on_store_id"
-  end
-
-  create_table "services", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "price", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_services_on_name", unique: true
-  end
-
   create_table "stores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "app_id"
+    t.string "password_digest"
     t.string "store_name", null: false
     t.string "store_name_kana", null: false
     t.string "alphabet_notation"
@@ -146,23 +120,23 @@ ActiveRecord::Schema.define(version: 2021_11_16_043118) do
     t.string "bank_account_type", null: false
     t.string "bank_account_number", null: false
     t.string "bank_account_holder_kana", null: false
+    t.integer "progress_status", default: 0, null: false
+    t.integer "settlement_status", default: 0, null: false
     t.bigint "company_id", null: false
+    t.bigint "agency_id", null: false
+    t.string "agency_charge_id"
     t.string "agency_per_name"
     t.bigint "plan_id", null: false
     t.string "plan_settlement", null: false
-    t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "agency_id"
-    t.integer "progress_status", default: 0, null: false
-    t.integer "settlement_status", default: 0, null: false
+    t.index ["agency_id"], name: "index_stores_on_agency_id"
     t.index ["app_id"], name: "index_stores_on_app_id", unique: true
     t.index ["company_id"], name: "index_stores_on_company_id"
     t.index ["plan_id"], name: "index_stores_on_plan_id"
   end
 
-  add_foreign_key "serviceoffers", "services"
-  add_foreign_key "serviceoffers", "stores"
+  add_foreign_key "stores", "agencies"
   add_foreign_key "stores", "companies"
   add_foreign_key "stores", "plans"
 end

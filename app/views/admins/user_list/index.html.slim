@@ -50,6 +50,7 @@
                     th.text-nowrap 店舗ID
                     th.text-nowrap 事業者名
                     th.text-nowrap 店舗名
+                    th.text-nowrap プラン名
                     th.text-nowrap 店舗TEL
                     th.text-nowrap 店舗MAIL
                     th.text-nowrap 代理店ID
@@ -65,6 +66,10 @@
                       td= c.id
                       td= c.corp_name
                       td= s.store_name
+                      td
+                        - @plans.each do |p|
+                          - if p.id.eql?(s.plan_id)
+                            = p.name
                       td= s.store_tel
                       td= s.store_email
                       td= s.agency_id
@@ -124,6 +129,7 @@
                     th.text-nowrap 店舗ID
                     th.text-nowrap 事業者名
                     th.text-nowrap 店舗名
+                    th.text-nowrap プラン名
                     th.text-nowrap 店舗TEL
                     th.text-nowrap 店舗MAIL
                     th.text-nowrap 代理店ID
@@ -139,6 +145,10 @@
                       td= c.id
                       td= c.corp_name
                       td= s.store_name
+                      td
+                        - @plans.each do |p|
+                          - if p.id.eql?(s.plan_id)
+                            = p.name
                       td= s.store_tel
                       td= s.store_email
                       td= s.agency_id
