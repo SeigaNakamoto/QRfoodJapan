@@ -72,7 +72,7 @@ class Agency < ApplicationRecord
   validates :bank_account_holder_kana, presence: true
 
   def parent_agency_id_check
-    unless Agency.where(agency_id: parent_agency_id).exists?
+    unless parent_agency_id.blank? || Agency.where(agency_id: parent_agency_id).exists?
       errors.add(:parent_agency_id, 'この代理店IDは登録されていません')
     end
   end
