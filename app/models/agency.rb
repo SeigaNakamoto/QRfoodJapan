@@ -33,6 +33,7 @@
 #  index_agencies_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class Agency < ApplicationRecord
+  has_many :stores
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :authentication_keys => [:agency_id]
@@ -51,6 +52,7 @@ class Agency < ApplicationRecord
   end
 
   # Validation
+  validate :parent_agency_id_check
   validates :company_type, presence: true
   validates :agency_name, presence: true
   validates :agency_postal, presence: true
@@ -68,5 +70,11 @@ class Agency < ApplicationRecord
   validates :bank_account_type, presence: true
   validates :bank_account_number, presence: true, length: { is: 7 }
   validates :bank_account_holder_kana, presence: true
+
+  def parent_agency_id_check
+    # if Agency.where.not(agency_id: parent_agency_id).exists?
+    #   errors.add(:parent_agency_id, '登録されていない代理店IDです')
+    # end
+  end
 
 end

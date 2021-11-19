@@ -9,7 +9,7 @@
           .card-body
             p サマリー
             - @plans.each do |p|
-              - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+              - reward_cnt = Store.where(agency_charge_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
               - reward_price = (p.reward_price * @tax).to_i
               ul.plan_color
                 li.d-flex              
@@ -57,7 +57,7 @@
           .card-body
             p サマリー
             - @plans.each do |p|
-              - reward_cnt = Store.where(agency_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+              - reward_cnt = Store.where(agency_charge_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
               - reward_price = (p.reward_price * @tax).to_i
               ul.plan_color
                 li.d-flex              

@@ -136,11 +136,11 @@
             .d-flex
               .p-2.mb-1
                 | 今月（現時点まで）
-                .fs-6
+                .fs-6 
                   | ¥
                   span.fs-4 
-                    = (@st_total + @sp_total).to_s(:delimited)
-                  | (税込)
+                    = (@st_total + @sp_total + @special_reward).to_s(:delimited)
+                  | （税込）
             .d-flex
               .p-2.mb-1
                 | 当月（#{Date.current.strftime('%m')}月中）
@@ -158,7 +158,7 @@
             /       | 件
             .d-flex
               .p-2.mb-1
-                | 年間概算予想
+                | 年間報酬
                 .fs-6 
                   | ¥
                   span.fs-4 
@@ -203,7 +203,7 @@
                 | 特別代理店報酬詳細
               .d-flex
                 .p-2.mb-1
-                  | 傘下代理店対象件数
+                  | 特別代理店報酬対象件数
                   .fs-6.text-center
                     = @special_reward_cnt 
                     | 件

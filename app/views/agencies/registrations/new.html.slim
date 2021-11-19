@@ -12,7 +12,10 @@
             .card-body
               .form-group
                 = f.label :parent_agency_id, '代理店ID'
-                = f.text_field :parent_agency_id, class: 'form-control', :placeholder=>"QXX-XXX"
+                - if @agency.errors.include?(:parent_agency_id)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:parent_agency_id).first}
+                = f.text_field :parent_agency_id, class: 'form-control', :placeholder=>"※特別代理店として登録する際は、空欄にしてください"
               .form-group
                 = f.label :company_type, '事業者種別'
                 | 【
@@ -108,6 +111,9 @@
                 = f.text_field :bank_account_holder_kana, class: 'form-control', :placeholder=>"ヤマダ　タロウ"
           .form-group.mt-1
             = f.label :password, "ログインパスワード", :class => "form-label"
+            - if @agency.errors.include?(:password)
+              .error-message
+              | * #{@agency.errors.full_messages_for(:password).first}
             = f.password_field :password, :class => "form-control"
 
           .actions

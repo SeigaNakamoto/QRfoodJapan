@@ -120,7 +120,7 @@ class Admins::UserListController < ApplicationController
 
   def send_companies_csv(companies)
     csv_data = CSV.generate do |csv|
-      column_names = %w(店舗ID 事業者名 店舗名 店舗TEL 店舗MAIL 代理店ID 代理店担当者名 申込日 進捗ステータス 決済ステータス 金融機関名 金融機関コード 支店名 支店コード 口座種別 口座名義（カナ） 口座番号)
+      column_names = %w(店舗ID 事業者名 店舗名 プラン名 店舗TEL 店舗MAIL 代理店ID 代理店担当者名 申込日 進捗ステータス 決済ステータス 金融機関名 金融機関コード 支店名 支店コード 口座種別 口座名義（カナ） 口座番号)
       csv << column_names
       companies.each do |company|
         company.stores.each do |store|
@@ -128,6 +128,7 @@ class Admins::UserListController < ApplicationController
             store.id,
             company.corp_name,
             store.store_name,
+            Plan.where(id: store.plan_id).first.name,
             store.store_tel,
             store.store_email,
             store.agency_id,

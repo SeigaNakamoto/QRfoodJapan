@@ -12,13 +12,10 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     build_resource(sign_up_params)
-    if resource.parent_agency_id.eql?("parent")
+    if resource.parent_agency_id.eql?("")
       # 代理店テーブルの親代理店の数をカウント
       @parent_no = sprintf("%02d", Agency.where(parent_agency_id: "parent").count + 1)
-      # QXX-000作成
-      create_parent_agency.save
       # 代理店IDを作成
-      resource.parent_agency_id = "Q#{@parent_no}-000"
       resource.agency_id = "Q#{@parent_no}-001"
     else
       parent_no = resource.parent_agency_id[1, 2]
@@ -27,10 +24,18 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
       # 親代理店IDの2桁の数値を格納（例：「Q03-000」の場合、『03』）
       # 今回が何店舗目の傘下代理店登録か、Agencyテーブルにある代理店IDをカウントし、代理店IDを作成
     end  
+
     resource.save
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
+        if resource.parent_agency_id.eql?("")
+          # QXX-000作成
+          create_parent_agency.save
+          # QXX-001作成
+          resource.parent_agency_id = "Q#{@parent_no}-000"
+          resource.save
+        end
         set_flash_message! :notice, :signed_up
         sign_up(resource_name, resource)
         respond_with resource, location: after_sign_up_path_for(resource)

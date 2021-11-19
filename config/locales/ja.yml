@@ -25,6 +25,7 @@ ja:
         bank_account_type: 口座種別
         bank_account_number: 口座番号
         bank_account_holder_kana: 口座名義（カナ）
+        password: パスワード
 
       company:
         company_type: 事業者種別
@@ -47,7 +48,7 @@ ja:
         rep_email: 代表者 メールアドレス
 
       store:
-        agency_id": 代理店ID
+        agency_charge_id": 代理店ID
         agency_per_name: 代理店担当者名
         store_name: 店舗名
         store_name_kana: 店舗名（カナ）

@@ -1,8 +1,8 @@
 class CreateStores < ActiveRecord::Migration[6.1]
   def change
     create_table :stores do |t|
-      t.string :app_id
-      t.string :password_digest
+      t.string :app_id, null: false, default: ""
+      t.string :password_digest, null: false, default: ""
       t.string :store_name, null: false
       t.string :store_name_kana, null: false
       t.string :alphabet_notation

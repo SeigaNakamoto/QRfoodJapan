@@ -19,7 +19,7 @@
 #  hp                       :text(65535)
 #  menu_cnt                 :integer          default(0), not null
 #  menu_photo_cnt           :integer          default(0), not null
-#  password_digest          :string(255)
+#  password_digest          :string(255)      default(""), not null
 #  per_email                :string(255)      not null
 #  per_name                 :string(255)      not null
 #  per_name_kana            :string(255)      not null
@@ -44,7 +44,7 @@
 #  updated_at               :datetime         not null
 #  agency_charge_id         :string(255)
 #  agency_id                :bigint           not null
-#  app_id                   :string(255)
+#  app_id                   :string(255)      default(""), not null
 #  company_id               :bigint           not null
 #  plan_id                  :bigint           not null
 #
@@ -63,7 +63,7 @@
 #
 class Store < ApplicationRecord
   belongs_to :company
-  # belongs_to :agency
+  belongs_to :agency
   belongs_to :plan
 
   #enum

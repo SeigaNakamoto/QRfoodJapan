@@ -23,7 +23,7 @@
                   - total = 0
                   - @agencies.each do |a|
                     - @plans.each do |p|
-                      - total += (Store.where(agency_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
+                      - total += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
                   | ¥
                   = total.to_s(:delimited)
                   | (税込)
@@ -59,13 +59,13 @@
                     td.plan
                       - @plans.each do |p|
                         = p.name
-                        | ：#{Store.where(agency_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
+                        | ：#{Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
                         br/
                     td
                       .text-right
                         - total = 0
                         - @plans.each do |p|
-                          - total += (Store.where(agency_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
+                          - total += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
                         | ¥
                         = total.to_s(:delimited)
             = paginate @agencies
@@ -86,7 +86,7 @@
                   | 傘下代理店数
                 .col.text-right
                   = @child_agencies.count
-                  | 店舗
+                  | 代理店
               li.d-flex              
                 .col
                   | 累計代理店報酬
@@ -94,7 +94,7 @@
                   - total = 0
                   - @agencies.each do |a|
                     - @plans.each do |p|
-                      - total += (Store.where(agency_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
+                      - total += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
                   | ¥
                   = total.to_s(:delimited)
                   | (税込)
@@ -131,13 +131,13 @@
                       td.plan
                         - @plans.each do |p|
                           = p.name
-                          | ：#{Store.where(agency_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
+                          | ：#{Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
                           br/
                       td
                         .text-right
                           - total = 0
                           - @plans.each do |p|
-                            - total += (Store.where(agency_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
+                            - total += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
                           | ¥
                           = total.to_s(:delimited)
               = paginate @agencies

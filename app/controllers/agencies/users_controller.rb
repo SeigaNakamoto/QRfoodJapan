@@ -7,7 +7,7 @@ class Agencies::UsersController < ApplicationController
       @plans = Plan.all
 
       if params[:agency_id] != nil then
-        @store.agency_id = params[:agency_id]
+        @store.agency_charge_id = params[:agency_id]
       end
   end
   
@@ -15,7 +15,16 @@ class Agencies::UsersController < ApplicationController
     @company = Company.new(company_params)
     @store = Store.new(store_params[:store])
     @plans = Plan.all
-    if @company.valid? & (@store.valid? | @store.errors.size.eql?(1))
+
+    if Agency.where(agency_id: @store.agency_charge_id).exists?
+      @store.agency_id = Agency.where(agency_id: @store.agency_charge_id).first.id
+      @store.valid?
+    else
+      @store.valid?
+      @store.errors.add(:agency_charge_id, 'は登録されていない代理店IDです')
+    end
+    
+    if @company.valid? & @store.errors.size.eql?(1)
       @company.save
       @store.company_id = @company.id
       @store.save
@@ -62,9 +71,6 @@ class Agencies::UsersController < ApplicationController
   def store_params
     params.require(:company).permit(
       store:[
-        :agency_id,
-        :agency_per_name,
-        :company_id,
         :store_name,
         :store_name_kana,
         :alphabet_notation,
@@ -97,6 +103,10 @@ class Agencies::UsersController < ApplicationController
         :bank_account_type,
         :bank_account_number,
         :bank_account_holder_kana,
+        :agency_id,
+        :agency_charge_id,
+        :agency_per_name,
+        :company_id,
         :plan_id,
         :plan_settlement,
         :agreement,

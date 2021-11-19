@@ -15,4 +15,5 @@
 #  index_plans_on_name  (name) UNIQUE
 #
 class Plan < ApplicationRecord
+    has_many :stores
 end
