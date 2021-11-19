@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(version: 2021_10_20_064053) do
   end
 
   create_table "stores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "app_id", default: "", null: false
-    t.string "password_digest", default: "", null: false
+    t.string "app_id"
+    t.string "password_digest"
     t.string "store_name", null: false
     t.string "store_name_kana", null: false
     t.string "alphabet_notation"
