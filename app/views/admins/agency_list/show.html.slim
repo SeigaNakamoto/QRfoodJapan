@@ -28,6 +28,8 @@
                 .mb-2
                   | 代理店ID：
                   = @agency.agency_id
+                  - unless @agency.agency_id[4,3].eql?("001")
+                    | （親：#{@agency.parent_agency_id}）
               .form-group
                 = f.label :company_type, '事業者種別'
                 | 【
