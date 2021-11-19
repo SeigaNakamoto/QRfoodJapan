@@ -88,9 +88,9 @@
                 | 動画を視聴する
             .d-flex.align-items-center.justify-content-between.plan_item
               | 営業資料ダウンロード
-              = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', class: 'btn btn-primary' do 
+              = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do 
                 | ダウンロード
             .d-flex.align-items-center.justify-content-between
               | プラン申込みURL
-              = link_to agencies_payment_path(agency_id: @agency.agency_id), class: 'btn btn-primary' do 
+              = link_to new_user_path(agency_id: @agency.agency_id), class: 'btn btn-primary' do 
                 | 申込み画面へ
