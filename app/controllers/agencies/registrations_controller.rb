@@ -28,7 +28,6 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
       # 親代理店IDの2桁の数値を格納（例：「Q03-000」の場合、『03』）
       # 今回が何店舗目の傘下代理店登録か、Agencyテーブルにある代理店IDをカウントし、代理店IDを作成
     end
-
     resource.save
 
     yield resource if block_given?

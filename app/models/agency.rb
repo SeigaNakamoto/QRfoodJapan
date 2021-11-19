@@ -72,10 +72,8 @@ class Agency < ApplicationRecord
   validates :bank_account_holder_kana, presence: true
 
   def parent_agency_id_check
-    unless parent_agency_id.blank? && parent_agency_id.eql?('parent')
-      unless Agency.where(agency_id: parent_agency_id).exists? && parent_agency_id[4,3].eql?('000')
-          errors.add(:parent_agency_id, '有効な代理店IDを入力してください')
-      end
+    unless parent_agency_id.blank? || (Agency.where(agency_id: parent_agency_id).exists? && parent_agency_id[4,3].eql?('000')) || (agency_id[4,3].eql?('000') && parent_agency_id.eql?('parent'))
+      errors.add(:parent_agency_id, '有効な代理店IDを入力してください')
     end
   end
 
