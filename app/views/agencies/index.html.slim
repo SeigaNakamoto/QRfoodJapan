@@ -16,13 +16,13 @@
         .card
           .card-body
             - if @agency.agency_id[4,3].eql?('001')
-              this_month = (@special_reward + @child_agencies_reward).to_s(:delimited)
-              same_month = (@special_reward_m + @child_agencies_reward_m).to_s(:delimited)
-              year_reward = ((@special_reward + @child_agencies_reward) * 12).to_s(:delimited)
+              - @this_month = (@special_reward + @child_agencies_reward).to_s(:delimited)
+              - @same_month = (@special_reward_m + @child_agencies_reward_m).to_s(:delimited)
+              - @year_reward = ((@special_reward + @child_agencies_reward) * 12).to_s(:delimited)
             - else
-              this_month = (@st_total + @sp_total + @special_reward).to_s(:delimited)
-              same_month = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
-              year_reward = ((@st_total + @sp_total + @special_reward) * 12).to_s(:delimited)
+              - @this_month = (@st_total + @sp_total + @special_reward).to_s(:delimited)
+              - @same_month = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
+              - @year_reward = ((@st_total + @sp_total + @special_reward) * 12).to_s(:delimited)
             .d-flex.justify-content-between
               .badge.badge-pil.badge-secondary.p-2
                 | 現在の報酬詳細
@@ -42,14 +42,14 @@
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = this_month 
+                    = @this_month 
                   | （税込）
               .p-2.mb-1
                 | 当月（#{Date.current.strftime('%m')}月中）
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = same_month
+                    = @same_month
                   | （税込）
               / .p-2.mb-1
               /   | 当月解約
@@ -62,7 +62,7 @@
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = year_reward
+                    = @year_reward
                   | （税込）
         .card
           .card-body
@@ -128,13 +128,13 @@
         .card
           .card-body
             - if @agency.agency_id[4,3].eql?('001')
-              this_month = (@special_reward + @child_agencies_reward).to_s(:delimited)
-              same_month = (@special_reward_m + @child_agencies_reward_m).to_s(:delimited)
-              year_reward = ((@special_reward + @child_agencies_reward) * 12).to_s(:delimited)
+              - @this_month = (@special_reward + @child_agencies_reward).to_s(:delimited)
+              - @same_month = (@special_reward_m + @child_agencies_reward_m).to_s(:delimited)
+              - @year_reward = ((@special_reward + @child_agencies_reward) * 12).to_s(:delimited)
             - else
-              this_month = (@st_total + @sp_total + @special_reward).to_s(:delimited)
-              same_month = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
-              year_reward = ((@st_total + @sp_total + @special_reward) * 12).to_s(:delimited)
+              - @this_month = (@st_total + @sp_total + @special_reward).to_s(:delimited)
+              - @same_month = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
+              - @year_reward = ((@st_total + @sp_total + @special_reward) * 12).to_s(:delimited)
             .d-flex.justify-content-between
               .badge.badge-pil.badge-secondary.p-2
                 | 現在の報酬詳細
@@ -155,7 +155,7 @@
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = this_month 
+                    = @this_month 
                   | （税込）
             .d-flex
               .p-2.mb-1
@@ -163,7 +163,7 @@
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = same_month
+                    = @same_month
                   | （税込）
             / .d-flex
             /   .p-2.mb-1
@@ -178,7 +178,7 @@
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = year_reward
+                    = @year_reward
                   | (税込)
         .card
           .card-body
