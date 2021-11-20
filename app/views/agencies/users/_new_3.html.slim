@@ -82,19 +82,11 @@
   .card-header
     h5.card-title 紹介者情報
   .card-body
-    -if params[:agency_id] != nil
-      .py-2
-        .mb-2
-        | 代理店ID：
-        = @store.agency_charge_id
-        = s.hidden_field :agency_charge_id, :value => @store.agency_charge_id
-    -else
-      .form-group
-        = s.label :agency_charge_id, '代理店ID'
-        - if @store.errors.include?(:agency_charge_id)
-          .error-message
-            | * #{@store.errors.full_messages_for(:agency_charge_id).first}
-        = s.text_field :agency_charge_id, class: 'form-control', :placeholder=>"QXX-XXX"
+    .py-2
+      .mb-2
+      | 代理店ID：
+      = @store.agency_charge_id
+      = s.hidden_field :agency_charge_id, :value => @store.agency_charge_id
     .form-group
       = s.label :agency_per_name, '代理店担当者名'
       = s.text_field :agency_per_name, class: 'form-control', :placeholder=>"山田太郎"

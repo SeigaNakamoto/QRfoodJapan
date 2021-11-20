@@ -72,7 +72,7 @@
                             = p.name
                       td= s.store_tel
                       td= s.store_email
-                      td= s.agency_id
+                      td= s.agency_charge_id
                       td= s.agency_per_name
                       td= s.created_at.to_s(:datetime_jp_Ymd)
                       td= select :progress_status, :name, options_for_select(Store.progress_statuses_i18n.invert, selected: s.progress_status), {}, { class: 'js-progress_status form-control', data: { id: s.id } }
@@ -151,7 +151,7 @@
                             = p.name
                       td= s.store_tel
                       td= s.store_email
-                      td= s.agency_id
+                      td= s.agency_charge_id
                       td= s.agency_per_name
                       td= s.created_at.to_s(:datetime_jp_Ymd)
                       td= select :progress_status, :name, options_for_select(Store.progress_statuses_i18n.invert, selected: s.progress_status), {}, { class: 'js-progress_status form-control', data: { id: s.id } }
