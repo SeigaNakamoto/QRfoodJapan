@@ -23,7 +23,7 @@
             = render partial: 'edit_3_form', locals: {c: c, s: s, btn: '更新'}
         .d-flex.align-items-center
           .ml-auto.boards__linkBox
-            = link_to '削除', admins_user_list_path(@company.id), class: 'btn btn-outline-dark', method: :delete
+            = link_to '削除', admins_user_list_path(@company.id), class: 'btn btn-outline-dark', method: :delete, data: {confirm: "本当に削除しますか？"}
           .ml-auto.boards__linkBox
             = link_to '一覧に戻る', admins_user_list_index_path, class: 'btn btn-outline-dark'
 
@@ -51,6 +51,6 @@
             = render partial: 'edit_3_form', locals: {c: c, s: s, btn: '更新'}
         .d-flex.align-items-center.justify-content-between
           .ml-auto.boards__linkBox
-            = link_to '削除', admins_user_list_path(@company.id), class: 'btn btn-outline-dark', method: :delete
+            = link_to '削除', admins_user_list_path(@company.id), class: 'btn btn-outline-dark', method: :delete, data: {confirm: "本当に削除しますか？"}
           .ml-auto.boards__linkBox
             = link_to '一覧に戻る', admins_user_list_index_path, class: 'btn btn-outline-dark'

@@ -20,12 +20,7 @@
                 .col
                   | 累計代理店報酬
                 .col.text-right
-                  - total = 0
-                  - @agencies.each do |a|
-                    - @plans.each do |p|
-                      - total += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
-                  | ¥
-                  = total.to_s(:delimited)
+                  = @child_agencies_reward
                   | (税込)
               li.d-flex              
                 .col

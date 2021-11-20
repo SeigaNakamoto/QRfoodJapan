@@ -56,7 +56,6 @@ class AgenciesController < ApplicationController
   end
   
   def agency_list
-    @agencies = Agency.where(parent_agency_id: @agency.parent_agency_id).page(params[:page]).per(30)
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
   end
   
@@ -64,20 +63,28 @@ class AgenciesController < ApplicationController
   
   def set_agency
     @agency = current_agency
+    @agencies = Agency.where(parent_agency_id: @agency.parent_agency_id).page(params[:page]).per(30)
     @plans = Plan.all
     @tax = 1.1
 
     # 傘下代理店一覧
     @child_agencies = Agency.where(parent_agency_id: @agency.parent_agency_id)
 
-    # 【今月】特別代理店報酬対象件数
-    @special_reward_cnt = 0
-    # 【当月】特別代理店報酬対象件数
-    @special_reward_cnt_m = 0
+    # 【今月/当月】特別代理店報酬対象件数
+    @special_reward_cnt, @special_reward_cnt_m = 0, 0
+    # 【今月/当月】累計代理店報酬
+    @child_agencies_reward, @child_agencies_reward_m = 0, 0
+    
     if @agency.agency_id[4,3].eql?('001')
       @child_agencies.each do |child|
         @special_reward_cnt += Store.where(agency_charge_id: child.agency_id, settlement_status: [0,2]).count
         @special_reward_cnt_m += Store.where(agency_charge_id: child.agency_id, settlement_status: [0,2], created_at: Date.current.strftime('%Y-%m-%d').in_time_zone.all_month).count
+      end
+      @agencies.each do |a|
+        @plans.each do |p|
+          @child_agencies_reward += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
+          @child_agencies_reward_m += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2], created_at: Date.current.strftime('%Y-%m-%d').in_time_zone.all_month).count * p.reward_price * @tax).to_i
+        end
       end
     end
   end

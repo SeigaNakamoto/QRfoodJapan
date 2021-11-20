@@ -34,14 +34,14 @@
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = (@st_total + @sp_total + @special_reward).to_s(:delimited)
+                    = (@st_total + @sp_total + @special_reward + @child_agencies_reward).to_s(:delimited)
                   | （税込）
               .p-2.mb-1
                 | 当月（#{Date.current.strftime('%m')}月中）
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
+                    = (@st_total_m + @sp_total_m + @special_reward_m + @child_agencies_reward_m).to_s(:delimited)
                   | （税込）
               / .p-2.mb-1
               /   | 当月解約
@@ -139,7 +139,7 @@
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = (@st_total + @sp_total + @special_reward).to_s(:delimited)
+                    = (@st_total + @sp_total + @special_reward + @child_agencies_reward).to_s(:delimited)
                   | （税込）
             .d-flex
               .p-2.mb-1
@@ -147,7 +147,7 @@
                 .fs-6 
                   | ¥
                   span.fs-4 
-                    = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
+                    = (@st_total_m + @sp_total_m + @special_reward_m + @child_agencies_reward_m).to_s(:delimited)
                   | （税込）
             / .d-flex
             /   .p-2.mb-1
