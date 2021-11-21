@@ -1,8 +1,10 @@
 nav.client-header.navbar.navbar-expand-lg.navbar-light.border-bottom.position-fixed.w-100.d-xl-none
   ul
     li.sidebar__wraper.text-light.text-left
-        | 会社名：
-        = @agency.agency_name
+      - if @agency.company_type.eql?("法人")
+        | 会社名：#{@agency.agency_name}
+      - else
+        | 個人事業主
     li.sidebar__wraper.text-light.text-left
         | 氏名：
         = @agency.agency_rec_name

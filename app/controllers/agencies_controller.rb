@@ -39,6 +39,16 @@ class AgenciesController < ApplicationController
     @special_reward_m = (@special_reward_cnt_m * 2000 * @tax).to_i
   end
   
+  def update
+    @agency = Agency.find(params[:id])
+    if @agency.update(agency_params)
+      flash[:success] = "「#{@agency.agency_name}」の代理店情報を変更しました。"
+      redirect_to agency_path(@agency.id)
+    else
+      render 'show'
+    end
+  end
+
   def projects
     @agencies = Agency.page(params[:page])
   end
@@ -60,7 +70,27 @@ class AgenciesController < ApplicationController
   end
   
   private
-  
+
+  def agency_params
+    params.require(:agency).permit(
+      :company_type,
+      :agency_name,
+      :agency_postal,
+      :agency_add,
+      :agency_rec_name,
+      :agency_rec_tel,
+      :agency_tel,
+      :agency_mail,
+      :bank_name,
+      :bank_code,
+      :bank_branch_name,
+      :bank_branch_code,
+      :bank_account_type,
+      :bank_account_number,
+      :bank_account_holder_kana
+    )
+  end
+
   def set_agency
     @agency = current_agency
     @agencies = Agency.where(parent_agency_id: @agency.parent_agency_id).page(params[:page]).per(30)
