@@ -47,7 +47,11 @@
                 - @agencies.each do |a|
                   tr
                     td= a.agency_id
-                    td= a.agency_name
+                    td
+                      - if a.company_type.eql?("法人")
+                        = a.agency_name
+                      - else
+                        | ＜個人＞#{a.agency_rec_name}
                     td= a.agency_tel
                     td= a.agency_mail
                     td= a.created_at.to_s(:datetime_jp_Ymd)
@@ -114,7 +118,11 @@
                   - @agencies.each do |a|
                     tr
                       td= a.agency_id
-                      td= a.agency_name
+                      td
+                        - if a.company_type.eql?("法人")
+                          = a.agency_name
+                        - else
+                        | ＜個人＞#{a.agency_rec_name}
                       td= a.agency_tel
                       td= a.agency_mail
                       td= a.created_at.to_s(:datetime_jp_Ymd)
