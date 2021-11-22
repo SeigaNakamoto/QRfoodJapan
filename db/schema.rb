@@ -131,7 +131,6 @@ ActiveRecord::Schema.define(version: 2021_10_20_064053) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["agency_id"], name: "index_stores_on_agency_id"
-    t.index ["app_id"], name: "index_stores_on_app_id", unique: true
     t.index ["company_id"], name: "index_stores_on_company_id"
     t.index ["plan_id"], name: "index_stores_on_plan_id"
   end

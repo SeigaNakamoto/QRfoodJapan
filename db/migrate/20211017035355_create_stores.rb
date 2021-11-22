@@ -46,6 +46,5 @@ class CreateStores < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-    add_index :stores, :app_id, unique: true
   end
 end

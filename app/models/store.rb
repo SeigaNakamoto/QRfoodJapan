@@ -51,7 +51,6 @@
 # Indexes
 #
 #  index_stores_on_agency_id   (agency_id)
-#  index_stores_on_app_id      (app_id) UNIQUE
 #  index_stores_on_company_id  (company_id)
 #  index_stores_on_plan_id     (plan_id)
 #
