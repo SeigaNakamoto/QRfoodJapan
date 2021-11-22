@@ -30,7 +30,8 @@ class Admins::UserListController < ApplicationController
     @plans = Plan.all
     if @company.update(company_params) & @store.update(store_params[:store])
       flash[:success] = "「#{@store.store_name}」のユーザー情報を変更しました。"
-      redirect_to admins_user_list_path(@company.id)
+      redirect_to admins_user_list_index_path
+      # redirect_to admins_user_list_index_pathadmins_user_list_path(params[:id]))
     else
       render 'show'
     end
