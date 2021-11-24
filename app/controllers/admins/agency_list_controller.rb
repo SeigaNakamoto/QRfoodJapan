@@ -51,7 +51,8 @@ class Admins::AgencyListController < ApplicationController
       :bank_branch_code,
       :bank_account_type,
       :bank_account_number,
-      :bank_account_holder_kana
+      :bank_account_holder_kana,
+      :memo
     )
   end
 

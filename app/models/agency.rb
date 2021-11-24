@@ -19,6 +19,7 @@
 #  bank_name                :string(255)      not null
 #  company_type             :string(255)      not null
 #  encrypted_password       :string(255)      default(""), not null
+#  memo                     :text(65535)
 #  remember_created_at      :datetime
 #  reset_password_sent_at   :datetime
 #  reset_password_token     :string(255)
