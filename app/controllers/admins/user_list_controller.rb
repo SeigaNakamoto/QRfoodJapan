@@ -3,7 +3,7 @@ class Admins::UserListController < ApplicationController
   require 'csv'
   
   def index
-    @companies = Company.joins(:stores).page(params[:page]).per(30)
+    @companies = Company.order(id: :desc).joins(:stores).page(params[:page]).per(30)
     @plans = Plan.all
 
     @companiescsv = Company.joins(:stores).all
