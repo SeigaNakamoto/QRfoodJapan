@@ -100,8 +100,8 @@ class Store < ApplicationRecord
     # validates :reservation
     validates :table_cnt                , presence: true, numericality: true
     validates :counter_cnt              , presence: true, numericality: true
-    validates :menu_cnt                 , presence: true, numericality: true
-    validates :menu_photo_cnt           , presence: true, numericality: true
+    # validates :menu_cnt
+    # validates :menu_photo_cnt
     validates :bank_name                , presence: true
     validates :bank_code                , presence: true, length: { is: 4 }, numericality: true
     validates :bank_branch_name         , presence: true

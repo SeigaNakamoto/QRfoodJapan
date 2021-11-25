@@ -258,8 +258,6 @@ if Rails.env == 'development'
       reservation: "可",
       table_cnt: 10,
       counter_cnt: 10,
-      menu_cnt: 10,
-      menu_photo_cnt: 10,
       bank_name: "三井住友銀行",
       bank_code: "0009",
       bank_branch_name: "本店",

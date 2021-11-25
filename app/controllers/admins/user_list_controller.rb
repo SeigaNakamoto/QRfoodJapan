@@ -100,8 +100,6 @@ class Admins::UserListController < ApplicationController
         :reservation,
         :table_cnt,
         :counter_cnt,
-        :menu_cnt,
-        :menu_photo_cnt,
         :bank_name,
         :bank_code,
         :bank_branch_name,

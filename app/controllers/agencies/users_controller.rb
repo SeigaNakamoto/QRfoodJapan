@@ -1,5 +1,5 @@
 class Agencies::UsersController < ApplicationController
-  before_action :authenticate_agency!
+  # before_action :authenticate_agency!
   
   def new
       @company = Company.new
@@ -94,8 +94,6 @@ class Agencies::UsersController < ApplicationController
         :reservation,
         :table_cnt,
         :counter_cnt,
-        :menu_cnt,
-        :menu_photo_cnt,
         :bank_name,
         :bank_code,
         :bank_branch_name,

@@ -142,15 +142,15 @@
         .error-message
           | * #{@store.errors.full_messages_for(:counter_cnt).first}
       = s.text_field :counter_cnt, class: 'form-control', :placeholder=>"半角数字"
-    .form-group
-      = s.label :menu_cnt, 'メニュー数'
-      - if @store.errors.include?(:menu_cnt)
-        .error-message
-          | * #{@store.errors.full_messages_for(:menu_cnt).first}
-      = s.text_field :menu_cnt, class: 'form-control', :placeholder=>"半角数字"
-    .form-group
-      = s.label :menu_photo_cnt, 'メニュー個別写真数'
-      - if @store.errors.include?(:menu_photo_cnt)
-        .error-message
-          | * #{@store.errors.full_messages_for(:menu_photo_cnt).first}
-      = s.text_field :menu_photo_cnt, class: 'form-control', :placeholder=>"半角数字"
+    / .form-group
+    /   = s.label :menu_cnt, 'メニュー数'
+    /   - if @store.errors.include?(:menu_cnt)
+    /     .error-message
+    /       | * #{@store.errors.full_messages_for(:menu_cnt).first}
+    /   = s.text_field :menu_cnt, class: 'form-control', :placeholder=>"半角数字"
+    / .form-group
+    /   = s.label :menu_photo_cnt, 'メニュー個別写真数'
+    /   - if @store.errors.include?(:menu_photo_cnt)
+    /     .error-message
+    /       | * #{@store.errors.full_messages_for(:menu_photo_cnt).first}
+    /   = s.text_field :menu_photo_cnt, class: 'form-control', :placeholder=>"半角数字"
