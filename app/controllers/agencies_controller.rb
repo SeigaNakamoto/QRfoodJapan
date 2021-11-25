@@ -54,7 +54,7 @@ class AgenciesController < ApplicationController
   end
   
   def store_list
-    @companies = Company.joins(:stores).where(stores: { agency_charge_id: @agency.agency_id}).page(params[:page]).per(30)
+    @companies = Company.order(id: :desc).joins(:stores).where(stores: { agency_charge_id: @agency.agency_id}).page(params[:page]).per(30)
     @companiescsv = Company.joins(:stores).where(stores: { agency_charge_id: @agency.agency_id}).all
     # CSV出力
     respond_to do |format|
