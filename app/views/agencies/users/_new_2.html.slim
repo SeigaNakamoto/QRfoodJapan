@@ -155,7 +155,7 @@
       = s.text_field :hp, class: 'form-control', :placeholder=>"HP、食べログなどのURL"
     .form-group
       .d-flex
-        = s.label :ave_price, '平均価格帯'
+        = s.label :ave_price, '平均価格帯（1,000円単位）'
         .error-message *
       - if @store.errors.include?(:ave_price)
         .error-message

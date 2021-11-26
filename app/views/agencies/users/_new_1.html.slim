@@ -65,6 +65,7 @@
             | * #{@company.errors.full_messages_for(:corp_date).first}
         = c.date_field :corp_date, value: Time.now.strftime("%Y-%m-%d"), class: 'form-control'
     hr/
+    | ◆法人・個人事業主
     .form-row
       .form-group.col-xl-2
         .d-flex

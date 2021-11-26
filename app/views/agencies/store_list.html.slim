@@ -21,6 +21,7 @@
                 tr
                   th.text-nowrap 店舗ID
                   th.text-nowrap お申込者名
+                  th.text-nowrap 担当者
                   th.text-nowrap 店舗名
                   th.text-nowrap プラン名
                   th.text-nowrap 店舗TEL
@@ -33,6 +34,7 @@
                     tr
                       td= c.id
                       td= s.per_name
+                      td= s.agency_per_name
                       td= s.store_name
                       td
                         - @plans.each do |p|
@@ -66,6 +68,7 @@
                   tr
                     th.text-nowrap 店舗ID
                     th.text-nowrap お申込者名
+                    th.text-nowrap 担当者
                     th.text-nowrap 店舗名
                     th.text-nowrap プラン名
                     th.text-nowrap 店舗TEL
@@ -78,6 +81,7 @@
                       tr
                         td= c.id
                         td= s.per_name
+                        td= s.agency_per_name
                         td= s.store_name
                         td
                           - @plans.each do |p|
