@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 2021_11_24_211328) do
     t.string "corp_add_kana"
     t.string "corp_tel"
     t.string "corp_fax"
-    t.string "corp_num"
     t.date "corp_date"
     t.string "rep_post", null: false
     t.string "rep_name", null: false
@@ -128,7 +127,6 @@ ActiveRecord::Schema.define(version: 2021_11_24_211328) do
     t.string "agency_charge_id"
     t.string "agency_per_name"
     t.bigint "plan_id", null: false
-    t.string "plan_settlement", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["agency_id"], name: "index_stores_on_agency_id"

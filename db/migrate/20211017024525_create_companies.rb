@@ -8,7 +8,6 @@ class CreateCompanies < ActiveRecord::Migration[6.1]
       t.string :corp_add_kana
       t.string :corp_tel
       t.string :corp_fax
-      t.string :corp_num
       t.date :corp_date
       t.string :rep_post, null: false
       t.string :rep_name, null: false

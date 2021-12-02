@@ -9,7 +9,6 @@
 #  corp_date     :date
 #  corp_fax      :string(255)
 #  corp_name     :string(255)
-#  corp_num      :string(255)
 #  corp_postal   :string(255)
 #  corp_tel      :string(255)
 #  rep_add       :string(255)      not null
@@ -39,7 +38,6 @@ class Company < ApplicationRecord
     # validates :corp_add_kana
     # validates :corp_tel, format: { with: VALID_PHONE_REGEX }
     # validates :corp_fax, format: { with: VALID_PHONE_REGEX }
-    # validates :corp_num, length: { is: 13 }
     # validates :corp_date
     validates :rep_post        , presence: true
     validates :rep_name        , presence: true

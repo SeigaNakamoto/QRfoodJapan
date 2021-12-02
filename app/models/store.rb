@@ -25,7 +25,6 @@
 #  per_name_kana            :string(255)      not null
 #  per_post                 :string(255)      not null
 #  per_tel                  :string(255)      not null
-#  plan_settlement          :string(255)      not null
 #  progress_status          :integer          default("photo_waiting"), not null
 #  regular_holiday          :string(255)      not null
 #  reservation              :string(255)      not null
@@ -110,8 +109,8 @@ class Store < ApplicationRecord
     validates :bank_account_number      , presence: true, length: { is: 7 }, numericality: true
     validates :bank_account_holder_kana , presence: true
     validates :plan_id                  , presence: true, presence: { message: 'を選択してください' }
-    # validates :plan_settlement
 
     validates_acceptance_of :agreement, allow_nil: false, on: :create, message: 'に同意してください'
+    validates_acceptance_of :agreement_up, allow_nil: false, on: :create, message: 'に同意してください'
 
 end

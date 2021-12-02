@@ -36,7 +36,6 @@ ja:
         corp_add_kana: 登記住所（カナ）
         corp_tel: 事業者電話番号
         corp_fax: 事業者FAX番号
-        corp_num: 法人番号
         corp_date: 設立年月日
         rep_post: 代表者 役職
         rep_name: 代表者 氏名
@@ -83,8 +82,8 @@ ja:
         bank_account_type: 口座種別
         bank_account_number: 口座番号
         bank_account_holder_kana: 口座名義（カナ）
-        plan_settlement: 決済機能有無
         agreement: 利用規約とプライバシーポリシー
+        agreement_up: 決済機能規約
 
   views:
     pagination:

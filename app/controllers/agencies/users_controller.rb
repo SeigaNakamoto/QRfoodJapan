@@ -54,7 +54,6 @@ class Agencies::UsersController < ApplicationController
       :corp_add_kana,
       :corp_tel,
       :corp_fax,
-      :corp_num,
       :corp_date,
       :rep_post,
       :rep_name,
@@ -106,8 +105,8 @@ class Agencies::UsersController < ApplicationController
         :agency_per_name,
         :company_id,
         :plan_id,
-        :plan_settlement,
         :agreement,
+        :agreement_up,
         :progress_status,
         :settlement_status
       ]

@@ -52,13 +52,7 @@
             | * #{@company.errors.full_messages_for(:corp_fax).first}
         = c.text_field :corp_fax, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
     .form-row
-      .form-group.col
-        = c.label :corp_num, '法人番号'
-        - if @company.errors.include?(:corp_num)
-          .error-message
-            | * #{@company.errors.full_messages_for(:corp_num).first}
-        = c.text_field :corp_num, class: 'form-control', :placeholder=>"13桁"
-      .form-group.col
+      .form-group.col-6
         = c.label :corp_date, '設立年月日'
         - if @company.errors.include?(:corp_date)
           .error-message

@@ -57,9 +57,6 @@
         - @plans.each do |p|
           - if p.id.eql?(@store.plan_id)
             | 【 #{p.name} （プラン料金：¥ #{p.sales_price.to_s(:delimited)}）】
-    .py-2
-      .mb-2
-        | 決済機能有無：【#{@store.plan_settlement}】
 .card
   .card-header
     .d-flex.align-items-center

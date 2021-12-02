@@ -84,21 +84,25 @@
           | ）】
           br/
     .form-group
+      - if @store.errors.include?(:agreement_up)
+        .error-message
+          | * #{@store.errors.full_messages_for(:agreement_up).first}
       .d-flex
-        = s.label :plan_settlement, '決済機能有無'
-        .error-message *
-      | 【
-      | #{s.radio_button :plan_settlement, '有', checked: true} 有：
-      | #{s.radio_button :plan_settlement, '無'} 無】
+        = s.check_box :agreement_up, :as => :boolean, checked:false 
+        | ◆
+        = link_to '決済機能規約', users_univapay_path, target: :_blank, rel: "noopener noreferrer"
+        | に同意する◆
     .form-group
       - if @store.errors.include?(:agreement)
         .error-message
           | * #{@store.errors.full_messages_for(:agreement).first}
-      = s.check_box :agreement, :as => :boolean, checked:false 
-      = link_to '利用規約', users_termsofservice_path, target: :_blank, rel: "noopener noreferrer"
-      | と
-      = link_to 'プライバシーポリシー', users_privacypolicy_path, target: :_blank, rel: "noopener noreferrer"
-      | に同意する
+      .d-flex
+        = s.check_box :agreement, :as => :boolean, checked:false 
+        | ◆
+        = link_to '利用規約', users_termsofservice_path, target: :_blank, rel: "noopener noreferrer"
+        | と
+        = link_to 'プライバシーポリシー', users_privacypolicy_path, target: :_blank, rel: "noopener noreferrer"
+        | に同意する◆
 .card
   .card-header
     h5.card-title 紹介者情報

@@ -55,7 +55,6 @@ class Admins::UserListController < ApplicationController
       :corp_add_kana,
       :corp_tel,
       :corp_fax,
-      :corp_num,
       :corp_date,
       :rep_post,
       :rep_name,
@@ -108,8 +107,8 @@ class Admins::UserListController < ApplicationController
         :bank_account_number,
         :bank_account_holder_kana,
         :plan_id,
-        :plan_settlement,
         :agreement,
+        :agreement_up,
         :progress_status,
         :settlement_status
       ]

@@ -42,7 +42,6 @@ class CreateStores < ActiveRecord::Migration[6.1]
       t.string :agency_charge_id
       t.string :agency_per_name
       t.references :plan, null: false, foreign_key: true
-      t.string :plan_settlement, null: false
 
       t.timestamps
     end

@@ -74,7 +74,6 @@ if Rails.env == 'production'
   #       corp_add_kana: "トウキョウトチヨダクマルノウチ1チョウメ",
   #       corp_tel: "0311112222",
   #       corp_fax: "0311112223",
-  #       corp_num: "0123456789101",
   #       corp_date: 20200101,
   #       rep_post: "代表取締役",
   #       rep_name: "山田太郎",
@@ -217,7 +216,6 @@ if Rails.env == 'development'
       corp_add_kana: "トウキョウトチヨダクマルノウチ1チョウメ",
       corp_tel: "0311112222",
       corp_fax: "0311112223",
-      corp_num: "0123456789101",
       corp_date: 20200101,
       rep_post: "代表取締役",
       rep_name: "山田太郎",
@@ -266,8 +264,8 @@ if Rails.env == 'development'
       bank_account_number: "1234567",
       bank_account_holder_kana: "ヤマダ　タロウ",
       plan_id: rand(1..3),
-      plan_settlement: "有",
-      agreement: true
+      agreement: true,
+      agreement_up: true,
     )
   end
 end

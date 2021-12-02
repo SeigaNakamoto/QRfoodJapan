@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   # QRfoodサービスお申込フォーム
   resources :users, module: 'agencies', only: [:new, :create]
   get  "users/payment"  => "agencies/users#payment"
+  get  "users/univapay" => "agencies/users#univapay"
   get  "users/termsofservice" => "agencies/users#termsofservice"
   get  "users/privacypolicy" => "agencies/users#privacypolicy"
   
