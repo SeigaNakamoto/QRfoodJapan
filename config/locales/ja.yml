@@ -82,6 +82,7 @@ ja:
         bank_account_type: 口座種別
         bank_account_number: 口座番号
         bank_account_holder_kana: 口座名義（カナ）
+        plan_id: プラン
         agreement: 利用規約とプライバシーポリシー
         agreement_up: 決済機能規約
 

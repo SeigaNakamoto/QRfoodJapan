@@ -108,7 +108,7 @@ class Store < ApplicationRecord
     validates :bank_account_type        , presence: true
     validates :bank_account_number      , presence: true, length: { is: 7 }, numericality: true
     validates :bank_account_holder_kana , presence: true
-    validates :plan_id                  , presence: true, presence: { message: 'を選択してください' }
+    validates :plan_id                  , presence: { message: 'を選択してください' }
 
     validates_acceptance_of :agreement, allow_nil: false, on: :create, message: 'に同意してください'
     validates_acceptance_of :agreement_up, allow_nil: false, on: :create, message: 'に同意してください'
