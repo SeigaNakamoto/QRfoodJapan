@@ -18,6 +18,7 @@ class CreateAgencies < ActiveRecord::Migration[6.1]
       t.string :bank_account_number, null: false
       t.string :bank_account_holder_kana, null: false
       t.string :parent_agency_id
+      t.text :memo
       
       t.timestamps
     end
