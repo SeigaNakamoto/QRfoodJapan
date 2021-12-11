@@ -114,7 +114,7 @@
             - if @agency.errors.include?(:password)
               .error-message
               | * #{@agency.errors.full_messages_for(:password).first}
-            = f.text_field :password, :class => "form-control"
+            = f.text_field :password, :class => "form-control", :placeholder=>"6文字以上の半角英数"
 
           .actions
             = f.submit "サインアップ", :class => "btn btn-block btn-secondary"
