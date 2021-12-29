@@ -1,0 +1,122 @@
+.container
+  .row
+    .card.col-sm-5.mx-auto.my-5
+      .card-body
+        h2.text-center.mb-4 QR FOOD JAPAN<br>for 代理店
+        h3.mt-1.mb-3.text-center 代理店登録
+        = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+          .card
+            .card-header
+              .d-flex.align-items-center
+                h5.card-title 基本情報
+            .card-body
+              .form-group
+                = f.label :parent_agency_id, '代理店ID'
+                - if @agency.errors.include?(:parent_agency_id)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:parent_agency_id).first}
+                = f.text_field :parent_agency_id, class: 'form-control', :placeholder=>"※特別代理店として登録する際は、空欄にしてください"
+              .form-group
+                = f.label :company_type, '事業者種別'
+                | 【
+                | #{f.radio_button :company_type, '法人', checked: true} 法人：
+                | #{f.radio_button :company_type, '個人事業主'} 個人事業主】
+              .form-group
+                = f.label :agency_name, '代理店名'
+                - if @agency.errors.include?(:agency_name)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:agency_name).first}
+                = f.text_field :agency_name, class: 'form-control', :placeholder=>"法人：法人名、個人事業主：活動名"
+              .form-group
+                = f.label :agency_postal, '代理店郵便番号'
+                - if @agency.errors.include?(:agency_postal)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:agency_postal).first}
+                = f.text_field :agency_postal, class: 'form-control', :placeholder=>"XXX-XXXX"
+              .form-group
+                = f.label :agency_add, '代理店住所'
+                - if @agency.errors.include?(:agency_add)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:agency_add).first}
+                = f.text_field :agency_add, class: 'form-control', :placeholder=>"法人：登記住所、個人事業主：代表者住所（都道府県市区町村番地建物名）"
+              .form-group
+                = f.label :agency_tel, '代理店電話番号（会社）'
+                - if @agency.errors.include?(:agency_tel)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:agency_tel).first}
+                = f.text_field :agency_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+              .form-group
+                = f.label :agency_rec_name, '窓口担当者名'
+                - if @agency.errors.include?(:agency_rec_name)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:agency_rec_name).first}
+                = f.text_field :agency_rec_name, class: 'form-control', :placeholder=>"山田太郎"
+              .form-group
+                = f.label :agency_rec_tel, '窓口担当者電話番号'
+                - if @agency.errors.include?(:agency_rec_tel)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:agency_rec_tel).first}
+                = f.text_field :agency_rec_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+              .form-group
+                = f.label :agency_mail, '代理店メールアドレス'
+                - if @agency.errors.include?(:agency_mail)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:agency_mail).first}
+                = f.text_field :agency_mail, class: 'form-control', :placeholder=>"au/docomo/softbankなどのキャリアアドレス以外"
+          .card
+            .card-header
+              .d-flex.align-items-center
+                h5.card-title 報酬振込先口座
+            .card-body
+              .form-group
+                = f.label :bank_name, '金融機関名'
+                - if @agency.errors.include?(:bank_name)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:bank_name).first}
+                = f.text_field :bank_name, class: 'form-control', :placeholder=>"〇〇銀行"
+              .form-group
+                = f.label :bank_code, '金融機関コード'
+                - if @agency.errors.include?(:bank_code)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:bank_code).first}
+                = f.text_field :bank_code, class: 'form-control', :placeholder=>"XXXX"
+              .form-group
+                = f.label :bank_branch_name, '支店名'
+                - if @agency.errors.include?(:bank_branch_name)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:bank_branch_name).first}
+                = f.text_field :bank_branch_name, class: 'form-control', :placeholder=>"〇〇支店"
+              .form-group
+                = f.label :bank_branch_code, '支店コード'
+                - if @agency.errors.include?(:bank_branch_code)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:bank_branch_code).first}
+                = f.text_field :bank_branch_code, class: 'form-control', :placeholder=>"XXX"
+              .form-group
+                = f.label :bank_account_type, '口座種別'
+                | 【
+                | #{f.radio_button :bank_account_type, '普通預金', checked: true} 普通預金：
+                | #{f.radio_button :bank_account_type, '当座預金'} 当座預金】
+              .form-group
+                = f.label :bank_account_number, '口座番号'
+                - if @agency.errors.include?(:bank_account_number)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:bank_account_number).first}
+                = f.text_field :bank_account_number, class: 'form-control', :placeholder=>"XXXXXXX"
+              .form-group
+                = f.label :bank_account_holder_kana, '口座名義（カナ）'
+                - if @agency.errors.include?(:bank_account_holder_kana)
+                  .error-message
+                  | * #{@agency.errors.full_messages_for(:bank_account_holder_kana).first}
+                = f.text_field :bank_account_holder_kana, class: 'form-control', :placeholder=>"ヤマダ　タロウ"
+          .form-group.mt-1
+            = f.label :password, "ログインパスワード", :class => "form-label"
+            - if @agency.errors.include?(:password)
+              .error-message
+              | * #{@agency.errors.full_messages_for(:password).first}
+            = f.text_field :password, :class => "form-control", :placeholder=>"6文字以上の半角英数"
+
+          .actions
+            = f.submit "サインアップ", :class => "btn btn-block btn-secondary"
+          .mt-3
+            = link_to 'ログイン', new_agency_session_path, :class => "btn btn-block btn-outline-secondary"

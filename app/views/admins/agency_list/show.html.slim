@@ -1,0 +1,280 @@
+.sidebar.d-none.d-xl-block
+  .row
+    .col-md-2
+      = render partial: 'admins/sidebar'
+    .col-md-10 
+      .container
+        h2.mt-3.font-weight-bold.valion-client-color 代理店詳細確認・更新
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_agency_list_index_path, class: 'btn btn-outline-dark'
+        
+        - if flash[:success]
+          .alert.alert-primary= flash[:success]
+        
+        - if @agency.errors.any?
+          .alert.alert-danger 入力内容をご確認ください。
+        
+        = form_with( model: @agency, url: admins_agency_list_path) do |f|
+        
+          .card
+            .card-header
+              .d-flex.align-items-center
+                h5.card-title 基本情報
+                .ml-auto.boards__linkBox
+                = f.submit '更新', class: 'btn btn-primary'
+            .card-body
+              .py-2
+                .mb-2
+                  | 代理店ID：
+                  = @agency.agency_id
+                  - unless @agency.agency_id[4,3].eql?("001")
+                    | （親：#{@agency.parent_agency_id}）
+              .form-group
+                = f.label :company_type, '事業者種別'
+                | 【
+                | #{f.radio_button :company_type, '法人', checked: true} 法人：
+                | #{f.radio_button :company_type, '個人事業主'} 個人事業主】
+              .form-group
+                = f.label :agency_name, '代理店名'
+                - if @agency.errors.include?(:agency_name)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_name).first}
+                = f.text_field :agency_name, class: 'form-control', :placeholder=>"法人：法人名、個人事業主：活動名"
+              .form-group
+                = f.label :agency_postal, '代理店郵便番号'
+                - if @agency.errors.include?(:agency_postal)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_postal).first}
+                = f.text_field :agency_postal, class: 'form-control', :placeholder=>"XXX-XXXX"
+              .form-group
+                = f.label :agency_add, '代理店住所'
+                - if @agency.errors.include?(:agency_add)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_add).first}
+                = f.text_field :agency_add, class: 'form-control', :placeholder=>"法人：登記住所、個人事業主：代表者住所（都道府県市区町村番地建物名）"
+              .form-group
+                = f.label :agency_rec_name, '窓口担当者名'
+                - if @agency.errors.include?(:agency_rec_name)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_rec_name).first}
+                = f.text_field :agency_rec_name, class: 'form-control', :placeholder=>"山田太郎"
+              .form-group
+                = f.label :agency_rec_tel, '窓口担当者電話番号'
+                - if @agency.errors.include?(:agency_rec_tel)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_rec_tel).first}
+                = f.text_field :agency_rec_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+              .form-group
+                = f.label :agency_tel, '代理店電話番号'
+                - if @agency.errors.include?(:agency_tel)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_tel).first}
+                = f.text_field :agency_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+              .form-group
+                = f.label :agency_mail, '代理店メールアドレス'
+                - if @agency.errors.include?(:agency_mail)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_mail).first}
+                = f.text_field :agency_mail, class: 'form-control', :placeholder=>"au/docomo/softbankなどのキャリアアドレス以外"
+          .card
+            .card-header
+              .d-flex.align-items-center
+                h5.card-title 報酬振込先口座
+                .ml-auto.boards__linkBox
+                = f.submit '更新', class: 'btn btn-primary'
+            .card-body
+              .form-group
+                = f.label :bank_name, '金融機関名'
+                - if @agency.errors.include?(:bank_name)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_name).first}
+                = f.text_field :bank_name, class: 'form-control', :placeholder=>"〇〇銀行"
+              .form-group
+                = f.label :bank_code, '金融機関コード'
+                - if @agency.errors.include?(:bank_code)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_code).first}
+                = f.text_field :bank_code, class: 'form-control', :placeholder=>"XXXX"
+              .form-group
+                = f.label :bank_branch_name, '支店名'
+                - if @agency.errors.include?(:bank_branch_name)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_branch_name).first}
+                = f.text_field :bank_branch_name, class: 'form-control', :placeholder=>"〇〇支店"
+              .form-group
+                = f.label :bank_branch_code, '支店コード'
+                - if @agency.errors.include?(:bank_branch_code)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_branch_code).first}
+                = f.text_field :bank_branch_code, class: 'form-control', :placeholder=>"XXX"
+              .form-group
+                = f.label :bank_account_type, '口座種別'
+                | 【
+                | #{f.radio_button :bank_account_type, '普通預金', checked: true} 普通預金：
+                | #{f.radio_button :bank_account_type, '当座預金'} 当座預金】
+              .form-group
+                = f.label :bank_account_number, '口座番号'
+                - if @agency.errors.include?(:bank_account_number)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_account_number).first}
+                = f.text_field :bank_account_number, class: 'form-control', :placeholder=>"XXXXXXX"
+              .form-group
+                = f.label :bank_account_holder_kana, '口座名義（カナ）'
+                - if @agency.errors.include?(:bank_account_holder_kana)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_account_holder_kana).first}
+                = f.text_field :bank_account_holder_kana, class: 'form-control', :placeholder=>"ヤマダ　タロウ"
+          .card
+            .card-header
+              .d-flex.align-items-center
+                h5.card-title メモ
+                .ml-auto.boards__linkBox
+                = f.submit '更新', class: 'btn btn-primary'
+            .card-body
+              .form-group
+                = f.label :memo, 'メモ'
+                = f.text_area :memo, rows: 5, class: 'form-control', :placeholder=>""
+        
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_agency_list_index_path, class: 'btn btn-outline-dark'
+
+= render partial: 'admins/navibar'
+.d-block.d-xl-none
+  .row
+    .col.mt-5
+      .container
+        h2.mt-3.font-weight-bold.valion-client-color 代理店詳細確認・更新
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_agency_list_index_path, class: 'btn btn-outline-dark'
+        
+        - if flash[:success]
+          .alert.alert-primary= flash[:success]
+        
+        - if @agency.errors.any?
+          .alert.alert-danger 入力内容をご確認ください。
+        
+        = form_with( model: @agency, url: admins_agency_list_path) do |f|
+        
+          .card
+            .card-header
+              .d-flex.align-items-center
+                h5.card-title 基本情報
+                .ml-auto.boards__linkBox
+                = f.submit '更新', class: 'btn btn-primary'
+            .card-body
+              .py-2
+                .mb-2
+                  | 代理店ID：
+                  = @agency.agency_id
+              .form-group
+                = f.label :company_type, '事業者種別'
+                | 【
+                | #{f.radio_button :company_type, '法人', checked: true} 法人：
+                | #{f.radio_button :company_type, '個人事業主'} 個人事業主】
+              .form-group
+                = f.label :agency_name, '代理店名'
+                - if @agency.errors.include?(:agency_name)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_name).first}
+                = f.text_field :agency_name, class: 'form-control', :placeholder=>"法人：法人名、個人事業主：活動名"
+              .form-group
+                = f.label :agency_postal, '代理店郵便番号'
+                - if @agency.errors.include?(:agency_postal)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_postal).first}
+                = f.text_field :agency_postal, class: 'form-control', :placeholder=>"XXX-XXXX"
+              .form-group
+                = f.label :agency_add, '代理店住所'
+                - if @agency.errors.include?(:agency_add)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_add).first}
+                = f.text_field :agency_add, class: 'form-control', :placeholder=>"法人：登記住所、個人事業主：代表者住所（都道府県市区町村番地建物名）"
+              .form-group
+                = f.label :agency_rec_name, '窓口担当者名'
+                - if @agency.errors.include?(:agency_rec_name)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_rec_name).first}
+                = f.text_field :agency_rec_name, class: 'form-control', :placeholder=>"山田太郎"
+              .form-group
+                = f.label :agency_rec_tel, '窓口担当者電話番号'
+                - if @agency.errors.include?(:agency_rec_tel)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_rec_tel).first}
+                = f.text_field :agency_rec_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+              .form-group
+                = f.label :agency_tel, '代理店電話番号'
+                - if @agency.errors.include?(:agency_tel)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_tel).first}
+                = f.text_field :agency_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+              .form-group
+                = f.label :agency_mail, '代理店メールアドレス'
+                - if @agency.errors.include?(:agency_mail)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:agency_mail).first}
+                = f.text_field :agency_mail, class: 'form-control', :placeholder=>"au/docomo/softbankなどのキャリアアドレス以外"
+          .card
+            .card-header
+              .d-flex.align-items-center
+                h5.card-title 報酬振込先口座
+                .ml-auto.boards__linkBox
+                = f.submit '更新', class: 'btn btn-primary'
+            .card-body
+              .form-group
+                = f.label :bank_name, '金融機関名'
+                - if @agency.errors.include?(:bank_name)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_name).first}
+                = f.text_field :bank_name, class: 'form-control', :placeholder=>"〇〇銀行"
+              .form-group
+                = f.label :bank_code, '金融機関コード'
+                - if @agency.errors.include?(:bank_code)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_code).first}
+                = f.text_field :bank_code, class: 'form-control', :placeholder=>"XXXX"
+              .form-group
+                = f.label :bank_branch_name, '支店名'
+                - if @agency.errors.include?(:bank_branch_name)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_branch_name).first}
+                = f.text_field :bank_branch_name, class: 'form-control', :placeholder=>"〇〇支店"
+              .form-group
+                = f.label :bank_branch_code, '支店コード'
+                - if @agency.errors.include?(:bank_branch_code)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_branch_code).first}
+                = f.text_field :bank_branch_code, class: 'form-control', :placeholder=>"XXX"
+              .form-group
+                = f.label :bank_account_type, '口座種別'
+                | 【
+                | #{f.radio_button :bank_account_type, '普通預金', checked: true} 普通預金：
+                | #{f.radio_button :bank_account_type, '当座預金'} 当座預金】
+              .form-group
+                = f.label :bank_account_number, '口座番号'
+                - if @agency.errors.include?(:bank_account_number)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_account_number).first}
+                = f.text_field :bank_account_number, class: 'form-control', :placeholder=>"XXXXXXX"
+              .form-group
+                = f.label :bank_account_holder_kana, '口座名義（カナ）'
+                - if @agency.errors.include?(:bank_account_holder_kana)
+                  span.error-message
+                    | * #{@agency.errors.full_messages_for(:bank_account_holder_kana).first}
+                = f.text_field :bank_account_holder_kana, class: 'form-control', :placeholder=>"ヤマダ　タロウ"
+          .card
+            .card-header
+              .d-flex.align-items-center
+                h5.card-title メモ
+                .ml-auto.boards__linkBox
+                = f.submit '更新', class: 'btn btn-primary'
+            .card-body
+              .form-group
+                = f.label :memo, 'メモ'
+                = f.text_area :memo, rows: 5, class: 'form-control', :placeholder=>""
+        
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = link_to '一覧に戻る', admins_agency_list_index_path, class: 'btn btn-outline-dark'
