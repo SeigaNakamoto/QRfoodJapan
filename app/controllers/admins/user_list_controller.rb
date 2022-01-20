@@ -1,7 +1,7 @@
 class Admins::UserListController < ApplicationController
   before_action :authenticate_admin!
   require 'csv'
-  
+
   def index
     @companies = Company.order(id: :desc).joins(:stores).page(params[:page]).per(30)
     @plans = Plan.all
@@ -13,7 +13,7 @@ class Admins::UserListController < ApplicationController
         send_companies_csv(@companiescsv)
       end
     end
-  
+
     # @q = Agency.ransack(params[:q])
     # @agencies = @q.result.includes(:user).page(params[:page]).order("created_at desc")
   end
@@ -64,10 +64,11 @@ class Admins::UserListController < ApplicationController
       :rep_add_kana,
       :rep_birthdate,
       :rep_tel,
-      :rep_email
+      :rep_email,
+      :memo
     )
   end
-  
+
   def store_params
     params.require(:company).permit(
       store:[
@@ -110,7 +111,7 @@ class Admins::UserListController < ApplicationController
         :agreement,
         :agreement_up,
         :progress_status,
-        :settlement_status
+        :settlement_status,
       ]
     )
   end
@@ -128,7 +129,7 @@ class Admins::UserListController < ApplicationController
             Plan.where(id: store.plan_id).first.name,
             store.store_tel,
             store.store_email,
-            store.agency_id,
+            store.agency.agency_id,
             store.agency_per_name,
             store.created_at.to_s(:datetime_jp_Ymd),
             store.progress_status_i18n,
