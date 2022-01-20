@@ -5,8 +5,15 @@ class Admins::UserListController < ApplicationController
   def index
     @companies = Company.order(id: :desc).joins(:stores).page(params[:page]).per(30)
     @plans = Plan.all
-
-    @companiescsv = Company.joins(:stores).all
+    if params[:export_csv]
+      @start_date = params[:start_date]
+      @end_date = params[:end_date]
+      if @start_date.blank? || @end_date.blank?
+        @companiescsv = Company.joins(:stores)
+      else
+        @companiescsv = Company.joins(:stores).where(stores: {created_at: @start_date..@end_date})
+      end
+    end
     respond_to do |format|
       format.html
       format.csv do |csv|
