@@ -2,38 +2,38 @@
   .row
     .col-md-2
       = render partial: 'admins/sidebar'
-    .col-md-10 
+    .col-md-10
       .container
         h2.mt-3.font-weight-bold.valion-client-color ユーザー管理
         .d-flex.flex-row.justify-content-end
           - @plans.each do |p|
             .card
               ul
-                li.d-flex              
+                li.d-flex
                   .col 【#{p.name}】
-                li.d-flex              
+                li.d-flex
                   .col ◆進捗ステータス
-                li.d-flex              
+                li.d-flex
                   .col 写真納品待ち
                   .col.text-right #{Store.where(plan_id: p.id, progress_status: 0).count}件
-                li.d-flex              
+                li.d-flex
                   .col UnivaPay審査待ち
                   .col.text-right #{Store.where(plan_id: p.id, progress_status: 1).count}件
-                li.d-flex              
+                li.d-flex
                   .col 問題なし
                   .col.text-right #{Store.where(plan_id: p.id, progress_status: 2).count}件
-                li.d-flex              
+                li.d-flex
                   .col ◆決済ステータス
-                li.d-flex              
+                li.d-flex
                   .col 問題なし
                   .col.text-right #{Store.where(plan_id: p.id, settlement_status: 0).count}件
-                li.d-flex              
+                li.d-flex
                   .col 滞納中
                   .col.text-right #{Store.where(plan_id: p.id, settlement_status: 1).count}件
-                li.d-flex              
+                li.d-flex
                   .col 解約予約
                   .col.text-right #{Store.where(plan_id: p.id, settlement_status: 2).count}件
-                li.d-flex              
+                li.d-flex
                   .col 解約済み
                   .col.text-right #{Store.where(plan_id: p.id, settlement_status: 3).count}件
         .card
@@ -41,7 +41,17 @@
             .d-flex.align-items-center
               .me-auto.p-2
                 h5.card-title ユーザー一覧
-              = link_to 'ユーザー情報csvダウンロード', admins_user_list_index_path(format: :csv), class: 'btn btn-outline-dark'
+              = form_tag admins_user_list_index_path(format: :csv), method: :get
+                div.row
+                  div.col-sm-6
+                    div.form-group
+                      label 対象期間（開始）
+                      = date_field_tag :start_date, @start_date, class: 'form-control datepicker'
+                  div.col-sm-6
+                    div.form-group
+                      label 対象期間（終了）
+                      = date_field_tag :end_date, @end_date, class: 'form-control datepicker'
+                = submit_tag 'ユーザー情報csvダウンロード', name: 'export_csv', class: 'btn btn-outline-dark'
           .card-body
             .table-responsive
               table.table.table-hover
@@ -58,7 +68,7 @@
                     th.text-nowrap 申込日
                     th.text-nowrap 進捗ステータス
                     th.text-nowrap 決済ステータス
-                    th 
+                    th
                 tbody
                 - @companies.each do |c|
                   - c.stores.each do |s|
@@ -89,31 +99,31 @@
         - @plans.each do |p|
           .card
             ul
-              li.d-flex              
+              li.d-flex
                 .col 【#{p.name}】
-              li.d-flex              
+              li.d-flex
                 .col ◆進捗ステータス
-              li.d-flex              
+              li.d-flex
                 .col 写真納品待ち
                 .col.text-right #{Store.where(plan_id: p.id, progress_status: 0).count}件
-              li.d-flex              
+              li.d-flex
                 .col UnivaPay審査待ち
                 .col.text-right #{Store.where(plan_id: p.id, progress_status: 1).count}件
-              li.d-flex              
+              li.d-flex
                 .col 問題なし
                 .col.text-right #{Store.where(plan_id: p.id, progress_status: 2).count}件
-              li.d-flex              
+              li.d-flex
                 .col ◆決済ステータス
-              li.d-flex              
+              li.d-flex
                 .col 問題なし
                 .col.text-right #{Store.where(plan_id: p.id, settlement_status: 0).count}件
-              li.d-flex              
+              li.d-flex
                 .col 滞納中
                 .col.text-right #{Store.where(plan_id: p.id, settlement_status: 1).count}件
-              li.d-flex              
+              li.d-flex
                 .col 解約予約
                 .col.text-right #{Store.where(plan_id: p.id, settlement_status: 2).count}件
-              li.d-flex              
+              li.d-flex
                 .col 解約済み
                 .col.text-right #{Store.where(plan_id: p.id, settlement_status: 3).count}件
         .card
@@ -137,7 +147,7 @@
                     th.text-nowrap 申込日
                     th.text-nowrap 進捗ステータス
                     th.text-nowrap 決済ステータス
-                    th 
+                    th
                 tbody
                 - @companies.each do |c|
                   - c.stores.each do |s|
