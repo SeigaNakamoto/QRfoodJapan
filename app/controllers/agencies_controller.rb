@@ -128,8 +128,9 @@ class AgenciesController < ApplicationController
   end
 
   def send_companies_csv(companies)
+    tax = 1.1
     csv_data = CSV.generate do |csv|
-      column_names = %w(店舗ID お申込者名 店舗名 プラン名 店舗TEL 店舗MAIL 進捗ステータス 決済ステータス)
+      column_names = %w(店舗ID お申込者名 店舗名 プラン名 店舗TEL 店舗MAIL 進捗ステータス 決済ステータス 報酬金額(税込))
       csv << column_names
       companies.each do |c|
         c.stores.each do |s|
@@ -141,7 +142,8 @@ class AgenciesController < ApplicationController
             s.store_tel,
             s.store_email,
             s.progress_status_i18n,
-            s.settlement_status_i18n
+            s.settlement_status_i18n,
+            (s.plan.reward_price * tax).to_i
           ]
           csv << column_values
         end
