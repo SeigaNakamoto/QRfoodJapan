@@ -6,7 +6,7 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
 
-  config.hosts << ".herokuapp.com"
+  config.hosts << "qr-food-japan-management.herokuapp.com"
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -31,7 +31,7 @@ Rails.application.configure do
 
   # Bootstrap
   config.assets.js_compressor = :uglifier
-  
+
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
 
