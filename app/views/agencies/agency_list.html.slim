@@ -10,20 +10,20 @@
             h5.card-title 累計代理店基本情報
           .card-body
             ul
-              li.d-flex              
+              li.d-flex
                 .col
                   | 傘下代理店数
                 .col.text-right
                   = @child_agencies.count
                   | 代理店
-              li.d-flex              
+              li.d-flex
                 .col
                   | 累計代理店報酬
                 .col.text-right
                   | ¥
                   = @child_agencies_reward
                   | (税込)
-              li.d-flex              
+              li.d-flex
                 .col
                   | 特別代理店報酬
                 .col.text-right
@@ -33,6 +33,18 @@
         .card
           .card-header
             h5.card-title 代理店一覧
+            .ml-auto.boards__linkBox
+            = form_tag agencies_agency_list_path(format: :csv), method: :get
+              div.row
+                div.col-sm-6
+                  div.form-group
+                    label 対象期間（開始）
+                    = date_field_tag :start_date, @start_date, class: 'form-control datepicker'
+                div.col-sm-6
+                  div.form-group
+                    label 対象期間（終了）
+                    = date_field_tag :end_date, @end_date, class: 'form-control datepicker'
+              = submit_tag '子代理店情報CSVダウンロード', name: 'export_csv', class: 'btn btn-outline-dark'
           .card-body
             table.table.table-hover.table-sm
               thead
@@ -81,20 +93,20 @@
             h5.card-title 累計代理店基本情報
           .card-body
             ul
-              li.d-flex              
+              li.d-flex
                 .col
                   | 傘下代理店数
                 .col.text-right
                   = @child_agencies.count
                   | 代理店
-              li.d-flex              
+              li.d-flex
                 .col
                   | 累計代理店報酬
                 .col.text-right
                   | ¥
                   = @child_agencies_reward
                   | (税込)
-              li.d-flex              
+              li.d-flex
                 .col
                   | 特別代理店報酬
                 .col.text-right
@@ -104,6 +116,18 @@
         .card
           .card-header
             h5.card-title 代理店一覧
+            .ml-auto.boards__linkBox
+            = form_tag agencies_agency_list_path(format: :csv), method: :get
+              div.row
+                div.col-sm-6
+                  div.form-group
+                    label 対象期間（開始）
+                    = date_field_tag :start_date, @start_date, class: 'form-control datepicker'
+                div.col-sm-6
+                  div.form-group
+                    label 対象期間（終了）
+                    = date_field_tag :end_date, @end_date, class: 'form-control datepicker'
+              = submit_tag '子代理店情報CSVダウンロード', name: 'export_csv', class: 'btn btn-outline-dark'
           .card-body
             .table-responsive
               table.table.table-hover.table-sm

@@ -2,15 +2,25 @@
   .row
     .col-md-2
       = render partial: 'admins/sidebar'
-    .col-md-10 
+    .col-md-10
       .container
         h2.mt-3.font-weight-bold.valion-client-color 代理店管理
-        .card 
+        .card
           .card-header
             .d-flex.align-items-center
               .me-auto.p-2
                 h5.card-title 代理店一覧
-              = link_to '代理店情報csvダウンロード', admins_agency_list_index_path(format: :csv), class: 'btn btn-outline-dark'
+            = form_tag admins_agency_list_index_path(format: :csv), method: :get
+              div.row
+                div.col-sm-6
+                  div.form-group
+                    label 対象期間（開始）
+                    = date_field_tag :start_date, @start_date, class: 'form-control datepicker'
+                div.col-sm-6
+                  div.form-group
+                    label 対象期間（終了）
+                    = date_field_tag :end_date, @end_date, class: 'form-control datepicker'
+              = submit_tag '代理店情報csvダウンロード', name: 'export_csv', class: 'btn btn-outline-dark'
               = link_to '新規登録', new_agency_registration_path, target: :_blank, rel: "noopener noreferrer", class: 'btn btn-outline-dark'
           .card-body
             table.table.table-hover.table-sm
@@ -21,13 +31,13 @@
                   th.text-nowrap 代理店TEL
                   th.text-nowrap 代理店MAIL
                   th.text-nowrap プラン別件数
-                  th 
+                  th
               tbody
                 - @agencies.each do |a|
                   - if a.parent_agency_id.eql?("parent")
                     tr
                       td= a.agency_id
-                      td 【総合】#{a.agency_id} 
+                      td 【総合】#{a.agency_id}
                       td
                       td
                       td.plan
@@ -59,7 +69,7 @@
     .col.mt-5
       .container.mt-5
         h2.mt-3.font-weight-bold.valion-client-color 代理店管理
-        .card 
+        .card
           .card-header
             .align-items-center
               h5.card-title 代理店一覧
@@ -75,13 +85,13 @@
                     th.text-nowrap 代理店TEL
                     th.text-nowrap 代理店MAIL
                     th.text-nowrap プラン別件数
-                    th 
+                    th
                 tbody
                 - @agencies.each do |a|
                   - if a.parent_agency_id.eql?("parent")
                     tr
                       td= a.agency_id
-                      td 【総合】#{a.agency_id} 
+                      td 【総合】#{a.agency_id}
                       td
                       td
                       td.plan

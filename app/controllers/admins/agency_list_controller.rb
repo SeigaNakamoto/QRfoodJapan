@@ -5,15 +5,16 @@ class Admins::AgencyListController < ApplicationController
   def index
     @agencies = Agency.order(:agency_id).page(params[:page]).per(30)
     @plans = Plan.all
-
+    start_date = params[:start_date]
+    end_date = params[:end_date]
     @agenciescsv = Agency.all
     respond_to do |format|
       format.html
       format.csv do |csv|
-        send_agencies_csv(@agenciescsv)
+        send_agencies_csv(@agenciescsv, start_date, end_date)
       end
     end
-  
+
     # @q = Agency.ransack(params[:q])
     # @agencies = @q.result.includes(:user).page(params[:page]).order("created_at desc")
   end
@@ -56,20 +57,25 @@ class Admins::AgencyListController < ApplicationController
     )
   end
 
-  def send_agencies_csv(agencies)
+  def send_agencies_csv(agencies, start_date, end_date)
+    tax = 1.1
     csv_data = CSV.generate do |csv|
-      column_names = %w(代理店ID 代理店名 代理店TEL 代理店MAIL ライト スタンダード プレミアム 金融機関名 金融機関コード 支店名 支店コード 口座種別 口座名義（カナ） 口座番号)
+      column_names = %w(代理店ID 代理店名 代理店TEL 代理店MAIL ライト スタンダード プレミアム 合計 金融機関名 金融機関コード 支店名 支店コード 口座種別 口座名義（カナ） 口座番号)
       csv << column_names
       agencies.each do |agency|
         if agency.parent_agency_id.eql?("parent")
+          lite_plans = (Store.where('agency_charge_id like ?',"Q#{agency.agency_id[1, 2]}%").where(plan_id: 1, settlement_status: [0,2]).count  * Plan.find(1).reward_price * tax).to_i
+          standard_plans = (Store.where('agency_charge_id like ?',"Q#{agency.agency_id[1, 2]}%").where(plan_id: 2, settlement_status: [0,2]).count  * Plan.find(2).reward_price * tax).to_i
+          premium_plans = (Store.where('agency_charge_id like ?',"Q#{agency.agency_id[1, 2]}%").where(plan_id: 3, settlement_status: [0,2]).count  * Plan.find(3).reward_price * tax).to_i
           column_values = [
             agency.agency_id,
             "【総合】" + agency.agency_name,
             agency.agency_tel,
             agency.agency_mail,
-            Store.where('agency_charge_id like ?',"Q#{agency.agency_id[1, 2]}%").where(plan_id: 1, settlement_status: [0,2]).count,
-            Store.where('agency_charge_id like ?',"Q#{agency.agency_id[1, 2]}%").where(plan_id: 2, settlement_status: [0,2]).count,
-            Store.where('agency_charge_id like ?',"Q#{agency.agency_id[1, 2]}%").where(plan_id: 3, settlement_status: [0,2]).count,
+            lite_plans,
+            standard_plans,
+            premium_plans,
+            lite_plans + standard_plans + premium_plans,
             agency.bank_name,
             agency.bank_code,
             agency.bank_branch_name,
@@ -79,14 +85,18 @@ class Admins::AgencyListController < ApplicationController
             agency.bank_account_holder_kana
           ]
         elsif agency.agency_id[4,3].eql?("001")
+          lite_plans = (Store.where(agency_charge_id: agency.agency_id, plan_id: 1, settlement_status: [0,2]).count  * Plan.find(1).reward_price * tax).to_i
+          standard_plans = (Store.where(agency_charge_id: agency.agency_id, plan_id: 2, settlement_status: [0,2]).count  * Plan.find(2).reward_price * tax).to_i
+          premium_plans = (Store.where(agency_charge_id: agency.agency_id, plan_id: 3, settlement_status: [0,2]).count  * Plan.find(3).reward_price * tax).to_i
           column_values = [
             agency.agency_id,
             agency.agency_name,
             agency.agency_tel,
             agency.agency_mail,
-            Store.where(agency_charge_id: agency.agency_id, plan_id: 1, settlement_status: [0,2]).count,
-            Store.where(agency_charge_id: agency.agency_id, plan_id: 2, settlement_status: [0,2]).count,
-            Store.where(agency_charge_id: agency.agency_id, plan_id: 3, settlement_status: [0,2]).count,
+            lite_plans,
+            standard_plans,
+            premium_plans,
+            lite_plans + standard_plans + premium_plans,
             agency.bank_name,
             agency.bank_code,
             agency.bank_branch_name,
@@ -96,14 +106,18 @@ class Admins::AgencyListController < ApplicationController
             agency.bank_account_holder_kana
           ]
         else
+          lite_plans = (Store.where(agency_charge_id: agency.agency_id, plan_id: 1, settlement_status: [0,2]).count  * Plan.find(1).reward_price * tax).to_i
+          standard_plans = (Store.where(agency_charge_id: agency.agency_id, plan_id: 2, settlement_status: [0,2]).count  * Plan.find(2).reward_price * tax).to_i
+          premium_plans = (Store.where(agency_charge_id: agency.agency_id, plan_id: 3, settlement_status: [0,2]).count  * Plan.find(3).reward_price * tax).to_i
           column_values = [
             agency.agency_id,
             agency.agency_name,
             agency.agency_tel,
             agency.agency_mail,
-            Store.where(agency_charge_id: agency.agency_id, plan_id: 1, settlement_status: [0,2]).count,
-            Store.where(agency_charge_id: agency.agency_id, plan_id: 2, settlement_status: [0,2]).count,
-            Store.where(agency_charge_id: agency.agency_id, plan_id: 3, settlement_status: [0,2]).count,
+            lite_plans,
+            standard_plans,
+            premium_plans,
+            lite_plans + standard_plans + premium_plans,
             agency.bank_name,
             agency.bank_code,
             agency.bank_branch_name,

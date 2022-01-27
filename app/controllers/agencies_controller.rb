@@ -1,7 +1,7 @@
 class AgenciesController < ApplicationController
   before_action :authenticate_agency!
   before_action :set_agency
-
+  require 'csv'
 
   def index
     # 【今月】
@@ -75,6 +75,14 @@ class AgenciesController < ApplicationController
 
   def agency_list
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+    respond_to do |format|
+      format.html
+      format.csv do |csv|
+        agency_list_csv(@child_agencies, start_date, end_date)
+      end
+    end
   end
 
   private
@@ -152,4 +160,28 @@ class AgenciesController < ApplicationController
     send_data(csv_data, filename: "代理店側_ユーザー一覧.csv")
   end
 
+  def agency_list_csv(child_agencies, start_date, end_date)
+    tax = 1.1
+    csv_data = CSV.generate do |csv|
+      column_names = %w(代理店ID 代理店名 代理店TEL 代理店MAIL ライトプランの報酬合計 スタンダードプラン報酬合計 プレミアムプラン報酬合計 報酬金額合計)
+      csv << column_names
+      child_agencies.each do |child_agency|
+        lite_plans = (Store.where(agency_charge_id: child_agency.agency_id, plan_id: 1, settlement_status: [0,2], created_at: start_date..end_date).count * Plan.find(1).reward_price * tax).to_i
+        standard_plans = (Store.where(agency_charge_id: child_agency.agency_id, plan_id: 2, settlement_status: [0,2], created_at: start_date..end_date).count * Plan.find(2).reward_price * tax).to_i
+        premium_plans = (Store.where(agency_charge_id: child_agency.agency_id, plan_id: 3, settlement_status: [0,2], created_at: start_date..end_date).count * Plan.find(3).reward_price * tax).to_i
+        column_values = [
+          child_agency.agency_id,
+          child_agency.company_type == '法人' ? child_agency.agency_name : "＜個人＞#{a.agency_rec_name}",
+          child_agency.agency_tel,
+          child_agency.agency_mail,
+          lite_plans,
+          standard_plans,
+          premium_plans,
+          lite_plans + standard_plans + premium_plans,
+        ]
+        csv << column_values
+      end
+    end
+    send_data(csv_data, filename: "子代理店情報.csv")
+  end
 end
