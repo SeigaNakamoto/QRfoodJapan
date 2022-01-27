@@ -14,7 +14,17 @@
             .d-flex.align-items-center
               h5.card-title ユーザー一覧
               .ml-auto.boards__linkBox
-              = link_to 'ユーザー情報CSVダウンロード', agencies_store_list_path(format: :csv), class: 'btn btn-outline-dark'
+              = form_tag agencies_store_list_path(format: :csv), method: :get
+                div.row
+                  div.col-sm-6
+                    div.form-group
+                      label 対象期間（開始）
+                      = date_field_tag :start_date, @start_date, class: 'form-control datepicker'
+                  div.col-sm-6
+                    div.form-group
+                      label 対象期間（終了）
+                      = date_field_tag :end_date, @end_date, class: 'form-control datepicker'
+                = submit_tag 'ユーザー情報csvダウンロード', name: 'export_csv', class: 'btn btn-outline-dark'
           .card-body
             table.table.table-hover.table-sm
               thead

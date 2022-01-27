@@ -20,7 +20,7 @@ class AgenciesController < ApplicationController
     end
     # 特別代理店報酬金額
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
-    
+
     # 【当月】
     # ストック型（件数、報酬合計）、スポット型（件数、報酬合計）
     @st_cnt_m, @st_total_m, @sp_cnt_m, @sp_total_m = 0, 0, 0, 0
@@ -38,7 +38,7 @@ class AgenciesController < ApplicationController
     # 特別代理店報酬金額
     @special_reward_m = (@special_reward_cnt_m * 2000 * @tax).to_i
   end
-  
+
   def update
     @agency = Agency.find(params[:id])
     if @agency.update(agency_params)
@@ -52,10 +52,18 @@ class AgenciesController < ApplicationController
   def projects
     @agencies = Agency.page(params[:page])
   end
-  
+
   def store_list
     @companies = Company.order(id: :desc).joins(:stores).where(stores: { agency_charge_id: @agency.agency_id}).page(params[:page]).per(30)
-    @companiescsv = Company.joins(:stores).where(stores: { agency_charge_id: @agency.agency_id}).all
+    if params[:export_csv]
+      @start_date = params[:start_date]
+      @end_date = params[:end_date]
+      if @start_date.blank? || @end_date.blank?
+        @companiescsv = Company.joins(:stores).where(stores: { agency_charge_id: @agency.agency_id})
+      else
+        @companiescsv = Company.joins(:stores).where(stores: { agency_charge_id: @agency.agency_id}).where(stores: {created_at: @start_date..@end_date})
+      end
+    end
     # CSV出力
     respond_to do |format|
       format.html
@@ -64,11 +72,11 @@ class AgenciesController < ApplicationController
       end
     end
   end
-  
+
   def agency_list
     @special_reward = (@special_reward_cnt * 2000 * @tax).to_i
   end
-  
+
   private
 
   def agency_params
@@ -104,7 +112,7 @@ class AgenciesController < ApplicationController
     @special_reward_cnt, @special_reward_cnt_m = 0, 0
     # 【今月/当月】累計代理店報酬
     @child_agencies_reward, @child_agencies_reward_m = 0, 0
-    
+
     if @agency.agency_id[4,3].eql?('001')
       @child_agencies.each do |child|
         @special_reward_cnt += Store.where(agency_charge_id: child.agency_id, settlement_status: [0,2]).count
@@ -120,8 +128,9 @@ class AgenciesController < ApplicationController
   end
 
   def send_companies_csv(companies)
+    tax = 1.1
     csv_data = CSV.generate do |csv|
-      column_names = %w(店舗ID お申込者名 店舗名 プラン名 店舗TEL 店舗MAIL 進捗ステータス 決済ステータス)
+      column_names = %w(店舗ID お申込者名 店舗名 プラン名 店舗TEL 店舗MAIL 進捗ステータス 決済ステータス 報酬金額(税込))
       csv << column_names
       companies.each do |c|
         c.stores.each do |s|
@@ -133,7 +142,8 @@ class AgenciesController < ApplicationController
             s.store_tel,
             s.store_email,
             s.progress_status_i18n,
-            s.settlement_status_i18n
+            s.settlement_status_i18n,
+            (s.plan.reward_price * tax).to_i
           ]
           csv << column_values
         end

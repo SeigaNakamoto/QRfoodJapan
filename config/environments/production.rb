@@ -31,7 +31,7 @@ Rails.application.configure do
 
   # Bootstrap
   config.assets.js_compressor = :uglifier
-  
+
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
 

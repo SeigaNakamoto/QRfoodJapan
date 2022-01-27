@@ -11,6 +11,7 @@
 #  corp_name     :string(255)
 #  corp_postal   :string(255)
 #  corp_tel      :string(255)
+#  memo          :text(65535)
 #  rep_add       :string(255)      not null
 #  rep_add_kana  :string(255)      not null
 #  rep_birthdate :date             not null
