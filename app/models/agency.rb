@@ -4,7 +4,7 @@
 #
 #  id                       :bigint           not null, primary key
 #  agency_add               :string(255)      not null
-#  agency_mail              :string(255)      not null
+#  email              :string(255)      not null
 #  agency_name              :string(255)      not null
 #  agency_postal            :string(255)      not null
 #  agency_rec_name          :string(255)      not null
@@ -18,6 +18,7 @@
 #  bank_code                :string(255)      not null
 #  bank_name                :string(255)      not null
 #  company_type             :string(255)      not null
+#  email                    :string(255)      default(""), not null
 #  encrypted_password       :string(255)      default(""), not null
 #  memo                     :text(65535)
 #  remember_created_at      :datetime
@@ -63,7 +64,7 @@ class Agency < ApplicationRecord
   validates :agency_rec_tel, presence: true, format: { with: VALID_PHONE_REGEX }
   validates :agency_tel, presence: true, format: { with: VALID_PHONE_REGEX }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :agency_mail, presence: true, format: { with: VALID_EMAIL_REGEX }
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
   validates :bank_name, presence: true
   validates :bank_code, presence: true, length: { is: 4 }
   validates :bank_branch_name, presence: true
@@ -77,6 +78,12 @@ class Agency < ApplicationRecord
       errors.add(:parent_agency_id, '有効な代理店IDを入力してください')
     end
   end
+
+  # def self.send_reset_password_instructions(attributes={})
+  #   recoverable = find_or_initialize_with_errors([:email], attributes, :not_found)
+  #   recoverable.send_reset_password_instructions if recoverable.persisted?
+  #   recoverable
+  # end
 
   # def update_without_current_password(params, *options)
   #   params.delete(:current_password)

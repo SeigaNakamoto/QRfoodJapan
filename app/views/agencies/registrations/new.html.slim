@@ -58,11 +58,12 @@
                   | * #{@agency.errors.full_messages_for(:agency_rec_tel).first}
                 = f.text_field :agency_rec_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
               .form-group
-                = f.label :agency_mail, '代理店メールアドレス'
-                - if @agency.errors.include?(:agency_mail)
+                = f.label :email, '代理店メールアドレス'
+                - if @agency.errors.include?(:email)
                   .error-message
-                  | * #{@agency.errors.full_messages_for(:agency_mail).first}
-                = f.text_field :agency_mail, class: 'form-control', :placeholder=>"au/docomo/softbankなどのキャリアアドレス以外"
+                  | * #{@agency.errors.full_messages_for(:email).first}
+                = f.text_field :email, class: 'form-control', :placeholder=>"au/docomo/softbankなどのキャリアアドレス以外"
+                = f.hidden_field :agency_mail, value: 'husiyou@riri.jp'
           .card
             .card-header
               .d-flex.align-items-center

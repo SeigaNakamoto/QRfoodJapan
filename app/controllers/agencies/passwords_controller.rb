@@ -31,4 +31,10 @@ class Agencies::PasswordsController < Devise::PasswordsController
   # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
+
+  def unlockable?(resource)
+    resource.respond_to?(:unlock_access!) &&
+      resource.respond_to?(:unlock_strategy_enabled?) &&
+      resource.unlock_strategy_enabled?(:email)
+  end
 end
