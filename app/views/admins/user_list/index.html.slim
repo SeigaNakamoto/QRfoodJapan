@@ -168,3 +168,5 @@
                       td= select :settlement_status, :name, options_for_select(Store.settlement_statuses_i18n.invert, selected: s.settlement_status), {}, { class: 'js-settlement_status form-control', data: { id: s.id } }
                       td= link_to '詳細', admins_user_list_path(c.id), class: 'btn btn-outline-dark'
           = paginate @companies
+.copyrights 
+  | © 2022年3月11日 株式会社フロンティア All Rights Reserved.
