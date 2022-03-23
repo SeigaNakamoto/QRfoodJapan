@@ -55,7 +55,7 @@
                         - else
                           | ＜個人＞#{a.agency_rec_name}
                       td= a.agency_tel
-                      td= a.agency_mail
+                      td= a.email
                       td.plan
                         - @plans.each do |p|
                           = p.name
@@ -109,7 +109,7 @@
                         - else
                           | ＜個人＞#{a.agency_rec_name}
                       td= a.agency_tel
-                      td= a.agency_mail
+                      td= a.email
                       td.plan
                         - @plans.each do |p|
                           = p.name

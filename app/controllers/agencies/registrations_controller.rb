@@ -45,7 +45,7 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
       clean_up_passwords resource
       set_minimum_password_length
       respond_with resource
-    end  
+    end
   end
 
   # GET /resource/edit
@@ -87,6 +87,7 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
       agency_tel: "1234567890",
       agency_rec_name: "parent",
       agency_rec_tel: "1234567890",
+      email: "parent@parent.parent",
       agency_mail: "parent@parent.parent",
       bank_name: "parent",
       bank_code: "1234",
@@ -100,7 +101,7 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
   #
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ 
+    devise_parameter_sanitizer.permit(:sign_up, keys: [
       :company_type,
       :parent_agency_id,
       :agency_name,
@@ -109,6 +110,7 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
       :agency_rec_name,
       :agency_rec_tel,
       :agency_tel,
+      :email,
       :agency_mail,
       :bank_name,
       :bank_code,
@@ -124,7 +126,7 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
   # def update_resource(resource, params)
   #   resource.update_without_current_password(params)
   # end
-  
+
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, keys: [
       :company_type,
@@ -134,6 +136,7 @@ class Agencies::RegistrationsController < Devise::RegistrationsController
       :agency_rec_name,
       :agency_rec_tel,
       :agency_tel,
+      :email,
       :agency_mail,
       :bank_name,
       :bank_code,
