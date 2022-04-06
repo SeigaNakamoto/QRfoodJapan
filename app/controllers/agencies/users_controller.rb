@@ -37,6 +37,10 @@ class Agencies::UsersController < ApplicationController
   def payment
   end
   
+  def paid
+    @param = request.query_string
+  end
+  
   def termsofservice
   end
   
