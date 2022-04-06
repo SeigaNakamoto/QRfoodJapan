@@ -85,6 +85,10 @@ class AgenciesController < ApplicationController
     end
   end
 
+  def paid
+    @param = request.query_string
+  end
+
   private
 
   def agency_params

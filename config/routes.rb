@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get  "agencies/store_list"  => "agencies#store_list"
   get  "agencies/agency_list"  => "agencies#agency_list"
   get  "agencies/payment"  => "agencies#payment"
+  get  "agencies/paid"  => "agencies#paid"
   
   # QRfoodサービスお申込フォーム
   resources :users, module: 'agencies', only: [:new, :create]
