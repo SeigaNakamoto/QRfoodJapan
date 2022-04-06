@@ -4,75 +4,24 @@
       .card 
         .card-header
           h5.card-title プラン選択
-        / .card-body
-        /   label
-        /     form action="https://credit.j-payment.co.jp/gateway/payform.aspx" method="post" 
-        /       input name="aid" type="hidden" value="121799"
-        /       input name="pt" type="hidden" value="1"
-        /       td class="“table-b-td-a”"
-        /       select name="iid" 
-        /         option value="QRLightPlan"  ライトプラン： 14,800円
-        /         option value="QRStandardPlan"  スタンダードプラン： 19,800円
-        /         option value="QRPremiumPlan"  プレミアムプラン： 27,800円
-        /         input name="submit" type="submit" value="登録"
-        <form id="mainform">
-          <input id="tkn" name="tkn" type="hidden" value="">
-          <div id="CARD_INPUT_FORM"></div>
-          <input type="button" value="購入する" onclick="doPurchase()"/>
-        </form>
+        .card-body
+          label
+            form action="https://credit.j-payment.co.jp/link/creditcard" method="post" 
+              input name="aid" type="hidden" value="121799"
+              input name="pt" type="hidden" value="1"
+              input class="cod" name="cod" type="hidden" value=""
+              td class="“table-b-td-a”"
+              select name="iid" 
+                option value="QRLightPlan"  ライトプラン： 14,800円
+                option value="QRStandardPlan"  スタンダードプラン： 19,800円
+                option value="QRPremiumPlan"  プレミアムプラン： 27,800円
+                input name="submit" type="submit" value="登録"
 
 .copyrights 
   | © 2022年3月11日 株式会社フロンティア All Rights Reserved.
-<script type="text/javascript"src="https://credit.j-payment.co.jp/gateway/js/CPToken.js"></script>
 javascript:
-  //日付取得
-  function dateFormatJ022(){
-    //日付オブジェクトの作成（現在の日付・時刻を設定）
-    var rightNow = new Date();
-    //日付(Date)オブジェクトの日付部分を取得する
-    var format_date = rightNow.toLocaleDateString();
-    return format_date
-  };
-
-  //ユニーク
-  function getUniqueStr(myStrong){
-    var strong = 1000;
-    if (myStrong) strong = myStrong;
-    return new Date().getTime().toString(16)  + Math.floor(strong*Math.random()).toString(16)
-  }
-
-  //ユニーク注文番号
-  let uniq_cod = dateFormatJ022() + '_' + getUniqueStr()
-
-  ///////////////////////////////////////////
-
-  function doPurchase() {
-    CPToken.CardInfo (
-      { 
-        aid: 121799
-      }, execPurchase
-    );
-  };
-
-  function execPurchase(resultCode, errMsg) { 
-    if (resultCode != "Success") { 
-      window.alert(errMsg);
-    } else {
-      $("#mainform").submit();
-    }
-  }
-  //https://stg-qr-food-japan-management.herokuapp.com/
-  function doPurchaseTest() {
-    var tkn_code = CPToken.TokenCreate ({ aid: '121799' });
-    CPToken.CardInfo (
-      { 
-        aid: '121799',
-        rt: '1',
-        cod: uniq_cod,
-        tkn: tkn_code,
-        pn: 08000000000,
-        em: 'gocha.yuki.banby@gmail.com',
-        iid: 'EntryPlan'
-      }, execPurchase
-    );
-  };
+  //注文番号生成
+  var max = 1000000000000000;
+  var min = 1;
+  var cod = Math.floor(( Math.random() * ( ( max + 1 ) - min ) ) + min);
+  $('.cod').val(cod);
