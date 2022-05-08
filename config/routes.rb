@@ -24,10 +24,14 @@ Rails.application.routes.draw do
   # 運営側システム
   namespace :admins do
     resources :user_list, :agency_list
+    resources :payment_list do
+      collection {post :import}
+    end
   end
 
   get "admins/store_list" => "admins#store_list"
   get "admins/agency_list" => "admins#agency_list"
+
 
   # 代理店側システム
   get  "agencies/projects"  => "agencies#projects"

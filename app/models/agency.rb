@@ -4,7 +4,7 @@
 #
 #  id                       :bigint           not null, primary key
 #  agency_add               :string(255)      not null
-#  email              :string(255)      not null
+#  agency_mail              :string(255)      not null
 #  agency_name              :string(255)      not null
 #  agency_postal            :string(255)      not null
 #  agency_rec_name          :string(255)      not null
