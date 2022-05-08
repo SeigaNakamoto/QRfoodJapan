@@ -28,13 +28,17 @@ class Agencies::UsersController < ApplicationController
       @company.save
       @store.company_id = @company.id
       @store.save
-      redirect_to users_payment_path
+      redirect_to users_payment_path(agency_id: @store.agency_charge_id)
     else
       render 'new'
     end
   end
   
   def payment
+  end
+  
+  def paid
+    @param = request.query_string
   end
   
   def termsofservice

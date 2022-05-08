@@ -23,12 +23,18 @@ class Agencies::PasswordsController < Devise::PasswordsController
 
   # protected
 
-  # def after_resetting_password_path_for(resource)
-  #   super(resource)
-  # end
+  def after_resetting_password_path_for(resource)
+    new_agency_session_path
+  end
 
   # The path used after sending reset password instructions
   # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
+
+  def unlockable?(resource)
+    resource.respond_to?(:unlock_access!) &&
+      resource.respond_to?(:unlock_strategy_enabled?) &&
+      resource.unlock_strategy_enabled?(:email)
+  end
 end

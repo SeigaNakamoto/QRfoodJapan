@@ -24,20 +24,26 @@ Rails.application.routes.draw do
   # 運営側システム
   namespace :admins do
     resources :user_list, :agency_list
+    resources :payment_list do
+      collection {post :import}
+    end
   end
 
   get "admins/store_list" => "admins#store_list"
   get "admins/agency_list" => "admins#agency_list"
+
 
   # 代理店側システム
   get  "agencies/projects"  => "agencies#projects"
   get  "agencies/store_list"  => "agencies#store_list"
   get  "agencies/agency_list"  => "agencies#agency_list"
   get  "agencies/payment"  => "agencies#payment"
+  get  "agencies/paid"  => "agencies#paid"
   
   # QRfoodサービスお申込フォーム
   resources :users, module: 'agencies', only: [:new, :create]
   get  "users/payment"  => "agencies/users#payment"
+  get  "users/paid"  => "agencies/users#paid"
   get  "users/univapay" => "agencies/users#univapay"
   get  "users/termsofservice" => "agencies/users#termsofservice"
   get  "users/privacypolicy" => "agencies/users#privacypolicy"

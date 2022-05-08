@@ -164,6 +164,13 @@ li {
     color: gray;
   }
 }
+
+.copyrights {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 // Place all the styles related to the chats controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/

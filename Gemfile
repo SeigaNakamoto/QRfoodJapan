@@ -28,6 +28,10 @@ gem 'jbuilder', '~> 2.7'
 #login
 gem 'devise'
 
+# CSV import
+gem 'roo'
+gem 'activerecord-import'
+
 
 # Bootstrap
 gem 'uglifier'

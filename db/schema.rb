@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_20_073038) do
+ActiveRecord::Schema.define(version: 2022_05_08_163228) do
 
   create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2022_01_20_073038) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "email", default: "", null: false
     t.index ["agency_id"], name: "index_agencies_on_agency_id", unique: true
     t.index ["reset_password_token"], name: "index_agencies_on_reset_password_token", unique: true
   end
@@ -76,7 +77,24 @@ ActiveRecord::Schema.define(version: 2022_01_20_073038) do
     t.text "memo"
   end
 
-  create_table "plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "payment_data", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "master_order_number"
+    t.string "payment_type"
+    t.string "pay_result"
+    t.string "sub_order_number"
+    t.string "card_type"
+    t.string "last_name"
+    t.string "first_name"
+    t.string "price"
+    t.string "tax"
+    t.string "shipping_cost"
+    t.string "payment_date"
+    t.string "payment_mode"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "plans", charset: "utf8mb3", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.integer "sales_price", null: false
     t.integer "reward_price", null: false

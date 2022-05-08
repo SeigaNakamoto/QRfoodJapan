@@ -13,5 +13,9 @@
       = link_to admins_agency_list_index_path, class: "sidebar__wraper--link"
         .sidebar__wraper--link__text
           | 代理店一覧　＞
+    li.sidebar__wraper.py-2.border-bottom
+      = link_to admins_payment_list_index_path, class: "sidebar__wraper--link"
+        .sidebar__wraper--link__text
+          | 決済データ一覧　＞
     li.sidebar__wraper.py-2
       = link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "btn btn-dark"

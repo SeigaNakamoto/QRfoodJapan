@@ -28,7 +28,7 @@ if Rails.env == 'production'
   #     agency_tel: "05020161600",
   #     agency_rec_name: "山田太郎",
   #     agency_rec_tel: "05020161601",
-  #     agency_mail: "dairiten.#{i}@test.com",
+  #     email: "dairiten.#{i}@test.com",
   #     bank_name: "三井住友銀行",
   #     bank_code: "0009",
   #     bank_branch_name: "本店",
@@ -51,7 +51,7 @@ if Rails.env == 'production'
   #       agency_tel: "05020161600",
   #       agency_rec_name: "山田太郎",
   #       agency_rec_tel: "05020161601",
-  #       agency_mail: "dairiten.#{i}_#{j}@test.com",
+  #       email: "dairiten.#{i}_#{j}@test.com",
   #       bank_name: "三井住友銀行",
   #       bank_code: "0009",
   #       bank_branch_name: "本店",
@@ -152,7 +152,7 @@ if Rails.env == 'development'
       agency_tel: "1234567890",
       agency_rec_name: "parent",
       agency_rec_tel: "1234567890",
-      agency_mail: "parent@parent.parent",
+      email: "parent@parent.parent",
       bank_name: "parent",
       bank_code: "1234",
       bank_branch_name: "parent",
@@ -173,7 +173,7 @@ if Rails.env == 'development'
       agency_tel: "05020161600",
       agency_rec_name: "山田太郎",
       agency_rec_tel: "05020161601",
-      agency_mail: "agency.#{i}@test.com",
+      email: "agency.#{i}@test.com",
       bank_name: "三井住友銀行",
       bank_code: "0009",
       bank_branch_name: "本店",
@@ -195,7 +195,7 @@ if Rails.env == 'development'
         agency_tel: "05020161600",
         agency_rec_name: "山田太郎",
         agency_rec_tel: "05020161601",
-        agency_mail: "agency.#{i}_#{j-1}@test.com",
+        email: "agency.#{i}_#{j-1}@test.com",
         bank_name: "三井住友銀行",
         bank_code: "0009",
         bank_branch_name: "本店",
@@ -205,7 +205,7 @@ if Rails.env == 'development'
         bank_account_holder_kana: "ヤマダ　タロウ"
       )
     end
-  end  
+  end
 
   (1..500).each do |i|
     @company = Company.create(

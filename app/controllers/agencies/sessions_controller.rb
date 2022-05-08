@@ -31,7 +31,7 @@ class Agencies::SessionsController < Devise::SessionsController
       :agency_add_kana,
       :agency_tel,
       :agency_fax,
-      :agency_mail,
+      :email,
       :bank_name,
       :bank_code,
       :bank_branch_name,

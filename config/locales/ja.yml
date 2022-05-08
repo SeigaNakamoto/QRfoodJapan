@@ -17,7 +17,7 @@ ja:
         agency_rec_name: 窓口担当者名
         agency_rec_tel: 代理店電話番号（窓口担当）
         agency_tel: 代理店電話番号
-        agency_mail: 代理店メールアドレス
+        email: 代理店メールアドレス
         bank_name: 金融機関名
         bank_code: 金融機関コード
         bank_branch_name: 支店名
