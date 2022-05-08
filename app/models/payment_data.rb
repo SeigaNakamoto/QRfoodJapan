@@ -23,10 +23,23 @@ class PaymentData < ApplicationRecord
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
-      task = find_by(master_order_number: row["master_order_number"]) || new
+      task = find_or_initialize_by(
+        master_order_number: row["決済番号"], 
+        payment_mode: row["システムモード"], 
+        payment_date: row["決済日時"], 
+        payment_type: row["決済タイプ"], 
+        pay_result: row["結果"], 
+        sub_order_number: row["オーダー"], 
+        card_type: row["カードタイプ"], 
+        last_name: row["名前"], 
+        first_name: row["姓"], 
+        price: row["金額"], 
+        tax: row["税金"], 
+        shipping_cost: row["送料"]
+      ) 
       # CSVからデータを取得し、設定する
       task.attributes = row.to_hash.slice(*updatable_attributes)
-      task.save
+      task.save!(validate: false)
     end
   end
 
