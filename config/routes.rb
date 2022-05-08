@@ -42,7 +42,10 @@ Rails.application.routes.draw do
   
   # QRfoodサービスお申込フォーム
   resources :users, module: 'agencies', only: [:new, :create]
-  get  "users/payment"  => "agencies/users#payment"
+  get  "users/entry_payment"  => "agencies/users#entry_payment"
+  get  "users/light_payment"  => "agencies/users#light_payment"
+  get  "users/standard_payment"  => "agencies/users#standard_payment"
+  get  "users/premium_payment"  => "agencies/users#premium_payment"
   get  "users/paid"  => "agencies/users#paid"
   get  "users/univapay" => "agencies/users#univapay"
   get  "users/termsofservice" => "agencies/users#termsofservice"
