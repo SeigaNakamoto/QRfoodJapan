@@ -116,3 +116,9 @@
       .form-group.col
         = s.label :agency_per_name, '代理店担当者名'
         = s.text_field :agency_per_name, class: 'form-control', :placeholder=>"山田太郎"
+javascript:
+	$('input:radio[name="company[store][plan_id]"]').change(function() {
+		const value = $('input:radio[name="company[store][plan_id]"]:checked').val();
+    if (value == 0) {}
+		$('#span4').text(str1);
+	});

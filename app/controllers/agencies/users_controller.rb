@@ -28,13 +28,28 @@ class Agencies::UsersController < ApplicationController
       @company.save
       @store.company_id = @company.id
       @store.save
-      redirect_to users_payment_path(agency_id: @store.agency_charge_id)
+      if @store.plan_id == 0
+        redirect_to users_entry_payment_path(agency_id: @store.agency_charge_id)
+      elsif @store.plan_id == 1
+        redirect_to users_light_payment_path(agency_id: @store.agency_charge_id)
+      elsif @store.plan_id == 2
+        redirect_to users_standard_payment_path(agency_id: @store.agency_charge_id)
+      else
+        redirect_to users_premium_payment_path(agency_id: @store.agency_charge_id)
+
+      end
     else
       render 'new'
     end
   end
   
-  def payment
+  def entry_payment
+  end
+  def light_payment
+  end
+  def standard_payment
+  end
+  def premium_payment
   end
   
   def paid
