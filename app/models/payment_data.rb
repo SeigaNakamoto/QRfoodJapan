@@ -45,6 +45,6 @@ class PaymentData < ApplicationRecord
 
   # 更新を許可するカラムを定義
   def self.updatable_attributes
-    ["id", "master_order_number", "payment_mode", "payment_date", "payment_type", "pay_result", "sub_order_number", "card_type", "last_name", "first_name", "price", "tax", "shipping_cost", ]
+    ["master_order_number", "payment_mode", "payment_date", "payment_type", "pay_result", "sub_order_number", "card_type", "last_name", "first_name", "price", "tax", "shipping_cost", ]
   end
 end
