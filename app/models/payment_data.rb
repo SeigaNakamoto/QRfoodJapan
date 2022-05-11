@@ -21,7 +21,7 @@
 class PaymentData < ApplicationRecord
   #importメソッド
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file.path, headers: true, encoding: 'BOM|UTF-8') do |row|
       # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
       task = find_or_initialize_by(
         master_order_number: row["決済番号"], 
@@ -45,6 +45,6 @@ class PaymentData < ApplicationRecord
 
   # 更新を許可するカラムを定義
   def self.updatable_attributes
-    ["master_order_number", "payment_mode", "payment_date", "payment_type", "pay_result", "sub_order_number", "card_type", "last_name", "first_name", "price", "tax", "shipping_cost", ]
+    ["id", "master_order_number", "payment_mode", "payment_date", "payment_type", "pay_result", "sub_order_number", "card_type", "last_name", "first_name", "price", "tax", "shipping_cost", ]
   end
 end
