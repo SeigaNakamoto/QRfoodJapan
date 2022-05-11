@@ -21,7 +21,7 @@
 class PaymentData < ApplicationRecord
   #importメソッド
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file.path, headers: true, liberal_parsing: true) do |row|
       # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
       task = find_or_initialize_by(
         master_order_number: row["決済番号"], 
