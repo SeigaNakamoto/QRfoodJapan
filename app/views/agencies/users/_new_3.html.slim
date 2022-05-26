@@ -74,15 +74,14 @@
         .error-message
           | * #{@store.errors.full_messages_for(:plan_id).first}
       - else
-      - @plans.each do |p|
-        .d-flex
-          = s.radio_button :plan_id, p.id
-          | 【
-          = p.name
-          | （プラン料金：¥
-          = p.sales_price.to_s(:delimited)
-          | ）】
-          br/
+      .d-flex
+        = s.radio_button :plan_id, @plans.id, checked: true
+        | 【
+        = @plans.name
+        | （プラン料金：¥
+        = @plans.sales_price.to_s(:delimited)
+        | ）】
+        br/
     .form-group
       - if @store.errors.include?(:agreement_up)
         .error-message
