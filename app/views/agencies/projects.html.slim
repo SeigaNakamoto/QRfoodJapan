@@ -44,8 +44,15 @@
                 | ダウンロード
             .d-flex.align-items-center.justify-content-between
               | プラン申込みURL
-              = link_to new_user_path(agency_id: @agency.agency_id), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do 
-                | 申込み画面へ
+            .d-flex.align-items-center.justify-content-end
+              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 'entry'), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
+                | エントリー
+              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 'light'), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
+                | ライト
+              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 'standard'), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
+                | スタンダード
+              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 'premium'), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
+                | プレミアム
 
 = render partial: 'navibar'
 .d-block.d-xl-none
@@ -92,5 +99,12 @@
                 | ダウンロード
             .d-flex.align-items-center.justify-content-between
               | プラン申込みURL
-              = link_to new_user_path(agency_id: @agency.agency_id), class: 'btn btn-primary' do 
-                | 申込み画面へ
+            .d-flex.align-items-center.justify-content-end
+              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 'entry'), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
+                | エントリー
+              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 'light'), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
+                | ライト
+              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 'standard'), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
+                | スタンダード
+              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 'premium'), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
+                | プレミアム

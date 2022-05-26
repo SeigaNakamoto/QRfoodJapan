@@ -4,7 +4,15 @@ class Agencies::UsersController < ApplicationController
   def new
       @company = Company.new
       @store = Store.new
-      @plans = Plan.all
+      if params[:plan_id] == 'entry'
+        @plans = Plan.find(0)
+      elsif params[:plan_id] == 'light'
+        @plans = Plan.find(1)
+      elsif params[:plan_id] == 'standard'
+        @plans = Plan.find(2)
+      elsif params[:plan_id] == 'premium'
+        @plans = Plan.find(3)
+      end
 
       if params[:agency_id] != nil then
         @store.agency_charge_id = params[:agency_id]
