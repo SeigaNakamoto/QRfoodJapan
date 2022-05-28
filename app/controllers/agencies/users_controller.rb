@@ -5,7 +5,7 @@ class Agencies::UsersController < ApplicationController
       @company = Company.new
       @store = Store.new
       if params[:plan_id] == 'entry'
-        @plans = Plan.find(0)
+        @plans = Plan.find(44)
       elsif params[:plan_id] == 'light'
         @plans = Plan.find(1)
       elsif params[:plan_id] == 'standard'
@@ -22,7 +22,16 @@ class Agencies::UsersController < ApplicationController
   def create
     @company = Company.new(company_params)
     @store = Store.new(store_params[:store])
-    @plans = Plan.all
+    
+    if params[:plan_id] == 'entry'
+      @plans = Plan.find(44)
+    elsif params[:plan_id] == 'light'
+      @plans = Plan.find(1)
+    elsif params[:plan_id] == 'standard'
+      @plans = Plan.find(2)
+    elsif params[:plan_id] == 'premium'
+      @plans = Plan.find(3)
+    end
 
     if Agency.where(agency_id: @store.agency_charge_id).exists?
       @store.agency_id = Agency.where(agency_id: @store.agency_charge_id).first.id
@@ -36,7 +45,7 @@ class Agencies::UsersController < ApplicationController
       @company.save
       @store.company_id = @company.id
       @store.save
-      if @store.plan_id == 0
+      if @store.plan_id == 44
         redirect_to users_entry_payment_path(agency_id: @store.agency_charge_id)
       elsif @store.plan_id == 1
         redirect_to users_light_payment_path(agency_id: @store.agency_charge_id)
