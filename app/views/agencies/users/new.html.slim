@@ -1,15 +1,520 @@
-.row
-  .col-md-10.mx-auto
-    .d-flex.align-items-center
-      h1 QRfoodサービスお申込フォーム
-    - if @company.errors.any? || @store.errors.any?
-      .alert.alert-danger 入力内容をご確認ください。
-    .error-message ※「*」は必須項目です。
-    = form_with( model: @company, url: users_path) do |c|
-      = render partial: 'new_1', locals: {c: c}
-      = c.fields_for @store do |s| 
-        = render partial: 'new_2', locals: {s: s}
-        = render partial: 'new_3', locals: {s: s}
-        .d-flex.align-items-center
-          .ml-auto.boards__linkBox
-            = c.submit '次へ', class: 'btn btn-primary'
+#grad1.container-fluid
+  .row.justify-content-center.mt-0
+    .col-11.col-sm-9.col-md-7.col-lg-6.text-center.p-0.mt-3.mb-2
+      .card.px-0.pt-4.pb-0.mt-3.mb-3
+        h2
+          strong お客様情報登録
+        - if @company.errors.any? || @store.errors.any?
+          .alert.alert-danger 入力内容をご確認ください。          
+        .row
+          .col-md-12.mx-0
+            form#msform
+              /! progressbar
+              ul#progressbar
+                li#personal.active
+                  strong ステップ1
+                li#personal
+                  strong ステップ2
+                li#personal
+                  strong ステップ3
+                li#payment
+                  strong 決済へ進む
+              /! fieldsets
+              = form_with( model: @company, url: users_path) do |c|
+                fieldset
+                  .form-card
+                    h2.fs-title 事業者情報
+                    - if @company.errors.any? || @store.errors.any?
+                      .alert.alert-danger 入力内容をご確認ください。
+                    .error-message ※「*」は必須項目です。
+                    .d-flex
+                      = c.label :company_type, '事業者種別'
+                      .error-message *
+                    .row
+                      .col
+                        .d-flex
+                          = c.label :company_type, '法人', class: 'w-100'
+                          = c.radio_button :company_type, '法人', value: '法人'
+                      .col
+                        .d-flex
+                          = c.label :company_type, '個人事業主', class: 'w-100'
+                          = c.radio_button :company_type, '個人事業主', checked: true, value: '個人事業主'
+                    #accordion.panel-group
+                      .panel.panel-default
+                        .panel-heading
+                          .panel-title ◆法人のみ
+                        #collapseOne.panel-collapse.collapse
+                          .panel-body
+                            = c.label :corp_name, '法人名'
+                            - if @company.errors.include?(:corp_name)
+                              .error-message
+                                | * #{@company.errors.full_messages_for(:corp_name).first}
+                            = c.text_field :corp_name, class: 'form-control', :placeholder=>"株式会社○○○"
+                            .d-flex
+                            = c.label :corp_postal, '登記住所郵便番号'
+                            - if @company.errors.include?(:corp_postal)
+                              .error-message
+                                | * #{@company.errors.full_messages_for(:corp_postal).first}
+                            = c.text_field :corp_postal, class: 'form-control', :placeholder=>"XXX-XXXX"
+                            .d-flex
+                            = c.label :corp_add, '登記住所'
+                            - if @company.errors.include?(:corp_add)
+                              .error-message
+                                | * #{@company.errors.full_messages_for(:corp_add).first}
+                            = c.text_field :corp_add, class: 'form-control', :placeholder=>"都道府県市区町村番地建物名"
+                            .d-flex
+                            = c.label :corp_add_kana, '登記住所（カナ）'
+                            - if @company.errors.include?(:corp_add_kana)
+                              .error-message
+                                | * #{@company.errors.full_messages_for(:corp_add_kana).first}
+                            = c.text_field :corp_add_kana, class: 'form-control', :placeholder=>"トドウフケンシクチョウソンバンチタテモノメイ"
+                            .d-flex
+                            = c.label :corp_tel, '事業者電話番号'
+                            - if @company.errors.include?(:corp_tel)
+                              .error-message
+                                | * #{@company.errors.full_messages_for(:corp_tel).first}
+                            = c.text_field :corp_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+                            .d-flex
+                            = c.label :corp_fax, '事業者FAX番号'
+                            - if @company.errors.include?(:corp_fax)
+                              .error-message
+                                | * #{@company.errors.full_messages_for(:corp_fax).first}
+                            = c.text_field :corp_fax, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+
+                            = c.label :corp_date, '設立年月日'
+                            - if @company.errors.include?(:corp_date)
+                              .error-message
+                                | * #{@company.errors.full_messages_for(:corp_date).first}
+                            = c.date_field :corp_date, value: Time.now.strftime("%Y-%m-%d"), class: 'form-control'
+                      p ◆法人・個人事業主
+                      .d-flex
+                        = c.label :rep_post, '代表者 役職'
+                        .error-message *
+                      - if @company.errors.include?(:rep_post)
+                        .error-message
+                          | * #{@company.errors.full_messages_for(:rep_post).first}
+                      = c.text_field :rep_post, class: 'form-control', :placeholder=>"代表取締役"
+                    .d-flex
+                      = c.label :rep_name, '代表者 氏名'
+                      .error-message *
+                    - if @company.errors.include?(:rep_name)
+                      .error-message
+                        | * #{@company.errors.full_messages_for(:rep_name).first}
+                    = c.text_field :rep_name, class: 'form-control', :placeholder=>"山田太郎"
+                    .d-flex
+                      = c.label :rep_name_kana, '代表者 氏名（カナ）'
+                      .error-message *
+                    - if @company.errors.include?(:rep_name_kana)
+                      .error-message
+                        | * #{@company.errors.full_messages_for(:rep_name_kana).first}
+                    = c.text_field :rep_name_kana, class: 'form-control', :placeholder=>"ヤマダタロウ"
+                    .d-flex
+                      = c.label :rep_postal, '代表者 郵便番号'
+                      .error-message *
+                    - if @company.errors.include?(:rep_postal)
+                      .error-message
+                        | * #{@company.errors.full_messages_for(:rep_postal).first}
+                    = c.text_field :rep_postal, class: 'form-control', :placeholder=>"XXX-XXXX"
+                    .d-flex
+                      = c.label :rep_add, '代表者 住所'
+                      .error-message *
+                    - if @company.errors.include?(:rep_add)
+                      .error-message
+                        | * #{@company.errors.full_messages_for(:rep_add).first}
+                    = c.text_field :rep_add, class: 'form-control', :placeholder=>"都道府県市区町村番地建物名"
+                    .d-flex
+                      = c.label :rep_add_kana, '代表者 住所（カナ）'
+                      .error-message *
+                    - if @company.errors.include?(:rep_add_kana)
+                      .error-message
+                        | * #{@company.errors.full_messages_for(:rep_add_kana).first}
+                    = c.text_field :rep_add_kana, class: 'form-control', :placeholder=>"トドウフケンシクチョウソンバンチタテモノメイ"
+                    .d-flex
+                      = c.label :rep_birthdate, '代表者 生年月日'
+                      .error-message *
+                    - if @company.errors.include?(:rep_birthdate)
+                      .error-message
+                        | * #{@company.errors.full_messages_for(:rep_birthdate).first}
+                    = c.date_field :rep_birthdate, value: Time.now.strftime("%Y-%m-%d"), class: 'form-control'
+                    .d-flex
+                      = c.label :rep_birthdate, '代表者 生年月日'
+                      .error-message *
+                    - if @company.errors.include?(:rep_birthdate)
+                      .error-message
+                        | * #{@company.errors.full_messages_for(:rep_birthdate).first}
+                    = c.date_field :rep_birthdate, value: Time.now.strftime("%Y-%m-%d"), class: 'form-control'
+                    .d-flex
+                      = c.label :rep_tel, '代表者 電話番号'
+                      .error-message *
+                    - if @company.errors.include?(:rep_tel)
+                      .error-message
+                        | * #{@company.errors.full_messages_for(:rep_tel).first}
+                    = c.text_field :rep_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+                    .d-flex
+                      = c.label :rep_email, '代表者 メールアドレス'
+                      .error-message *
+                    - if @company.errors.include?(:rep_email)
+                      .error-message
+                        | * #{@company.errors.full_messages_for(:rep_email).first}
+                    = c.text_field :rep_email, class: 'form-control', :placeholder=>"auなどのキャリアアドレス以外"
+                  input.next.action-button name="next" type="button" value=("ステップ2")
+                = c.fields_for @store do |s| 
+                  fieldset
+                    .form-card
+                      h2.fs-title 店舗情報
+                      .d-flex
+                        = s.label :store_name, '店舗名'
+                        .error-message *
+                      - if @store.errors.include?(:store_name)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:store_name).first}
+                      = s.text_field :store_name, class: 'form-control'
+                      .d-flex
+                        = s.label :store_name_kana, '店舗名（カナ）'
+                        .error-message *
+                      - if @store.errors.include?(:store_name_kana)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:store_name_kana).first}
+                      = s.text_field :store_name_kana, class: 'form-control'
+                      .d-flex
+                        = s.label :alphabet_notation, 'アルファベット表記'
+                        - if @store.errors.include?(:alphabet_notation)
+                          .error-message
+                            | * #{@store.errors.full_messages_for(:alphabet_notation).first}
+                        = s.text_field :alphabet_notation, class: 'form-control'
+                      .d-flex
+                        = s.label :store_postal, '店舗 郵便番号'
+                        .error-message *
+                      - if @store.errors.include?(:store_postal)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:store_postal).first}
+                      = s.text_field :store_postal, class: 'form-control', :placeholder=>"XXX-XXXX"
+                      .d-flex
+                        = s.label :store_add, '店舗 住所'
+                        .error-message *
+                      - if @store.errors.include?(:store_add)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:store_add).first}
+                      = s.text_field :store_add, class: 'form-control', :placeholder=>"都道府県市区町村番地建物名"
+                      .d-flex
+                        = s.label :store_add_kana, '店舗 住所（カナ）'
+                        .error-message *
+                      - if @store.errors.include?(:store_add_kana)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:store_add_kana).first}
+                      = s.text_field :store_add_kana, class: 'form-control', :placeholder=>"トドウフケンシクチョウソンバンチタテモノメイ"
+                      .d-flex
+                        = s.label :store_tel, '店舗 電話番号'
+                        .error-message *
+                      - if @store.errors.include?(:store_tel)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:store_tel).first}
+                      = s.text_field :store_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+                      = s.label :store_fax, '店舗 FAX番号'
+                      - if @store.errors.include?(:store_fax)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:store_fax).first}
+                      = s.text_field :store_fax, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+                      = s.label :store_email, '店舗 メールアドレス'
+                      - if @store.errors.include?(:store_email)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:store_email).first}
+                      = s.text_field :store_email, class: 'form-control', :placeholder=>"auなどのキャリアアドレス以外"
+                      .d-flex
+                        = s.label :per_post, '担当者 役職'
+                        .error-message *
+                      - if @store.errors.include?(:per_post)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:per_post).first}
+                      = s.text_field :per_post, class: 'form-control', :placeholder=>"店長"
+                      .d-flex
+                        = s.label :per_name, '担当者 氏名'
+                        .error-message *
+                      - if @store.errors.include?(:per_name)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:per_name).first}
+                      = s.text_field :per_name, class: 'form-control', :placeholder=>"山田太郎"
+                      .d-flex
+                        = s.label :per_name_kana, '担当者 氏名（カナ）'
+                        .error-message *
+                      - if @store.errors.include?(:per_name_kana)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:per_name_kana).first}
+                      = s.text_field :per_name_kana, class: 'form-control', :placeholder=>"ヤマダタロウ"
+                      .d-flex
+                        = s.label :per_tel, '担当者 電話番号'
+                        .error-message *
+                      - if @store.errors.include?(:per_tel)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:per_tel).first}
+                      = s.text_field :per_tel, class: 'form-control', :placeholder=>"10桁または11桁（ハイフンなし）"
+                      .d-flex
+                        = s.label :per_email, '担当者 メールアドレス'
+                        .error-message *
+                      - if @store.errors.include?(:per_email)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:per_email).first}
+                      = s.text_field :per_email, class: 'form-control', :placeholder=>"auなどのキャリアアドレス以外"
+                      .d-flex
+                        = s.label :time_zone_to_contact, '連絡取りやすい時間帯'
+                        .error-message *
+                      - if @store.errors.include?(:time_zone_to_contact)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:time_zone_to_contact).first}
+                      = s.text_field :time_zone_to_contact, class: 'form-control', :placeholder=>"平日10:00~22:00、土日祝9:00~22:00など"
+                      .d-flex
+                        = s.label :genre, 'ジャンル'
+                        .error-message *
+                      - if @store.errors.include?(:genre)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:genre).first}
+                      = s.text_field :genre, class: 'form-control', :placeholder=>"和食、洋食、中華など"
+                      .d-flex
+                        = s.label :business_hours, '営業時間'
+                        .error-message *
+                      - if @store.errors.include?(:business_hours)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:business_hours).first}
+                      = s.text_field :business_hours, class: 'form-control', :placeholder=>"平日10:00~22:00、土日祝9:00~22:00など"
+                      .d-flex
+                        = s.label :regular_holiday, '定休日'
+                        .error-message *
+                      - if @store.errors.include?(:regular_holiday)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:regular_holiday).first}
+                      = s.text_field :regular_holiday, class: 'form-control', :placeholder=>"年中無休、毎週木曜日、第2水曜日など"
+                      = s.label :hp, 'HP ※HPや食べログなど'
+                      - if @store.errors.include?(:hp)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:hp).first}
+                      = s.text_field :hp, class: 'form-control', :placeholder=>"HP、食べログなどのURL"
+                      .d-flex
+                        = s.label :ave_price, '平均価格帯（1,000円単位）'
+                        .error-message *
+                      - if @store.errors.include?(:ave_price)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:ave_price).first}
+                      = s.text_field :ave_price, class: 'form-control', :placeholder=>"半角数字（1,000円単位）"
+                      .d-flex
+                        = s.label :reservation, '予約可否'
+                        .error-message *
+                      .row
+                        .col
+                          .d-flex
+                            .w-25
+                              = s.label :reservation, '可'
+                            .w-25
+                              = s.radio_button :reservation, '可', checked: true
+                      .row
+                        .col
+                          .d-flex
+                            .w-25
+                              = s.label :reservation, '不可能'
+                            .w-25
+                              = s.radio_button :reservation, '不可能'
+                      .d-flex
+                        = s.label :table_cnt, 'テーブル数'
+                        .error-message *
+                      - if @store.errors.include?(:table_cnt)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:table_cnt).first}
+                      = s.text_field :table_cnt, class: 'form-control', :placeholder=>"半角数字"
+                      .d-flex
+                        = s.label :counter_cnt, 'カウンター数'
+                        .error-message *
+                      - if @store.errors.include?(:counter_cnt)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:counter_cnt).first}
+                      = s.text_field :counter_cnt, class: 'form-control', :placeholder=>"半角数字"
+                    input.previous.action-button-previous name="previous" type="button" value="ステップ1"
+                    input.next.action-button name="next" type="button" value=("ステップ3") /
+                  fieldset
+                    .form-card
+                      h2.fs-title 口座情報
+                      .d-flex
+                        = s.label :bank_name, '金融機関名'
+                        .error-message *
+                      - if @store.errors.include?(:bank_name)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:bank_name).first}
+                      = s.text_field :bank_name, class: 'form-control', :placeholder=>"〇〇銀行"
+                      .d-flex
+                        = s.label :bank_code, '金融機関コード'
+                        .error-message *
+                      - if @store.errors.include?(:bank_code)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:bank_code).first}
+                      = s.text_field :bank_code, class: 'form-control', :placeholder=>"XXXX"
+                      .d-flex
+                        = s.label :bank_branch_name, '支店名'
+                        .error-message *
+                      - if @store.errors.include?(:bank_branch_name)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:bank_branch_name).first}
+                      = s.text_field :bank_branch_name, class: 'form-control', :placeholder=>"〇〇支店"
+                      .d-flex
+                        = s.label :bank_branch_code, '支店コード'
+                        .error-message *
+                      - if @store.errors.include?(:bank_branch_code)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:bank_branch_code).first}
+                      = s.text_field :bank_branch_code, class: 'form-control', :placeholder=>"XXX"
+                      .d-flex
+                        = s.label :bank_account_type, '口座種別'
+                        .error-message *
+                      .row 
+                        .d-flex.w-50
+                          = s.label :bank_account_type, '普通預金', class: 'w-100'
+                          = s.radio_button :bank_account_type, '普通預金', checked: true
+                      .row
+                        .d-flex.w-50
+                          = s.label :bank_account_type, '当座預金', class: 'w-100'
+                          = s.radio_button :bank_account_type, '当座預金'
+                      .d-flex
+                        = s.label :bank_account_number, '口座番号'
+                        .error-message *
+                      - if @store.errors.include?(:bank_account_number)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:bank_account_number).first}
+                      = s.text_field :bank_account_number, class: 'form-control', :placeholder=>"XXXXXXX"
+                      .d-flex
+                        = s.label :bank_account_holder_kana, '口座名義（カナ）'
+                        .error-message *
+                      - if @store.errors.include?(:bank_account_holder_kana)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:bank_account_holder_kana).first}
+                      = s.text_field :bank_account_holder_kana, class: 'form-control', :placeholder=>"ヤマダ　タロウ"
+                      h2.fs-title プラン
+                      .row
+                        = s.label :plan_id, 'プラン選択'
+                        .error-message *
+                      - if @store.errors.include?(:plan_id)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:plan_id).first}
+                      - else
+                      .row
+                        | 【
+                        = @plans.name
+                        | （プラン料金：¥
+                        = @plans.sales_price.to_s(:delimited)
+                        | ）】
+                        = s.radio_button :plan_id, @plans.id, checked: true, class: 'w-25'
+                        br/
+                      - if @store.errors.include?(:agreement_up)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:agreement_up).first}
+                      .row
+                        .col-8
+                          | ◆
+                          = link_to '決済機能規約', users_univapay_path, target: :_blank, rel: "noopener noreferrer"
+                          | に同意する◆
+                        .col-4
+                          = s.check_box :agreement_up, :as => :boolean, checked:false 
+                      - if @store.errors.include?(:agreement)
+                        .error-message
+                          | * #{@store.errors.full_messages_for(:agreement).first}
+                      .row
+                        .col-8
+                          | ◆
+                          = link_to '利用規約', users_termsofservice_path, target: :_blank, rel: "noopener noreferrer"
+                          | と
+                          = link_to 'プライバシーポリシー', users_privacypolicy_path, target: :_blank, rel: "noopener noreferrer"
+                          | に同意する◆
+                        .col-4
+                          = s.check_box :agreement, :as => :boolean, checked:false 
+                      h2.fs-title 紹介者情報
+                      .d-flex.w-50
+                        | 代理店ID： #{@store.agency_charge_id}
+                        = s.hidden_field :agency_charge_id, :value => @store.agency_charge_id
+                      .d-flex.w-25
+                        = s.label :agency_per_name, '代理店担当者名'
+                      .w-75
+                        = s.text_field :agency_per_name, class: 'form-control', :placeholder=>"山田太郎"
+                    input.previous.action-button-previous name="previous" type="button" value="ステップ2"
+                    input.next.action-button name="make_payment" type="button" value="決済確認"
+                  fieldset
+                    .form-card
+                      h2.fs-title.text-center プラン確認と決済
+                      .w-100.mx-auto.text-center
+                        = c.submit '決済', class: 'btn btn-primary next action-button'
+
+
+
+javascript:
+  // ラジオボタン選択時にアコーディオンを開閉する
+  $('[name="company[company_type]"]').on('change', function(){  
+    if($(this).val()  === "法人"){
+      $('#collapseOne').collapse('show')
+    }else{
+      $('#collapseOne').collapse('hide')
+    }
+  });
+
+  $(document).ready(function(){
+      
+  var current_fs, next_fs, previous_fs; //fieldsets
+  var opacity;
+
+  $(".next").click(function(){
+      
+      current_fs = $(this).parent();
+      next_fs = $(this).parent().next();
+      
+      //Add Class Active
+      $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+      
+      //show the next fieldset
+      next_fs.show(); 
+      //hide the current fieldset with style
+      current_fs.animate({opacity: 0}, {
+          step: function(now) {
+              // for making fielset appear animation
+              opacity = 1 - now;
+
+              current_fs.css({
+                  'display': 'none',
+                  'position': 'relative'
+              });
+              next_fs.css({'opacity': opacity});
+          }, 
+          duration: 600
+      });
+  });
+
+  $(".previous").click(function(){
+      
+      current_fs = $(this).parent();
+      previous_fs = $(this).parent().prev();
+      
+      //Remove class active
+      $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+      
+      //show the previous fieldset
+      previous_fs.show();
+
+      //hide the current fieldset with style
+      current_fs.animate({opacity: 0}, {
+          step: function(now) {
+              // for making fielset appear animation
+              opacity = 1 - now;
+
+              current_fs.css({
+                  'display': 'none',
+                  'position': 'relative'
+              });
+              previous_fs.css({'opacity': opacity});
+          }, 
+          duration: 600
+      });
+  });
+
+  $('.radio-group .radio').click(function(){
+      $(this).parent().find('.radio').removeClass('selected');
+      $(this).addClass('selected');
+  });
+
+  $(".submit").click(function(){
+      return false;
+  })
+      
+  });

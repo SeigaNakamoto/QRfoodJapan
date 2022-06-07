@@ -4,14 +4,10 @@ class Agencies::UsersController < ApplicationController
   def new
       @company = Company.new
       @store = Store.new
-      if params[:plan_id] == 'entry'
-        @plans = Plan.find(44)
-      elsif params[:plan_id] == 'light'
-        @plans = Plan.find(1)
-      elsif params[:plan_id] == 'standard'
-        @plans = Plan.find(2)
-      elsif params[:plan_id] == 'premium'
-        @plans = Plan.find(3)
+      if params[:plan_id] != nil then
+        @plans = Plan.find(params[:plan_id])
+      else
+        @plans = Plan.find(session[:plan_id])
       end
 
       if params[:agency_id] != nil then
@@ -22,16 +18,8 @@ class Agencies::UsersController < ApplicationController
   def create
     @company = Company.new(company_params)
     @store = Store.new(store_params[:store])
-    
-    if params[:plan_id] == 'entry'
-      @plans = Plan.find(44)
-    elsif params[:plan_id] == 'light'
-      @plans = Plan.find(1)
-    elsif params[:plan_id] == 'standard'
-      @plans = Plan.find(2)
-    elsif params[:plan_id] == 'premium'
-      @plans = Plan.find(3)
-    end
+    @plans = Plan.find(@store.plan_id)
+    session[:plan_id] = @plans.id
 
     if Agency.where(agency_id: @store.agency_charge_id).exists?
       @store.agency_id = Agency.where(agency_id: @store.agency_charge_id).first.id
