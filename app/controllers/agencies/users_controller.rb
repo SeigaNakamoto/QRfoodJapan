@@ -2,17 +2,17 @@ class Agencies::UsersController < ApplicationController
   # before_action :authenticate_agency!
   
   def new
-      @company = Company.new
-      @store = Store.new
-      if params[:plan_id] != nil then
-        @plans = Plan.find(params[:plan_id])
-      else
-        @plans = Plan.find(session[:plan_id])
-      end
+    @company = Company.new
+    @store = Store.new
+    if params[:plan_id] != nil then
+      @plans = Plan.find(params[:plan_id])
+    else
+      @plans = Plan.find(session[:plan_id])
+    end
 
-      if params[:agency_id] != nil then
-        @store.agency_charge_id = params[:agency_id]
-      end
+    if params[:agency_id] != nil then
+      @store.agency_charge_id = params[:agency_id]
+    end
   end
   
   def create
