@@ -1,6 +1,6 @@
 class Agencies::UsersController < ApplicationController
   # before_action :authenticate_agency!
-  
+
   def new
     @company = Company.new
     @store = Store.new
@@ -14,7 +14,7 @@ class Agencies::UsersController < ApplicationController
       @store.agency_charge_id = params[:agency_id]
     end
   end
-  
+
   def create
     @company = Company.new(company_params)
     @store = Store.new(store_params[:store])
@@ -28,7 +28,7 @@ class Agencies::UsersController < ApplicationController
       @store.valid?
       @store.errors.add(:agency_charge_id, 'は登録されていない代理店IDです')
     end
-    
+
     if @company.valid? & @store.errors.size.eql?(1)
       @company.save
       @store.company_id = @company.id
@@ -47,7 +47,7 @@ class Agencies::UsersController < ApplicationController
       render 'new'
     end
   end
-  
+
   def entry_payment
   end
   def light_payment
@@ -56,19 +56,19 @@ class Agencies::UsersController < ApplicationController
   end
   def premium_payment
   end
-  
+
   def paid
     @param = request.query_string
   end
-  
+
   def termsofservice
   end
-  
+
   def privacypolicy
   end
-  
+
   private
-  
+
   def company_params
     params.require(:company).permit(
       :company_type,
@@ -90,7 +90,7 @@ class Agencies::UsersController < ApplicationController
       :rep_email
     )
   end
-  
+
   def store_params
     params.require(:company).permit(
       store:[
