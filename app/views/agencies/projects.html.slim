@@ -8,51 +8,52 @@
         .card
           .card-body
             p サマリー
-            - @plans.each do |p|
-              - reward_cnt = Store.where(agency_charge_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
-              - reward_price = (p.reward_price * @tax).to_i
-              ul.plan_color
-                li.d-flex              
-                  .col プラン
-                  .col.text-right #{p.name}
-                li.d-flex              
-                  .col 販売金額
-                  .col.text-right ¥#{p.sales_price.to_s(:delimited)}（税抜）
-                li.d-flex              
-                  .col 報酬金額
-                  .col.text-right ¥#{reward_price.to_s(:delimited)}（税込）
-                li.d-flex              
-                  .col 報酬金額形態
-                  .col.text-right #{p.reward_style}
-                li.d-flex              
-                  .col 対象合計件数
-                  .col.text-right #{reward_cnt}件　
-                li.d-flex              
-                  .col 報酬合計金額
-                  .col.text-right ¥#{(reward_cnt * reward_price).to_s(:delimited)}（税込）
+            #accordionExample.accordion
+              - @plans.each do |p|
+                .card
+                  .card-header id="heading#{p.id}"
+                    h5.mb-0
+                      button.btn.btn-link aria-controls="collapse#{p.id}" aria-expanded="true" data-target="#collapse#{p.id}" data-toggle="collapse" type="button"
+                        | #{p.name}
+                  .collapse aria-labelledby="heading#{p.id}" data-parent="#accordionExample" id="collapse#{p.id}"
+                    .card-body.p-0
+                      - reward_cnt = Store.where(agency_charge_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+                      - reward_price = (p.reward_price * @tax).to_i
+                      ul.plan_color.p-3
+                        li.d-flex
+                          .col プラン
+                          .col.text-right #{p.name}
+                        li.d-flex
+                          .col 販売金額
+                          .col.text-right ¥#{p.sales_price.to_s(:delimited)}（税抜）
+                        li.d-flex
+                          .col 報酬金額
+                          .col.text-right ¥#{reward_price.to_s(:delimited)}（税込）
+                        li.d-flex
+                          .col 報酬金額形態
+                          .col.text-right #{p.reward_style}
+                        li.d-flex
+                          .col 対象合計件数
+                          .col.text-right #{reward_cnt}件　
+                        li.d-flex
+                          .col 報酬合計金額
+                          .col.text-right ¥#{(reward_cnt * reward_price).to_s(:delimited)}（税込）
+                        li.d-flex
+                          .col プラン申込みURL
+                          = link_to new_user_path(agency_id: @agency.agency_id, plan_id: p.id), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do
+                            | #{p.name}お申込フォーム
             .d-flex.align-items-center.justify-content-between.plan_item
               | サービス紹介ページ
-              = link_to agencies_projects_path, class: 'btn btn-primary' do 
+              = link_to agencies_projects_path, class: 'btn btn-primary' do
                 | WEBサイトへ
             .d-flex.align-items-center.justify-content-between.plan_item
               | 営業研修動画
-              = link_to agencies_projects_path, class: 'btn btn-primary' do 
+              = link_to agencies_projects_path, class: 'btn btn-primary' do
                 | 動画を視聴する
             .d-flex.align-items-center.justify-content-between.plan_item
               | 営業資料ダウンロード
-              = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do 
+              = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do
                 | ダウンロード
-            .d-flex.align-items-center.justify-content-between
-              | プラン申込みURL
-            .d-flex.align-items-center.justify-content-end
-              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 44), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
-                | エントリー
-              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 1), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
-                | ライト
-              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 2), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
-                | スタンダード
-              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 3), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
-                | プレミアム
 
 = render partial: 'navibar'
 .d-block.d-xl-none
@@ -63,48 +64,45 @@
         .card
           .card-body
             p サマリー
-            - @plans.each do |p|
-              - reward_cnt = Store.where(agency_charge_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
-              - reward_price = (p.reward_price * @tax).to_i
-              ul.plan_color
-                li.d-flex              
-                  .col プラン
-                  .col.text-right #{p.name}
-                li.d-flex              
-                  .col 販売金額
-                  .col.text-right ¥#{p.sales_price.to_s(:delimited)}（税抜）
-                li.d-flex              
-                  .col 報酬金額
-                  .col.text-right ¥#{reward_price.to_s(:delimited)}（税込）
-                li.d-flex              
-                  .col 報酬金額形態
-                  .col.text-right #{p.reward_style}
-                li.d-flex              
-                  .col 対象合計件数
-                  .col.text-right #{reward_cnt}件　
-                li.d-flex              
-                  .col 報酬合計金額
-                  .col.text-right ¥#{(reward_cnt * reward_price).to_s(:delimited)}（税込）
+            #accordionExampleSp.accordion
+              - @plans.each do |p|
+                .card
+                  .card-header id="heading#{p.id}"
+                    h5.mb-0
+                      button.btn.btn-link aria-controls="collapseSp#{p.id}" aria-expanded="true" data-target="#collapseSp#{p.id}" data-toggle="collapse" type="button"
+                        | #{p.name}
+                  .collapse aria-labelledby="heading#{p.id}" data-parent="#accordionExampleSp" id="collapseSp#{p.id}"
+                    .card-body.p-0
+                      - reward_cnt = Store.where(agency_charge_id: @agency.agency_id, plan_id: p.id, settlement_status: [0,2]).count # プラン毎の合計件数格納
+                      - reward_price = (p.reward_price * @tax).to_i
+                      ul.plan_color.p-3
+                        li.d-flex
+                          .col プラン
+                          .col.text-right #{p.name}
+                        li.d-flex
+                          .col 販売金額
+                          .col.text-right ¥#{p.sales_price.to_s(:delimited)}（税抜）
+                        li.d-flex
+                          .col 報酬金額
+                          .col.text-right ¥#{reward_price.to_s(:delimited)}（税込）
+                        li.d-flex
+                          .col 報酬金額形態
+                          .col.text-right #{p.reward_style}
+                        li.d-flex
+                          .col 対象合計件数
+                          .col.text-right #{reward_cnt}件　
+                        li.d-flex
+                          .col 報酬合計金額
+                          .col.text-right ¥#{(reward_cnt * reward_price).to_s(:delimited)}（税込）
             .d-flex.align-items-center.justify-content-between.plan_item
               | サービス紹介ページ
-              = link_to agencies_projects_path, class: 'btn btn-primary' do 
+              = link_to agencies_projects_path, class: 'btn btn-primary' do
                 | WEBサイトへ
             .d-flex.align-items-center.justify-content-between.plan_item
               | 営業研修動画
-              = link_to agencies_projects_path, class: 'btn btn-primary' do 
+              = link_to agencies_projects_path, class: 'btn btn-primary' do
                 | 動画を視聴する
             .d-flex.align-items-center.justify-content-between.plan_item
               | 営業資料ダウンロード
-              = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do 
+              = link_to 'https://drive.google.com/drive/folders/19ds_GF008i4L7E3uUQ5hGAmddNhUTsPG?usp=sharing', target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary' do
                 | ダウンロード
-            .d-flex.align-items-center.justify-content-between
-              | プラン申込みURL
-            .d-flex.align-items-center.justify-content-end
-              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 44), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
-                | エントリー
-              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 1), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
-                | ライト
-              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 2), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
-                | スタンダード
-              = link_to new_user_path(agency_id: @agency.agency_id, plan_id: 3), target: :_blank, rel: "noopener noreferrer", class: 'btn btn-primary mr-1' do 
-                | プレミアム
