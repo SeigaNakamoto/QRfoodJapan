@@ -4,10 +4,10 @@
       .card-body
         h3.mt-1.mb-3.text-center パスワードリセット
         = form_for(resource, as: resource_name, url: password_path(resource_name)) do |f|
-          == render "admins/shared/error_messages", resource: resource
+          == render "agencies/shared/error_messages", resource: resource
           .form-group
             = f.label :email, "メールアドレス", :class => "form-label"
             = f.email_field :email, autofocus: true, autocomplete: "email", :class => "form-control"
           .actions
             = f.submit "再発行", :class => "btn btn-block btn-secondary"
-          == render "admins/shared/links"
+          == render "agencies/shared/links"
