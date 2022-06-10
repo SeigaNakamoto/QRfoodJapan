@@ -1,37 +1,25 @@
 class Agencies::UsersController < ApplicationController
   # before_action :authenticate_agency!
-  
-  def new
-      @company = Company.new
-      @store = Store.new
-      if params[:plan_id] == 'entry'
-        @plans = Plan.find(44)
-      elsif params[:plan_id] == 'light'
-        @plans = Plan.find(1)
-      elsif params[:plan_id] == 'standard'
-        @plans = Plan.find(2)
-      elsif params[:plan_id] == 'premium'
-        @plans = Plan.find(3)
-      end
 
-      if params[:agency_id] != nil then
-        @store.agency_charge_id = params[:agency_id]
-      end
+  def new
+    @company = Company.new
+    @store = Store.new
+    if params[:plan_id] != nil then
+      @plans = Plan.find(params[:plan_id])
+    else
+      @plans = Plan.find(session[:plan_id])
+    end
+
+    if params[:agency_id] != nil then
+      @store.agency_charge_id = params[:agency_id]
+    end
   end
-  
+
   def create
     @company = Company.new(company_params)
     @store = Store.new(store_params[:store])
-    
-    if params[:plan_id] == 'entry'
-      @plans = Plan.find(44)
-    elsif params[:plan_id] == 'light'
-      @plans = Plan.find(1)
-    elsif params[:plan_id] == 'standard'
-      @plans = Plan.find(2)
-    elsif params[:plan_id] == 'premium'
-      @plans = Plan.find(3)
-    end
+    @plans = Plan.find(@store.plan_id)
+    session[:plan_id] = @plans.id
 
     if Agency.where(agency_id: @store.agency_charge_id).exists?
       @store.agency_id = Agency.where(agency_id: @store.agency_charge_id).first.id
@@ -40,11 +28,14 @@ class Agencies::UsersController < ApplicationController
       @store.valid?
       @store.errors.add(:agency_charge_id, 'は登録されていない代理店IDです')
     end
-    
+
     if @company.valid? & @store.errors.size.eql?(1)
       @company.save
       @store.company_id = @company.id
       @store.save
+      NotificationMailer.registrer_to_store(@company, @store, @plans).deliver
+      NotificationMailer.registrer_to_agent(@company, @store, @plans).deliver
+      NotificationMailer.registrer_to_admin(@company, @store, @plans).deliver
       if @store.plan_id == 44
         redirect_to users_entry_payment_path(agency_id: @store.agency_charge_id)
       elsif @store.plan_id == 1
@@ -59,7 +50,7 @@ class Agencies::UsersController < ApplicationController
       render 'new'
     end
   end
-  
+
   def entry_payment
   end
   def light_payment
@@ -68,19 +59,19 @@ class Agencies::UsersController < ApplicationController
   end
   def premium_payment
   end
-  
+
   def paid
     @param = request.query_string
   end
-  
+
   def termsofservice
   end
-  
+
   def privacypolicy
   end
-  
+
   private
-  
+
   def company_params
     params.require(:company).permit(
       :company_type,
@@ -102,7 +93,7 @@ class Agencies::UsersController < ApplicationController
       :rep_email
     )
   end
-  
+
   def store_params
     params.require(:company).permit(
       store:[

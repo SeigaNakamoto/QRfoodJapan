@@ -1,0 +1,15 @@
+.row
+  .col-md-10.mx-auto
+    .d-flex.align-items-center
+      h1 QRfoodサービスお申込フォーム
+    - if @company.errors.any? || @store.errors.any?
+      .alert.alert-danger 入力内容をご確認ください。
+    .error-message ※「*」は必須項目です。
+    = form_with( model: @company, url: users_path) do |c|
+      = render partial: 'new_1', locals: {c: c}
+      = c.fields_for @store do |s| 
+        = render partial: 'new_2', locals: {s: s}
+        = render partial: 'new_3', locals: {s: s}
+        .d-flex.align-items-center
+          .ml-auto.boards__linkBox
+            = c.submit '次へ', class: 'btn btn-primary'
