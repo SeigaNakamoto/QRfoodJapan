@@ -1,0 +1,173 @@
+■以下の内容で店舗の申し込みが完了されました。
+
+お申し込みいただきありがとうございます。
+
+内容に相違がある場合は下記の電話番号またはメールアドレスにご連絡ください。
+電話番号：000-0000-0000
+メールアドレス：example@mail.jp
+
+【申し込み内容】
+
+『事業者情報』
+事業者種別：
+<%= @company.company_type %>
+
+◆法人のみ
+法人名：
+<%= @company.corp_name %>
+
+登記住所郵便番号：
+<%= @company.corp_postal %>
+
+登記住所：
+<%= @company.corp_add %>
+
+登記住所（カナ）：
+<%= @company.corp_add_kana %>
+
+事業者電話番号：
+<%= @company.corp_tel %>
+
+事業者FAX番号：
+<%= @company.corp_fax %>
+
+設立年月日：
+<%= @company.corp_date %>
+
+
+◆法人・個人事業主
+代表者 役職：
+<%= @company.rep_post %>
+
+代表者 氏名：
+<%= @company.rep_name %>
+
+代表者 氏名（カナ）：
+<%= @company.rep_name_kana %>
+
+代表者 郵便番号：
+<%= @company.rep_postal %>
+
+代表者 住所：
+<%= @company.rep_add %>
+
+代表者 住所（カナ）：
+<%= @company.rep_add_kana %>
+
+代表者 生年月日：
+<%= @company.rep_birthdate %>
+
+代表者 電話番号：
+<%= @company.rep_tel %>
+
+代表者 メールアドレス：
+<%= @company.rep_email %>
+
+
+『店舗情報』
+店舗名：
+<%= @store.store_name %>
+
+店舗名（カナ）：
+<%= @store.store_name_kana %>
+
+アルファベット表記：
+<%= @store.alphabet_notation %>
+
+店舗 郵便番号：
+<%= @store.store_postal %>
+
+店舗 住所：
+<%= @store.store_add %>
+
+店舗 住所（カナ）：
+<%= @store.store_add_kana %>
+
+店舗 電話番号：
+<%= @store.store_tel %>
+
+店舗 FAX番号：
+<%= @store.store_fax %>
+
+店舗 メールアドレス：
+<%= @store.store_email %>
+
+担当者 役職：
+<%= @store.per_post %>
+
+担当者 氏名：
+<%= @store.per_name %>
+
+担当者 氏名（カナ）：
+<%= @store.per_name_kana %>
+
+担当者 電話番号：
+<%= @store.per_tel %>
+
+担当者 メールアドレス：
+<%= @store.per_email %>
+
+連絡取りやすい時間帯：
+<%= @store.time_zone_to_contact %>
+
+ジャンル：
+<%= @store.genre %>
+
+営業時間：
+<%= @store.business_hours %>
+
+定休日：
+<%= @store.regular_holiday %>
+
+HP ※HPや食べログなど：
+<%= @store.hp %>
+
+平均価格帯（1,000円単位）：
+<%= @store.ave_price %>
+
+予約可否：
+<%= @store.reservation %>
+
+テーブル数：
+<%= @store.table_cnt %>
+
+カウンター数：
+<%= @store.counter_cnt %>
+
+
+『口座情報』
+金融機関名：
+<%= @store.bank_name %>
+
+金融機関コード：
+<%= @store.bank_code %>
+
+支店名：
+<%= @store.bank_branch_name %>
+
+支店コード：
+<%= @store.bank_branch_code %>
+
+口座種別：
+<%= @store.bank_account_type %>
+
+口座番号：
+<%= @store.bank_account_number %>
+
+口座名義（カナ）：
+<%= @store.bank_account_holder_kana %>
+
+
+『プラン』
+プラン：
+<%= @plan.name %>
+
+プラン料金：
+<%= @plan.sales_price %>
+
+『紹介者情報』
+代理店ID：
+<%= @store.agency.agency_id %>
+
+代理店担当者名：
+<%= @store.agency.agency_rec_name %>

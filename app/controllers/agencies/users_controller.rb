@@ -33,6 +33,9 @@ class Agencies::UsersController < ApplicationController
       @company.save
       @store.company_id = @company.id
       @store.save
+      NotificationMailer.registrer_to_store(@company, @store, @plans).deliver
+      NotificationMailer.registrer_to_agent(@company, @store, @plans).deliver
+      NotificationMailer.registrer_to_admin(@company, @store, @plans).deliver
       if @store.plan_id == 44
         redirect_to users_entry_payment_path(agency_id: @store.agency_charge_id)
       elsif @store.plan_id == 1
