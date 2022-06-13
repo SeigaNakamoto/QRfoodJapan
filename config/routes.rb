@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   # 運営側システム
   namespace :admins do
     resources :user_list, :agency_list
+    resources :cancel_lists, only: [:index] do
+      get :change_treated
+    end
     resources :payment_list do
       collection {post :import}
     end
@@ -39,7 +42,7 @@ Rails.application.routes.draw do
   get  "agencies/agency_list"  => "agencies#agency_list"
   get  "agencies/payment"  => "agencies#payment"
   get  "agencies/paid"  => "agencies#paid"
-  
+
   # QRfoodサービスお申込フォーム
   resources :users, module: 'agencies', only: [:new, :create]
   get  "users/entry_payment"  => "agencies/users#entry_payment"
@@ -50,7 +53,15 @@ Rails.application.routes.draw do
   get  "users/univapay" => "agencies/users#univapay"
   get  "users/termsofservice" => "agencies/users#termsofservice"
   get  "users/privacypolicy" => "agencies/users#privacypolicy"
-  
+
+  # 解約申請フォーム
+  resources :cancel_forms do
+    collection do
+      post 'confirm'
+      get  'thanks'
+    end
+  end
+
   resources :companies
   resources :agencies
   resources :stores do

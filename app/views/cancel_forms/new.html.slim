@@ -1,0 +1,37 @@
+.container
+  .row
+    .col-lg-8.mx-auto.py-5.border-bottom
+      h4.mb-3.pl-3.font-weight-bold 解約申請フォーム
+      .contact-form
+        = simple_form_for(@cancel_form, url: confirm_cancel_forms_path, html: { method: :post }) do |f|
+          = f.error_notification
+          .form-group.mt-5
+            span.badge.badge-danger.mr-2 必須
+            = f.label :name
+            = f.input :name, placeholder: '例：山田 太郎', label: false
+          .form-group.mt-5
+            span.badge.badge-danger.mr-2 必須
+            = f.label :email
+            = f.input :email, placeholder: '例：contact@example.com', label: false
+          .form-group.mt-5
+            span.badge.badge-danger.mr-2 必須
+            = f.label :tel
+            = f.input :tel, placeholder: '例：09012341234', label: false
+          .form-group.mt-5
+            span.badge.badge-danger.mr-2 必須
+            = f.label :shop_name
+            = f.input :shop_name, label: false
+          .form-group.mt-5
+            span.badge.badge-danger.mr-2 必須
+            = f.label :agent_shop_name
+            = f.input :agent_shop_name, label: false
+          .form-group.mt-5
+            span.badge.badge-danger.mr-2 必須
+            = f.label :agent_charge_name
+            = f.input :agent_charge_name, label: false
+          .form-group.mt-5
+            span.badge.badge-danger.mr-2 必須
+            = f.label :plan_name
+            = f.input :plan_name, label: false
+          .form-submit.mt-2
+            = f.button :submit, value: "確認画面へ進む", class: "btn btn-block my-5", data: { disable_with: "処理中..." }

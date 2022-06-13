@@ -9,7 +9,7 @@
           .card-body
             p サマリー
             #accordionExample.accordion
-              - @plans.each do |p|
+              - @plans.order(order_num: :asc).each do |p|
                 .card
                   .card-header id="heading#{p.id}"
                     h5.mb-0
@@ -65,7 +65,7 @@
           .card-body
             p サマリー
             #accordionExampleSp.accordion
-              - @plans.each do |p|
+              - @plans.order(order_num: :asc).each do |p|
                 .card
                   .card-header id="heading#{p.id}"
                     h5.mb-0
