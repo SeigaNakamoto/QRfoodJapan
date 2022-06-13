@@ -86,6 +86,20 @@ ja:
         agreement: 利用規約とプライバシーポリシー
         agreement_up: 決済機能規約
 
+      cancel_form:
+        email: メールアドレス
+        name: 名前
+        tel: 電話番号
+        shop_name: 店舗名
+        agent_shop_name: 代理店名
+        agent_charge_name: 代理店担当者名
+        plan_name: プラン名
+  simple_form:
+    required:
+      text: 'required'
+      mark: '*'
+    error_notification:
+      default_message: "入力欄に不備があります"
   views:
     pagination:
       first: 最初

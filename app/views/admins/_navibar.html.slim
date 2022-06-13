@@ -15,4 +15,10 @@ nav.client-header.navbar.navbar-expand-lg.navbar-light.border-bottom.position-fi
         = link_to admins_agency_list_index_path, class: "nav-link text-white"
           | 代理店一覧ページ
       li.nav-item.dropdown.border-bottom.m-2
+        = link_to admins_payment_list_index_path, class: "nav-link text-white"
+          | 決済データ一覧
+      li.nav-item.dropdown.border-bottom.m-2
+        = link_to admins_cancel_lists_path, class: "nav-link text-white"
+          | 解約店舗一覧ページ
+      li.nav-item.dropdown.border-bottom.m-2
         = link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: "nav-link text-white"

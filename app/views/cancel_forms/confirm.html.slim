@@ -1,0 +1,31 @@
+.container
+  .row
+    .col-lg-8.mx-auto.py-5.border-bottom
+      h4.mb-3.pl-3.font-weight-bold 入力内容確認
+      .contact-form
+        = simple_form_for(@cancel_form, url: cancel_forms_path, method: :post) do |f|
+          = f.error_notification
+          .form-group.mt-5
+            = f.label :name
+            = f.input :name, label: false, readonly: true
+          .form-group.mt-5
+            = f.label :email
+            = f.input :email, label: false, readonly: true
+          .form-group.mt-5
+            = f.label :tel
+            = f.input :tel, label: false, readonly: true
+          .form-group.mt-5
+            = f.label :shop_name
+            = f.input :shop_name, label: false, readonly: true
+          .form-group.mt-5
+            = f.label :agent_shop_name
+            = f.input :agent_shop_name, label: false, readonly: true
+          .form-group.mt-5
+            = f.label :agent_charge_name
+            = f.input :agent_charge_name, label: false, readonly: true
+          .form-group.mt-5
+            = f.label :plan_name
+            = f.input :plan_name, label: false, readonly: true
+          .form-submit
+            = f.button :submit, value: "送信する", class: "btn btn-block my-5", data: { disable_with: "送信中..." }
+            = link_to '前に戻る', 'javascript:history.back()', class: 'btn btn-block btn-secondary mr-3'

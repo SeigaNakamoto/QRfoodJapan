@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_08_163228) do
+ActiveRecord::Schema.define(version: 2022_06_12_434556) do
 
-  create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "admins", charset: "utf8mb3", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2022_05_08_163228) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "agencies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "agencies", charset: "utf8mb3", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "agency_id", null: false
     t.string "company_type", null: false
     t.string "agency_name", null: false
@@ -54,7 +54,20 @@ ActiveRecord::Schema.define(version: 2022_05_08_163228) do
     t.index ["reset_password_token"], name: "index_agencies_on_reset_password_token", unique: true
   end
 
-  create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "cancel_forms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "email"
+    t.string "name"
+    t.string "tel"
+    t.string "shop_name"
+    t.string "agent_shop_name"
+    t.string "agent_charge_name"
+    t.string "plan_name"
+    t.boolean "treated", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "companies", charset: "utf8mb3", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "company_type", null: false
     t.string "corp_name"
     t.string "corp_postal"
@@ -77,7 +90,7 @@ ActiveRecord::Schema.define(version: 2022_05_08_163228) do
     t.text "memo"
   end
 
-  create_table "payment_data", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "payment_data", charset: "utf8mb3", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "master_order_number"
     t.string "payment_type"
     t.string "pay_result"
@@ -101,10 +114,11 @@ ActiveRecord::Schema.define(version: 2022_05_08_163228) do
     t.string "reward_style", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "order_num"
     t.index ["name"], name: "index_plans_on_name", unique: true
   end
 
-  create_table "stores", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "stores", charset: "utf8mb3", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "app_id"
     t.string "password_digest"
     t.string "store_name", null: false

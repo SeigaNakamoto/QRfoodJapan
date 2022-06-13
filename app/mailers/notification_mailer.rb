@@ -1,5 +1,5 @@
 class NotificationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: 'qrfoodjapan00@gmail.com'
   layout 'mailer'
 
   # ========================================================================
@@ -37,8 +37,32 @@ class NotificationMailer < ActionMailer::Base
     @store = store
     @plan = plan
 
-    mail(to: 'from@example.com',
+    mail(to: 'qrfoodjapan00@gmail.com',
           subject: "【QRFoodJapan】店舗申し込みが完了されました")
+  end
+  # ---------------------------
+  # ========================================================================
+
+  # ========================================================================
+  # 解約申請時の自動返信メール
+
+  # ---------
+  # 店舗
+  def cancel_form_to_user(form)
+    @form = form
+
+    mail(to: @form.email,
+          subject: "【QRFoodJapan】店舗解約申請が完了しました")
+  end
+  # ---------------------------
+
+  # ---------
+  # 運営管理
+  def cancel_form_to_admin(form)
+    @form = form
+
+    mail(to: 'qrfoodjapan00@gmail.com',
+          subject: "【QRFoodJapan】店舗解約申請されました")
   end
   # ---------------------------
   # ========================================================================

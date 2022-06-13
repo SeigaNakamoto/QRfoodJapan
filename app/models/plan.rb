@@ -4,6 +4,7 @@
 #
 #  id           :bigint           not null, primary key
 #  name         :string(255)      not null
+#  order_num    :integer
 #  reward_price :integer          not null
 #  reward_style :string(255)      not null
 #  sales_price  :integer          not null
