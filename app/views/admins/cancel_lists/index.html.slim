@@ -136,30 +136,29 @@
                           div.form-group
                             = f.label '　'
                             = link_to '検索履歴をクリア', admins_cancel_lists_path, class: 'btn btn-success form-control'
-          .card-body
-            .teble-responsive
-              table.table
-                thead
+          .teble-responsive
+            table.table
+              thead
+                tr
+                  th.text-nowrap 名前
+                  th.text-nowrap メールアドレス
+                  th.text-nowrap 電話番号
+                  th.text-nowrap 店舗名
+                  th.text-nowrap 代理店名
+                  th.text-nowrap 代理店担当者名
+                  th.text-nowrap プラン名
+                  th.text-nowrap 対応可否
+                  th.text-nowrap
+              tbody
+                - @cancel_lists.each do |cancel_list|
                   tr
-                    th.text-nowrap 名前
-                    th.text-nowrap メールアドレス
-                    th.text-nowrap 電話番号
-                    th.text-nowrap 店舗名
-                    th.text-nowrap 代理店名
-                    th.text-nowrap 代理店担当者名
-                    th.text-nowrap プラン名
-                    th.text-nowrap 対応可否
-                    th.text-nowrap
-                tbody
-                  - @cancel_lists.each do |cancel_list|
-                    tr
-                      td = cancel_list.email
-                      td = cancel_list.name
-                      td = cancel_list.tel
-                      td = cancel_list.shop_name
-                      td = cancel_list.agent_shop_name
-                      td = cancel_list.agent_charge_name
-                      td = cancel_list.plan_name
-                      td = cancel_list.treated ? '対応済み' : '未対応'
-                      td = cancel_list.treated ? (link_to '未対応に戻す', admins_cancel_list_change_treated_path(cancel_list.id), class:'btn btn-secondary') : (link_to '対応済みにする', admins_cancel_list_change_treated_path(cancel_list.id), class:'btn btn-primary')
+                    td = cancel_list.email
+                    td = cancel_list.name
+                    td = cancel_list.tel
+                    td = cancel_list.shop_name
+                    td = cancel_list.agent_shop_name
+                    td = cancel_list.agent_charge_name
+                    td = cancel_list.plan_name
+                    td = cancel_list.treated ? '対応済み' : '未対応'
+                    td = cancel_list.treated ? (link_to '未対応に戻す', admins_cancel_list_change_treated_path(cancel_list.id), class:'btn btn-secondary') : (link_to '対応済みにする', admins_cancel_list_change_treated_path(cancel_list.id), class:'btn btn-primary')
           = paginate @cancel_lists
