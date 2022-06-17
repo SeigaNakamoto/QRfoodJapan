@@ -6,8 +6,8 @@
         h3.mt-1.mb-3.text-center ログイン
         = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
           .form-group
-            = f.label :agency_id, "代理店ID", :class => "form-label"
-            = f.text_field :agency_id, autofocus: true, autocomplete: "agency_id", :class => "form-control"
+            = f.label :login, "代理店IDまたはメールアドレス", :class => "form-label"
+            = f.text_field :login, autofocus: true, autocomplete: "login", :class => "form-control"
           .form-group.mt-1
             = f.label :password, "パスワード", :class => "form-label"
             = f.password_field :password, :class => "form-control"

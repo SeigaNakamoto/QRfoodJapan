@@ -14,7 +14,7 @@ class NotificationMailer < ActionMailer::Base
 
     mail(to: @store.per_email,
          cc: @company.rep_email,
-          subject: "【QRFoodJapan】申し込みが完了しました")
+          subject: "【QRFoodJapan】#{@plan.name}、お申込ありがとうございます！")
   end
   # ---------------------------
 
