@@ -4,7 +4,28 @@ class Admins::AgencyListController < ApplicationController
 
   def index
     @agencies = Agency.order(:agency_id).page(params[:page]).per(30)
-    @plans = Plan.all
+    @plans = Plan.order(:order_num)
+    payment_data_enable = PaymentData.where.not(price: 0)
+
+    @payment_stock_price_current = []
+    @stock_price_plan_current = []
+    @agencies.each_with_index do |agent, i|
+      @agency_id = agent.agency_id.delete('-')
+      if @agency_id[3, 3] == '000'
+        @payment_data_current = payment_data_enable.where('sub_order_number like ?', "#{@agency_id[0, 3]}%")
+      else
+        @payment_data_current = payment_data_enable.where('sub_order_number like ?', "#{@agency_id}%")
+      end
+      @payment_stock_price_current.push({'9800': 0, '14800': 0, '19800': 0, '27800': 0})
+      @payment_data_current.each do |stock|
+        @payment_stock_price_current[i].store(:"#{stock.price}", @payment_stock_price_current[i][:"#{stock.price}"] + 1)
+      end
+      @stock_price_plan_current.push([])
+      @payment_stock_price_current[i].each do |stock_price_total|
+        stock_price = plan_price_to_stock_price(stock_price_total[0].to_s.to_i)
+        @stock_price_plan_current[i].push(stock_price * stock_price_total[1])
+      end
+    end
     start_date = params[:start_date]
     end_date = params[:end_date]
     @agenciescsv = Agency.all
@@ -14,9 +35,6 @@ class Admins::AgencyListController < ApplicationController
         send_agencies_csv(@agenciescsv, start_date, end_date)
       end
     end
-
-    # @q = Agency.ransack(params[:q])
-    # @agencies = @q.result.includes(:user).page(params[:page]).order("created_at desc")
   end
 
   def show
@@ -55,6 +73,18 @@ class Admins::AgencyListController < ApplicationController
       :bank_account_holder_kana,
       :memo
     )
+  end
+
+  def plan_price_to_stock_price(price)
+    if price == 9800
+      2200
+    elsif price == 14800
+      4400
+    elsif price == 19800
+      6600
+    elsif price == 27800
+      11000
+    end
   end
 
   def send_agencies_csv(agencies, start_date, end_date)

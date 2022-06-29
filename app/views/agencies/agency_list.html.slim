@@ -21,14 +21,14 @@
                   | 累計代理店報酬
                 .col.text-right
                   | ¥
-                  = @child_agencies_reward
+                  = @stock_price_plan_current.sum.sum.to_s(:delimited)
                   | (税込)
               li.d-flex
                 .col
                   | 特別代理店報酬
                 .col.text-right
                   | ¥
-                  = @special_reward.to_s(:delimited)
+                  = @special_price.to_s(:delimited)
                   | (税込)
         .card
           .card-header
@@ -57,7 +57,7 @@
                   th.text-nowrap プラン別件数
                   th.text-nowrap 報酬合計(税込)
               tbody
-                - @agencies.each do |a|
+                - @agencies.each_with_index do |a, i|
                   tr
                     td= a.agency_id
                     td
@@ -71,15 +71,15 @@
                     td.plan
                       - @plans.each do |p|
                         = p.name
-                        | ：#{Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
+                        | ：#{@payment_stock_price_current[i][:"#{p.sales_price}"]}
                         br/
                     td
                       .text-right
                         - total = 0
                         - @plans.each do |p|
-                          - total += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
+                          / - total += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
                         | ¥
-                        = total.to_s(:delimited)
+                        = @stock_price_plan_current[i].sum.to_s(:delimited)
             = paginate @agencies
 
 = render partial: 'navibar'
@@ -104,14 +104,14 @@
                   | 累計代理店報酬
                 .col.text-right
                   | ¥
-                  = @child_agencies_reward
+                  = @stock_price_plan_current.sum.sum.to_s(:delimited)
                   | (税込)
               li.d-flex
                 .col
                   | 特別代理店報酬
                 .col.text-right
                   | ¥
-                  = @special_reward.to_s(:delimited)
+                  = @special_price.to_s(:delimited)
                   | (税込)
         .card
           .card-header
@@ -141,7 +141,7 @@
                     th.text-nowrap プラン別件数
                     th.text-nowrap 報酬合計(税込)
                 tbody
-                  - @agencies.each do |a|
+                  - @agencies.each_with_index do |a, i|
                     tr
                       td= a.agency_id
                       td
@@ -155,13 +155,12 @@
                       td.plan
                         - @plans.each do |p|
                           = p.name
-                          | ：#{Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
+                          | ：#{@payment_stock_price_current[i][:"#{p.sales_price}"]}
                           br/
                       td
                         .text-right
                           - total = 0
                           - @plans.each do |p|
-                            - total += (Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count * p.reward_price * @tax).to_i
                           | ¥
-                          = total.to_s(:delimited)
+                          = @stock_price_plan_current[i].sum.to_s(:delimited)
               = paginate @agencies
