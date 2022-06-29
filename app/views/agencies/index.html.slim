@@ -8,107 +8,89 @@
           - if flash[:notice]
             .alert.alert-primary= flash[:notice]
         .card
-          .card-header.border-0
+          .card-header.border
             .badge.badge-pil.badge-secondary.p-2
               |通知一覧
             .py-2
               | メッセージ本文
         .card
-          .card-header.border-0
-            - if @agency.agency_id[4,3].eql?('001')
-              - @this_month = (@special_reward + @child_agencies_reward).to_s(:delimited)
-              - @same_month = (@special_reward_m + @child_agencies_reward_m).to_s(:delimited)
-              - @year_reward = ((@special_reward + @child_agencies_reward) * 12).to_s(:delimited)
-            - else
-              - @this_month = (@st_total + @sp_total + @special_reward).to_s(:delimited)
-              - @same_month = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
-              - @year_reward = ((@st_total + @sp_total + @special_reward) * 12).to_s(:delimited)
+          .card-header.border
             .d-flex.justify-content-between
               .badge.badge-pil.badge-secondary.p-2
                 | 現在の報酬詳細
-              / .badge.badge-pil.badge-secondary.p-2
-              /   | 過去の報酬一覧
-            .d-flex
-              / - if @agency.parent_agency_id.eql?('parent')
-                / .p-2.mb-1
-                /   | 累計報酬金額
-                /   .fs-6
-                /     | ¥
-                /     span.fs-4
-                /       = (@st_total + @sp_total + @special_reward).to_s(:delimited)
-                /     | （税込）
-              .p-2.mb-1
-                | 今月（現時点まで）
-                .fs-6
-                  | ¥
-                  span.fs-4
-                    = @this_month
-                  | （税込）
-              .p-2.mb-1
-                | 当月（#{Date.current.strftime('%m')}月中）
-                .fs-6
-                  | ¥
-                  span.fs-4
-                    = @same_month
-                  | （税込）
-              / .p-2.mb-1
-              /   | 当月解約
-              /   .fs-6
-              /     span.fs-4
-              /       | ???
-              /     | 件
-              .p-2.mb-1
-                | 年間報酬
-                .fs-6
-                  | ¥
-                  span.fs-4
-                    = @year_reward
-                  | （税込）
-        .card
-          .card-header.border-0
-            .badge.badge-pil.badge-secondary.p-2
-              | 報酬形態内訳
-            .d-flex
-              .p-2.mb-1
-                | [ストック報酬益]
-                .fs-6.text-center
-                  = @st_cnt
-                  | 件
-              .p-2.mb-1
-                | 今月（現時点まで）
-                .fs-6
-                  | ¥
-                  span.fs-4
-                    = @st_total.to_s(:delimited)
-                  | （税込）
-              / .p-2.mb-1
-              /   | [スポット報酬益]
-              /   .fs-6.text-center
-              /     = @sp_cnt
-              /     | 件
-              / .p-2.mb-1
-              /   | 今月（現時点まで）
-              /   .fs-6
-              /     | ¥
-              /     span.fs-4
-              /       = @sp_total.to_s(:delimited)
+            - if @agency.agency_id[4,3].eql?('001')
+              .d-flex
+                .p-2.mb-1
+                  | 今月（現時点まで）
+                  .fs-6
+                    | ¥
+                    span.fs-4
+                      = @total_price
+                    | （税込）
+                .p-2.mb-1
+                  | 当月（#{Date.current.strftime('%m')}月中）
+                  .fs-6
+                    | ¥
+                    span.fs-4
+                      = @total_price_month
+                    | （税込）
+          .card
+            .card-header.border
+              .badge.badge-pil.badge-secondary.p-2
+                | 報酬形態内訳
+                | [代理店]
+              br
+                .badge.badge-primary 全ての期間
+              .d-flex
+                = render partial: 'stock_price', locals: {plan_count: @payment_stock_price_current, stock_price: @stock_price_plan_current}
+              br
+                .badge.badge-primary 当月
+              .d-flex
+                = render partial: 'stock_price', locals: {plan_count: @payment_stock_price_current_month, stock_price: @stock_price_plan_current_month}
+
         - if @agency.agency_id[4,3].eql?('001')
           .card
-            .card-header.border-0
+            .card-header.border
+              .badge.badge-pil.badge-secondary.p-2
+                | 報酬形態内訳
+                | [子代理店]
+              br
+                .badge.badge-primary 全ての期間
+              .d-flex
+                = render partial: 'stock_price', locals: {plan_count: @payment_stock_price_child, stock_price: @stock_price_plan_child}
+              br
+                .badge.badge-primary 当月
+              .d-flex
+                = render partial: 'stock_price', locals: {plan_count: @payment_stock_price_child_month, stock_price: @stock_price_plan_child_month}
+        - if @agency.agency_id[4,3].eql?('001')
+          .card
+            .card-header.border
               .badge.badge-pil.badge-secondary.p-2
                 | 特別代理店管理料詳細
               .d-flex
                 .p-2.mb-1
-                  | 特別代理店管理料対象件数
+                  | 対象件数(全ての期間)
                   .fs-6.text-center
-                    = @special_reward_cnt
+                    = @payment_data_child_count
                     | 件
                 .p-2.mb-1
-                  | 特別代理店管理手数料
+                  | 管理手数料(全ての期間)
                   .fs-6
                     | ¥
                     span.fs-4
-                      = @special_reward.to_s(:delimited)
+                      = @payment_special_price
+                    | （税込）
+                .p-2.mb-1
+                  | 対象件数(当月)
+                  .fs-6.text-center
+                    = @payment_data_child_count_month
+                    | 件
+                .p-2.mb-1
+                  | 管理手数料(当月)
+                  .fs-6
+                    | ¥
+                    span.fs-4
+                      = @payment_special_price_month
                     | （税込）
 
 = render partial: 'navibar'
@@ -127,106 +109,82 @@
               | メッセージ本文
         .card
           .card-header.border-0
-            - if @agency.agency_id[4,3].eql?('001')
-              - @this_month = (@special_reward + @child_agencies_reward).to_s(:delimited)
-              - @same_month = (@special_reward_m + @child_agencies_reward_m).to_s(:delimited)
-              - @year_reward = ((@special_reward + @child_agencies_reward) * 12).to_s(:delimited)
-            - else
-              - @this_month = (@st_total + @sp_total + @special_reward).to_s(:delimited)
-              - @same_month = (@st_total_m + @sp_total_m + @special_reward_m).to_s(:delimited)
-              - @year_reward = ((@st_total + @sp_total + @special_reward) * 12).to_s(:delimited)
             .d-flex.justify-content-between
               .badge.badge-pil.badge-secondary.p-2
                 | 現在の報酬詳細
-              / .badge.badge-pil.badge-secondary.p-2
-              /   | 過去の報酬一覧
-            / .d-flex
-            /   - if @agency.parent_agency_id.eql?('parent')
-                / .p-2.mb-1
-                /   | 累計報酬金額
-                /   .fs-6
-                /     | ¥
-                /     span.fs-4
-                /       = (@st_total + @sp_total + @special_reward).to_s(:delimited)
-                /     | (税込)
-            .d-flex
-              .p-2.mb-1
-                | 今月（現時点まで）
-                .fs-6
-                  | ¥
-                  span.fs-4
-                    = @this_month
-                  | （税込）
-            .d-flex
-              .p-2.mb-1
-                | 当月（#{Date.current.strftime('%m')}月中）
-                .fs-6
-                  | ¥
-                  span.fs-4
-                    = @same_month
-                  | （税込）
-            / .d-flex
-            /   .p-2.mb-1
-            /     | 当月解約
-            /     .fs-6
-            /       span.fs-4
-            /         | ???
-            /       | 件
-            .d-flex
-              .p-2.mb-1
-                | 年間報酬
-                .fs-6
-                  | ¥
-                  span.fs-4
-                    = @year_reward
-                  | (税込)
-        .card
-          .card-header.border-0
-            - stock = Store.where(agency_id: @agency, plan_id: (1..3)).count
-            - spot = 0
-            .badge.badge-pil.badge-secondary.p-2
-              | 報酬形態内訳
-            .d-flex
-              .p-2.mb-1
-                | [ストック報酬益]
-                .fs-6.text-center
-                  = @st_cnt
-                  | 件
-              .p-2.mb-1
-                | 今月（現時点まで）
-                .fs-6
-                  | ¥
-                  span.fs-4
-                    = @st_total.to_s(:delimited)
-                  | (税込)
-            / .d-flex
-            /   .p-2.mb-1
-            /     | [スポット報酬益]
-            /     .fs-6.text-center
-            /       = @sp_cnt
-            /       | 件
-            /   .p-2.mb-1
-            /     | 今月（現時点まで）
-            /     .fs-6
-            /       | ¥
-            /       span.fs-4
-            /         = @sp_total.to_s(:delimited)
-            /       | (税込)
+            - if @agency.agency_id[4,3].eql?('001')
+              .d-flex
+                .p-2.mb-1
+                  | 今月（現時点まで）
+                  .fs-6
+                    | ¥
+                    span.fs-4
+                      = @total_price
+                    | （税込）
+              .d-flex
+                .p-2.mb-1
+                  | 当月（#{Date.current.strftime('%m')}月中）
+                  .fs-6
+                    | ¥
+                    span.fs-4
+                      = @total_price_month
+                    | （税込）
+
+          .card
+            .card-header.border
+              .badge.badge-pil.badge-secondary.p-2
+                | 報酬形態内訳
+                | [代理店]
+              br
+                .badge.badge-primary 全ての期間
+              .d-flex
+                = render partial: 'stock_price', locals: {plan_count: @payment_stock_price_current, stock_price: @stock_price_plan_current}
+              br
+                .badge.badge-primary 当月
+              .d-flex
+                = render partial: 'stock_price', locals: {plan_count: @payment_stock_price_current_month, stock_price: @stock_price_plan_current_month}
+
         - if @agency.agency_id[4,3].eql?('001')
           .card
-            .card-header.border-0
+            .card-header.border
+              .badge.badge-pil.badge-secondary.p-2
+                | 報酬形態内訳
+                | [子代理店]
+              br
+                .badge.badge-primary 全ての期間
+              .d-flex
+                = render partial: 'stock_price', locals: {plan_count: @payment_stock_price_child, stock_price: @stock_price_plan_child}
+              br
+                .badge.badge-primary 当月
+              .d-flex
+                = render partial: 'stock_price', locals: {plan_count: @payment_stock_price_child_month, stock_price: @stock_price_plan_child_month}
+        - if @agency.agency_id[4,3].eql?('001')
+          .card
+            .card-header.border
               .badge.badge-pil.badge-secondary.p-2
                 | 特別代理店管理料詳細
               .d-flex
                 .p-2.mb-1
-                  | 特別代理店管理料対象件数
+                  | 対象件数(全ての期間)
                   .fs-6.text-center
-                    = @special_reward_cnt
+                    = @payment_data_child_count
                     | 件
                 .p-2.mb-1
-                  | 特別代理店管理手数料
+                  | 管理手数料(全ての期間)
                   .fs-6
                     | ¥
                     span.fs-4
-                      = @special_reward.to_s(:delimited)
-                    | (税込)
+                      = @payment_special_price
+                    | （税込）
+                .p-2.mb-1
+                  | 対象件数(当月)
+                  .fs-6.text-center
+                    = @payment_data_child_count_month
+                    | 件
+                .p-2.mb-1
+                  | 管理手数料(当月)
+                  .fs-6
+                    | ¥
+                    span.fs-4
+                      = @payment_special_price_month
+                    | （税込）

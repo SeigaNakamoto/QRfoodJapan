@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_12_434556) do
+ActiveRecord::Schema.define(version: 2022_06_24_055233) do
 
   create_table "admins", charset: "utf8mb3", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2022_06_12_434556) do
     t.string "price"
     t.string "tax"
     t.string "shipping_cost"
-    t.string "payment_date"
+    t.datetime "payment_date"
     t.string "payment_mode"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -1,0 +1,40 @@
+.p-2.mb-1.text-center
+	| エントリー
+	.fs-6
+		= plan_count[:"9800"]
+		| 件
+	.fs-6
+		= stock_price[0]
+		| 円
+.p-2.mb-1.text-center
+	| ライト
+	.fs-6
+		= plan_count[:"14800"]
+		| 件
+	.fs-6
+		= stock_price[1]
+		| 円
+.p-2.mb-1.text-center
+	| スタンダード
+	.fs-6
+		= plan_count[:"19800"]
+		| 件
+	.fs-6
+		= stock_price[2]
+		| 円
+.p-2.mb-1.text-center
+	| プレミアム
+	.fs-6
+		= plan_count[:"27800"]
+		| 件
+	.fs-6
+		= stock_price[3]
+		| 円
+.p-2.mb-1.text-center
+	| 合計
+	.fs-6
+		= plan_count.values.inject(:+)
+		| 件
+	.fs-6
+		= stock_price.sum
+		| 円

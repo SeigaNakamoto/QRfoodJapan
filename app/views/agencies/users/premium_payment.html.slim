@@ -1,25 +1,19 @@
 .row
   .col
     .container
-      .card 
+      .card
         .card-header
           h5.card-title 決済へお進みください
         .card-body
           label
-            form action="https://credit.j-payment.co.jp/link/creditcard" method="post" 
+            form action="https://credit.j-payment.co.jp/link/creditcard" method="post"
               input name="aid" type="hidden" value="121799"
               input name="pt" type="hidden" value="1"
-              input class="cod" name="cod" type="hidden" value=""
+              input class="cod" name="cod" type="hidden" value=@payment_id
               td class="“table-b-td-a”"
-              select name="iid" 
+              select name="iid"
                 option value="QRPremiumPlan"  プレミアムプラン： 27,800円
                 input name="submit" type="submit" value="決済"
 
 .copyrights.w-100
   | © 2022年3月11日 株式会社フロンティア All Rights Reserved.
-javascript:
-  //注文番号生成
-  var max = 1000000000000000;
-  var min = 1;
-  var cod = Math.floor(( Math.random() * ( ( max + 1 ) - min ) ) + min);
-  $('.cod').val(cod);

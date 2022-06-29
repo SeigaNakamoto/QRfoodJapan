@@ -8,7 +8,7 @@
 #  last_name           :string(255)
 #  master_order_number :string(255)
 #  pay_result          :string(255)
-#  payment_date        :string(255)
+#  payment_date        :datetime
 #  payment_mode        :string(255)
 #  payment_type        :string(255)
 #  price               :string(255)

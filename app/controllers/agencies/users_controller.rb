@@ -1,5 +1,7 @@
 class Agencies::UsersController < ApplicationController
   # before_action :authenticate_agency!
+  before_action :set_payment_id, only: [:entry_payment, :light_payment, :standard_payment, :premium_payment]
+  require 'securerandom'
 
   def new
     @company = Company.new
@@ -71,6 +73,23 @@ class Agencies::UsersController < ApplicationController
   end
 
   private
+
+  def set_payment_id
+    # ランダムな数字がサブ決済番号に既に存在するか確認し、存在した場合繰り返しランダムな数字を生成する
+    if @random_number.nil? || PaymentData.exists?(sub_order_number: @random_number)
+      create_random_id
+      set_payment_id
+    end
+
+    # agency_id（Q**-###） と ランダムな数字を組み合わせて下記のような文字列を生成する
+    # 「Q**###1234567890123456」
+    @payment_id = params[:agency_id].delete('-') + @random_number.to_s
+  end
+
+  def create_random_id
+    # 16桁のランダムな数字を生成
+    @random_number = SecureRandom.random_number(1000000000000000..9999999999999999)
+  end
 
   def company_params
     params.require(:company).permit(

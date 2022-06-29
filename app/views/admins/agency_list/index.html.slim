@@ -33,7 +33,7 @@
                   th.text-nowrap プラン別件数
                   th
               tbody
-                - @agencies.each do |a|
+                - @agencies.each_with_index do |a, i|
                   - if a.parent_agency_id.eql?("parent")
                     tr
                       td= a.agency_id
@@ -43,7 +43,7 @@
                       td.plan
                         - @plans.each do |p|
                           = p.name
-                          | ：#{Store.where('agency_charge_id like ?',"Q#{a.agency_id[1, 2]}%").where(plan_id: p.id, settlement_status: [0,2]).count}
+                          | ：#{@payment_stock_price_current[i][:"#{p.sales_price}"]}
                           br/
                       td
                   - else
@@ -59,7 +59,7 @@
                       td.plan
                         - @plans.each do |p|
                           = p.name
-                          | ：#{Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
+                          | ：#{@payment_stock_price_current[i][:"#{p.sales_price}"]}
                           br/
                       td= link_to '詳細', admins_agency_list_path(a.id), class: 'btn btn-outline-dark'
           = paginate @agencies
@@ -87,7 +87,7 @@
                     th.text-nowrap プラン別件数
                     th
                 tbody
-                - @agencies.each do |a|
+                - @agencies.each_with_index do |a, i|
                   - if a.parent_agency_id.eql?("parent")
                     tr
                       td= a.agency_id
@@ -97,7 +97,7 @@
                       td.plan
                         - @plans.each do |p|
                           = p.name
-                          | ：#{Store.where('agency_charge_id like ?',"Q#{a.agency_id[1, 2]}%").where(plan_id: p.id, settlement_status: [0,2]).count}
+                          | ：#{@payment_stock_price_current[i][:"#{p.sales_price}"]}
                           br/
                       td
                   - else
@@ -113,7 +113,7 @@
                       td.plan
                         - @plans.each do |p|
                           = p.name
-                          | ：#{Store.where(agency_charge_id: a.agency_id, plan_id: p.id, settlement_status: [0,2]).count}
+                          | ：#{@payment_stock_price_current[i][:"#{p.sales_price}"]}
                           br/
                       td= link_to '詳細', admins_agency_list_path(a.id), class: 'btn btn-outline-dark'
           = paginate @agencies
