@@ -5,7 +5,7 @@
         h2
           strong お客様情報登録
         - if @company.errors.any? || @store.errors.any?
-          .alert.alert-danger 入力内容をご確認ください。          
+          .alert.alert-danger 入力内容をご確認ください。
         .row
           .col-md-12.mx-0
             / form#msform
@@ -158,7 +158,7 @@
                       | * #{@company.errors.full_messages_for(:rep_email).first}
                   = c.text_field :rep_email, class: 'form-control', :placeholder=>"auなどのキャリアアドレス以外"
                 input.next.action-button name="next" type="button" value=("ステップ2")
-              = c.fields_for @store do |s| 
+              = c.fields_for @store do |s|
                 fieldset
                   .form-card
                     h2.fs-title 店舗情報
@@ -362,7 +362,7 @@
                     .d-flex
                       = s.label :bank_account_type, '口座種別'
                       .error-message *
-                    .row 
+                    .row
                       .d-flex.w-50
                         = s.label :bank_account_type, '普通預金', class: 'w-100'
                         = s.radio_button :bank_account_type, '普通預金', checked: true
@@ -409,7 +409,7 @@
                         = link_to '決済機能規約', users_univapay_path, target: :_blank, rel: "noopener noreferrer"
                         | に同意する◆
                       .col-4
-                        = s.check_box :agreement_up, :as => :boolean, checked:false 
+                        = s.check_box :agreement_up, :as => :boolean, checked:false
                     - if @store.errors.include?(:agreement)
                       .error-message
                         | * #{@store.errors.full_messages_for(:agreement).first}
@@ -421,7 +421,7 @@
                         = link_to 'プライバシーポリシー', users_privacypolicy_path, target: :_blank, rel: "noopener noreferrer"
                         | に同意する◆
                       .col-4
-                        = s.check_box :agreement, :as => :boolean, checked:false 
+                        = s.check_box :agreement, :as => :boolean, checked:false
                     h2.fs-title 紹介者情報
                     .d-flex.w-50
                       | 代理店ID： #{@store.agency_charge_id}
@@ -442,7 +442,7 @@
 
 javascript:
   // ラジオボタン選択時にアコーディオンを開閉する
-  $('[name="company[company_type]"]').on('change', function(){  
+  $('[name="company[company_type]"]').on('change', function(){
     if($(this).val()  === "法人"){
       $('#collapseOne').collapse('show')
     }else{
@@ -451,20 +451,20 @@ javascript:
   });
 
   $(document).ready(function(){
-      
+
   var current_fs, next_fs, previous_fs; //fieldsets
   var opacity;
 
   $(".next").click(function(){
-      
+
       current_fs = $(this).parent();
       next_fs = $(this).parent().next();
-      
+
       //Add Class Active
       $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-      
+
       //show the next fieldset
-      next_fs.show(); 
+      next_fs.show();
       //hide the current fieldset with style
       current_fs.animate({opacity: 0}, {
           step: function(now) {
@@ -476,19 +476,19 @@ javascript:
                   'position': 'relative'
               });
               next_fs.css({'opacity': opacity});
-          }, 
+          },
           duration: 600
       });
   });
 
   $(".previous").click(function(){
-      
+
       current_fs = $(this).parent();
       previous_fs = $(this).parent().prev();
-      
+
       //Remove class active
       $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-      
+
       //show the previous fieldset
       previous_fs.show();
 
@@ -503,7 +503,7 @@ javascript:
                   'position': 'relative'
               });
               previous_fs.css({'opacity': opacity});
-          }, 
+          },
           duration: 600
       });
   });
@@ -516,5 +516,5 @@ javascript:
   $(".submit").click(function(){
       return false;
   })
-      
+
   });

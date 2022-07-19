@@ -6,14 +6,44 @@
           h5.card-title 決済へお進みください
         .card-body
           label
-            form action="https://credit.j-payment.co.jp/link/creditcard" method="post"
-              input name="aid" type="hidden" value="121799"
-              input name="pt" type="hidden" value="1"
-              input class="cod" name="cod" type="hidden" value=@payment_id
-              td class="“table-b-td-a”"
-              select name="iid"
-                option value="EntryPlan"  エントリープラン： 9,800円
-                input name="submit" type="submit" value="決済"
+            / form action="https://credit.j-payment.co.jp/link/creditcard" method="post"
+            /   input name="aid" type="hidden" value="121799"
+            /   input name="md" type="hidden" value="10"
+            /   input class="cod" name="cod" type="hidden" value=@payment_id
+            /   td class="“table-b-td-a”"
+            /   select name="iid"
+            /     option value="EntryPlan"  エントリープラン： 9,800円
+            /     input name="submit" type="submit" value="決済"
+
+            form#mainform
+              input#tkn name="tkn" type="hidden" value="" /
+              #CARD_INPUT_FORM
+              input onclick="doPurchase()" type="button" value="購入する" /
 
 .copyrights.w-100
   | © 2022年3月11日 株式会社フロンティア All Rights Reserved.
+javascript:
+  // カード情報入力フォーム表示
+  function doPurchase() {
+    //CP非同期通信よりカード番号入力画面を表示する
+    CPToken.CardInfo (
+      {
+        aid: '121799',
+        md: '10',
+        iid: 'EntryPlan'
+
+      },
+        execPurchase
+    );
+  }
+
+  // コールバック関数
+  function execPurchase(resultCode, errMsg) {
+    if (resultCode != "Success") {
+      // 戻り値がSuccess以外の場合はエラーメッセージを表示
+      window.alert(errMsg);
+    } else {
+      // スクリプトからフォームをsubmit
+      $("#mainform").submit();
+    }
+  }
