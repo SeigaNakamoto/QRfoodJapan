@@ -87,7 +87,7 @@
         .error-message
           | * #{@store.errors.full_messages_for(:agreement_up).first}
       .d-flex
-        = s.check_box :agreement_up, :as => :boolean, checked:false 
+        = s.check_box :agreement_up, :as => :boolean, checked:false
         | ◆
         = link_to '決済機能規約', users_univapay_path, target: :_blank, rel: "noopener noreferrer"
         | に同意する◆
@@ -96,7 +96,7 @@
         .error-message
           | * #{@store.errors.full_messages_for(:agreement).first}
       .d-flex
-        = s.check_box :agreement, :as => :boolean, checked:false 
+        = s.check_box :agreement, :as => :boolean, checked:false
         | ◆
         = link_to '利用規約', users_termsofservice_path, target: :_blank, rel: "noopener noreferrer"
         | と
