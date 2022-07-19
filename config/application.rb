@@ -13,6 +13,14 @@ require "action_text/engine"
 require "action_view/railtie"
 require "action_cable/engine"
 require "sprockets/railtie"
+require "rest-client"
+
+RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
+
+res = RestClient.get("http://api.someservice.com/endpoint")
+
+puts "status code", res.code
+puts "headers", res.headers
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
