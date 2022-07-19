@@ -54,6 +54,7 @@ class Agencies::UsersController < ApplicationController
   end
 
   def entry_payment
+    p '------------------------------------------------'
   end
   def light_payment
   end
