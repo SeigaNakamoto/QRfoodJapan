@@ -15,8 +15,8 @@
             /     option value="EntryPlan"  エントリープラン： 9,800円
             /     input name="submit" type="submit" value="決済"
 
-            form#mainform
-              input#tkn name="tkn" type="hidden" value="https://credit.j-payment.co.jp/gateway/gateway_token.aspx"
+            form#mainform action="https://credit.j-payment.co.jp/gateway/gateway_token.aspx" method="get"
+              input#tkn name="tkn" type="hidden" value=""
               #CARD_INPUT_FORM
               input onclick="doPurchase()" type="button" value="購入する"
 
