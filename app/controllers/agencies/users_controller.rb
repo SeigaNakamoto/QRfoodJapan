@@ -84,7 +84,7 @@ class Agencies::UsersController < ApplicationController
 
     # agency_id（Q**-###） と ランダムな数字を組み合わせて下記のような文字列を生成する
     # 「Q**###1234567890123456」
-    @payment_id = params[:agency_id].delete('-') + @random_number.to_s
+    # @payment_id = params[:agency_id].delete('-') + @random_number.to_s
   end
 
   def create_random_id
