@@ -5,42 +5,36 @@ require_relative "config/environment"
 run Rails.application
 Rails.application.load_server
 require "rest-client"
-require "sinatra"
 
-helpers do
-  def proxy
-    RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
-    RestClient::Resource.new(ENV["PROXY_URL"] || "https://httpbin.org")
-  end
-end
 
-get "/*" do
+RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
+RestClient::Resource.new(ENV["PROXY_URL"] || "https://httpbin.org")
 
-  # rebuild the full path and querystring
-  path = request.env["REQUEST_PATH"] + "?" + request.env["QUERY_STRING"]
+# get "/*" do
 
-  # rack munges client headers, let's un-munge
-  headers = request.env.select { |k,v| k =~ /^HTTP_/ }.inject({}) do |ax, (key, val)|
-    ax.update(key.sub(/^HTTP_/, "").gsub("_", "-").split(/(\W)/).map(&:capitalize).join => val)
-  end
+#   # rebuild the full path and querystring
+#   path = request.env["REQUEST_PATH"] + "?" + request.env["QUERY_STRING"]
 
-  # delete host so RestClient can replace it
-  headers.delete "Host"
+#   # rack munges client headers, let's un-munge
+#   headers = request.env.select { |k,v| k =~ /^HTTP_/ }.inject({}) do |ax, (key, val)|
+#     ax.update(key.sub(/^HTTP_/, "").gsub("_", "-").split(/(\W)/).map(&:capitalize).join => val)
+#   end
 
-  # proxy the request
-  proxy[path].get(headers) do |res|
+#   # delete host so RestClient can replace it
+#   headers.delete "Host"
 
-    # RestClient munges response headers, let's un-munge
-    fixed_headers = res.raw_headers.inject({}) do |ax, (key, val)|
-      ax.update(key => val.first)
-    end
+#   # proxy the request
+#   proxy[path].get(headers) do |res|
 
-    # relay back to the user
-    status res.code
-    headers fixed_headers
-    body res.to_s
-  end
+#     # RestClient munges response headers, let's un-munge
+#     fixed_headers = res.raw_headers.inject({}) do |ax, (key, val)|
+#       ax.update(key => val.first)
+#     end
 
-end
+#     # relay back to the user
+#     status res.code
+#     headers fixed_headers
+#     body res.to_s
+#   end
 
-run Sinatra::Application
+# end
