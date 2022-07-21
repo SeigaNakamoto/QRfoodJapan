@@ -1,6 +1,6 @@
 require "rest-client"
 
-# RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
+RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
 
 # RestClient::Request.execute(
 #   method: :get,
