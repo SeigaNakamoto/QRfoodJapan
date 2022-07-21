@@ -4,7 +4,7 @@ require "rest-client"
 
 RestClient::Request.execute(
   method: :get,
-  url: 'https://credit.j-payment.co.jp/gateway/gateway_token.aspx',
+  url: 'https://stg-qr-food-japan-management.herokuapp.com/users/entry_payment?agency_id=Q01-004',
   proxy: ENV["PROXIMO_URL"]
 )
 
