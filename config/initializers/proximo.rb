@@ -1,21 +1,20 @@
 require 'rest-client'
 
 # RestClient.proxy = ENV["FIXIE_URL"]
-response = RestClient::Request.execute(
-  method: :get,
-  url: 'http://stg-qr-food-japan-management.herokuapp.com/users/entry_payment',
-  headers: {params: {agency_id: 'Q01-004'}},
-  proxy: ENV["FIXIE_URL"]
-)
-# RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
-
-
-# RestClient::Request.execute(
+# response = RestClient::Request.execute(
 #   method: :get,
 #   url: 'http://stg-qr-food-japan-management.herokuapp.com/users/entry_payment',
 #   headers: {params: {agency_id: 'Q01-004'}},
-#   proxy: ENV["PROXIMO_URL"]
+#   proxy: ENV["FIXIE_URL"]
 # )
+# RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
+
+
+RestClient::Request.execute(
+  method: :get,
+  url: 'https://credit.j-payment.co.jp/gateway/gateway_token.aspx',
+  proxy: ENV["PROXIMO_URL"]
+)
 
 # RestClient.get 'http://example.com/resource', {params: {id: 50, 'foo' => 'bar'}}
 
