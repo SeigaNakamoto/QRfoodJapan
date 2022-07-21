@@ -69,4 +69,6 @@ Rails.application.routes.draw do
     resource :settlement_status, only: :update, controller: 'stores/settlement_status'
   end
 
+  # ssl証明書発行用
+  get ".well-known/acme-challenge/:id" => "index#letsencrypt"
 end
