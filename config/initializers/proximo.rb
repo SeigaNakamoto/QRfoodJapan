@@ -1,8 +1,12 @@
 require 'rest-client'
 
-RestClient.proxy = ENV["FIXIE_URL"]
-response = RestClient.get("http://welcome.usefixie.com")
-
+# RestClient.proxy = ENV["FIXIE_URL"]
+response = RestClient::Request.execute(
+  method: :get,
+  url: 'http://stg-qr-food-japan-management.herokuapp.com/users/entry_payment',
+  headers: {params: {agency_id: 'Q01-004'}},
+  proxy: ENV["FIXIE_URL"]
+)
 # RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
 
 
