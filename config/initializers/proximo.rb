@@ -3,12 +3,12 @@ require "rest-client"
 # RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
 
 
-RestClient::Request.execute(
-  method: :get,
-  url: 'https://stg-qr-food-japan-management.herokuapp.com/users/entry_payment',
-  headers: {params: {agency_id: 'Q01-004'}},
-  proxy: ENV["PROXIMO_URL"]
-)
+# RestClient::Request.execute(
+#   method: :get,
+#   url: 'https://stg-qr-food-japan-management.herokuapp.com/users/entry_payment',
+#   headers: {params: {agency_id: 'Q01-004'}},
+#   proxy: ENV["PROXIMO_URL"]
+# )
 
 # RestClient.get 'http://example.com/resource', {params: {id: 50, 'foo' => 'bar'}}
 
