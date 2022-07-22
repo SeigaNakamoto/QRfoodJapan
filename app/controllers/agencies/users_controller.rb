@@ -54,8 +54,14 @@ class Agencies::UsersController < ApplicationController
   end
 
   def entry_payment
-    p '------------------------------------------------'
+    # p '------------------------------------------------'
+    # require 'rest-client'
+    # RestClient.proxy = 'http://proxy:8bb27a89b2d74c85b4d9254427fec858@proxy-174-129-240-180.proximo.io'
+    # response = RestClient.get("http://ip-api.com/json/")
+
+    # print response
   end
+
   def light_payment
   end
   def standard_payment

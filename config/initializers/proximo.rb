@@ -1,6 +1,6 @@
-require 'rest-client'
+# require 'rest-client'
 
-RestClient.proxy = ENV["FIXIE_URL"]
+# RestClient.proxy = ENV["FIXIE_URL"]
 # RestClient.get('http://ip-api.com/json/')
 
 
