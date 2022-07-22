@@ -1,7 +1,7 @@
 require 'rest-client'
 
 RestClient.proxy = ENV["FIXIE_URL"]
-RestClient.get('http://ip-api.com/json/')
+# RestClient.get('http://ip-api.com/json/')
 
 
 # response = RestClient::Request.execute(
