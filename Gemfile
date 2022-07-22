@@ -55,7 +55,7 @@ gem 'letter_opener_web', '~> 1.0'
 # form
 gem 'simple_form'
 
-# gem 'httpclient'
+gem 'httpclient'
 gem 'rest-client', '2.1.0'
 gem "sinatra"
 

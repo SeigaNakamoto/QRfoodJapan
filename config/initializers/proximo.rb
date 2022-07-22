@@ -1,4 +1,17 @@
-require 'rest-client'
+require 'httpclient'
+
+class ApiClient
+  def execute()
+    proxy = ENV["FIXIE_URL"]
+    # proxy を指定
+    HTTPClient.new(proxy)
+    # http://ip-api.com/json/ にリクエストすることでIPを確認
+    result = client.get('http://ip-api.com/json/')
+  end
+end
+
+
+# require 'rest-client'
 
 # RestClient.proxy = ENV["FIXIE_URL"]
 # response = RestClient::Request.execute(
@@ -10,11 +23,11 @@ require 'rest-client'
 # RestClient.proxy = ENV["PROXIMO_URL"] if ENV["PROXIMO_URL"]
 
 
-RestClient::Request.execute(
-  method: :get,
-  url: 'https://credit.j-payment.co.jp/gateway/gateway_token.aspx',
-  proxy: ENV["PROXIMO_URL"]
-)
+# RestClient::Request.execute(
+#   method: :get,
+#   url: 'https://credit.j-payment.co.jp/gateway/gateway_token.aspx',
+#   proxy: ENV["PROXIMO_URL"]
+# )
 
 # RestClient.get 'http://example.com/resource', {params: {id: 50, 'foo' => 'bar'}}
 
